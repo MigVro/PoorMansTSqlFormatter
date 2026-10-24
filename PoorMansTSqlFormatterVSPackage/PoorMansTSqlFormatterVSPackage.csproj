@@ -107,9 +107,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Target Name="SuppressReferencePdbsAndSatellitesFromVsix" BeforeTargets="GetVsixSourceItems">
+  <Target Name="SuppressReferencePdbsSatellitesAndConfigsFromVsix" BeforeTargets="GetVsixSourceItems">
     <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Extension)' == '.pdb'" />
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Extension)' == '.config' And $([System.String]::Copy('%(Filename)').EndsWith('.dll'))" />
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.DestinationSubDirectory)' != '' And $([System.String]::Copy('%(Filename)').EndsWith('.resources'))" />
     </ItemGroup>
   </Target>
