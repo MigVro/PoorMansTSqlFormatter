@@ -25,7 +25,7 @@ using System.IO;
 using System.Resources;
 using System.Reflection;
 
-namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
+namespace PoorMansTSqlFormatterExeShared
 {
     public class SingleAssemblyResourceManager : System.Resources.ResourceManager
     {
@@ -45,7 +45,7 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
             _contextTypeInfo = null;
             _namespace = sameNameSpaceType.Namespace;
         }
-
+ 
         protected override ResourceSet InternalGetResourceSet(CultureInfo culture, bool createIfNotExists, bool tryParents)
         {
             ResourceSet rs = (ResourceSet)this.ResourceSets[culture];
@@ -76,6 +76,10 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
                     rs = new ResourceSet(store);
                     //save for later.
                     AddResourceSet(this.ResourceSets, culture, ref rs);
+                }
+                else if (tryParents && !culture.Equals(CultureInfo.InvariantCulture))
+                {
+                    rs = InternalGetResourceSet(culture.Parent, createIfNotExists, tryParents);
                 }
                 else
                 {

@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using System.Threading;
 using PoorMansTSqlFormatterLib;
 using PoorMansTSqlFormatterLib.Interfaces;
+using PoorMansTSqlFormatterExeShared;
 
 namespace PoorMansTSqlFormatterDemo
 {
@@ -47,7 +48,7 @@ namespace PoorMansTSqlFormatterDemo
         object _refreshLock = new object();
         bool _settingsLoaded = false;
 
-        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager;
+        private SingleAssemblyResourceManager _generalResourceManager;
 
         public MainForm()
         {
@@ -71,7 +72,7 @@ namespace PoorMansTSqlFormatterDemo
             //set the UI language BEFORE initializeComponent...
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.UILanguage);
             System.Globalization.CultureInfo test1 = Thread.CurrentThread.CurrentUICulture;
-            _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+            _generalResourceManager = new SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
 
             InitializeComponent();
 

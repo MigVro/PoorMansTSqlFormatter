@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PoorMansTSqlFormatterWebDemo</RootNamespace>
     <AssemblyName>PoorMansTSqlFormatterWebDemo</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -70,6 +70,7 @@
       <Project>{944e63b9-65a4-4139-bd42-096e1b15ef86}</Project>
       <Name>PoorMansTSqlFormatterJSLib</Name>
       <Private>False</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">
       <Project>{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}</Project>

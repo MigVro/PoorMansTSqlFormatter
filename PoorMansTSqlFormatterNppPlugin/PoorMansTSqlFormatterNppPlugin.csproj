@@ -10,7 +10,7 @@
     <RootNamespace>PoorMansTSqlFormatterNppPlugin</RootNamespace>
     <AssemblyName>PoorMansTSqlFormatterNppPlugin</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

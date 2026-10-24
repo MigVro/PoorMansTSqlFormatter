@@ -25,12 +25,13 @@ using System.Drawing;
 using System.Reflection;
 using System.IO;
 using System.Windows.Forms;
+using PoorMansTSqlFormatterExeShared;
 
 namespace PoorMansTSqlFormatterDemo
 {
     partial class AboutBox : Form
     {
-        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+        private SingleAssemblyResourceManager _generalResourceManager = new SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
 
         public AboutBox()
         {

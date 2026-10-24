@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: approved, not started. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: step 1 done (2026-10-24, uncommitted); next is step 0 + step 2. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -78,11 +78,27 @@ Verify:
 - The solution builds for all three platforms without the .NET 3.5 feature.
 - The NUnit tests pass with identical expected-output files.
 
-Unverified, check during this step:
-- ILRepack (vendored version) merging a netstandard2.0 assembly into the net472 Demo/CmdLine exes.
-- COM registration of the netstandard2.0 `SqlFormattingManager` for the WinMerge VB6 plugin.
-- Notepad++ loading the v4.7.2 UnmanagedExports plugin.
-- `PoorMansTSqlFormatterWebDemo` building on v4.7.2.
+Scope change (approved): step 5's removals were pulled into this step, except VSPackage2019, because SSMSAddIn and its `.Setup.action` were v2.0.
+The WiX `PoorMansTSqlFormatterSSMSAddIn.Setup` and `PoorMansTSqlFormatterSSMSPackage.Setup` projects were removed too.
+
+Result:
+- All three platforms build with VS 2026 MSBuild. The only error is VSPackage2019's unrestored `packages.config`, which step 2 replaces.
+- All 182 test cases pass. They were run by reflection from Windows PowerShell, since there's no console runner. Expected-output files are unchanged.
+- ILRepack merges work: `SqlFormatter.exe` formats, and `SqlFormatterWinforms.exe` starts.
+- `tlbexp` exports a type library from the netstandard2.0 lib. Registering it for the WinMerge VB6 plugin wasn't tested.
+
+Changes beyond the plan:
+- Library: `<Deterministic>false</Deterministic>`, because `AssemblyInfo.cs` uses `1.6.16.*`.
+- SSMSLib: added a `Microsoft.CSharp` reference. On .NET 4 the embedded EnvDTE interop types return `dynamic`.
+- WebDemo: `ReferenceOutputAssembly=false` on the JSLib reference. On v2.0 it was silently ignored; now it caused duplicate-type errors.
+- `SingleAssemblyResourceManager`: fall back to `culture.Parent` inside the override. .NET 4 no longer does that walk in `GetString`, so the merged exes threw `MissingManifestResourceException`.
+  The Demo and CmdLine copies were merged into `PoorMansTSqlFormatterExeShared/SingleAssemblyResourceManager.cs`, which both projects link as source.
+- `Postbuild_Merge.bat` (Demo, CmdLine) and `.claude/skills/add-format-test/render.ps1` updated. `PoorMansTSqlFormatterTest/References/LinqBridge` deleted, and `BUILDING.txt` no longer lists LinqBridge.
+
+Open:
+- `PoorMansTSqlFormatterWinMergePlugin.Setup.vdproj` still packages LinqBridge.dll, the removed SSMSPackage output (with ~40 dependencies) and `PoorMansTSqlFormatterLib\obj\Debug\PoorMansTSqlFormatterLib.dll` (now under `netstandard2.0\`). Jon will fix it in VS with the Installer Projects extension.
+- Notepad++ loading the v4.7.2 plugin: manual test.
+- es/fr resources in the merged exes: not exercised.
 
 ### 2. VSIX project
 
@@ -120,14 +136,7 @@ Unverified, check during this step:
 
 ### 5. Solution cleanup
 
-Remove from `PoorMansTSqlFormatter.sln` and delete these folders:
-
-- `PoorMansTSqlFormatterVSPackage2013`
-- `PoorMansTSqlFormatterVSPackage2019` (after the new project works)
-- `PoorMansTSqlFormatterSSMSPackage`
-- `PoorMansTSqlFormatterSSMSAddIn`
-- `PoorMansTSqlFormatterSSMSPackage.Setup.action`
-- `PoorMansTSqlFormatterSSMSAddIn.Setup.action`
+Remove `PoorMansTSqlFormatterVSPackage2019` from `PoorMansTSqlFormatter.sln` and delete its folder once the new project works. The other obsolete projects were removed in step 1.
 
 Afterwards, update `CLAUDE.md` (build commands, the target list under Architecture, host layers) and the packaging steps in `BUILDING.txt`.
 `CLAUDE.md` also puts `NetUtils.cs` in `NetStandardLib`; it's in `PoorMansTSqlFormatterLib`.

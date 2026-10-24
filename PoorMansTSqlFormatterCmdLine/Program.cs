@@ -27,12 +27,13 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using NDesk.Options;
+using PoorMansTSqlFormatterExeShared;
 
 namespace PoorMansTSqlFormatterCmdLine
 {
     class Program
     {
-        private static FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager = null;
+        private static SingleAssemblyResourceManager _generalResourceManager = null;
 
         const string UILANGUAGE_EN = "EN";
         const string UILANGUAGE_FR = "FR";
@@ -112,19 +113,19 @@ namespace PoorMansTSqlFormatterCmdLine
                 {
                     showUsageError = true;
                     //get the resource manager with default language, before displaying error.
-                    _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+                    _generalResourceManager = new SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
                     Console.Error.WriteLine(_generalResourceManager.GetString("UnrecognizedLanguageErrorMessage"));
                 }
                 else
                 {
                     System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(uiLangCode);
-                    _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+                    _generalResourceManager = new SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
                     //get the resource manager AFTER setting language as requested.
                 }
             }
             else
             {
-                _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+                _generalResourceManager = new SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
             }
 
             //nasty trick to figure out whether we're in a pipeline or not

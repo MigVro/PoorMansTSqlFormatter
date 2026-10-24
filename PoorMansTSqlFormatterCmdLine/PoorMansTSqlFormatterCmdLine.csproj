@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PoorMansTSqlFormatterCmdLine</RootNamespace>
     <AssemblyName>SqlFormatterExeAssembly</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>PoorMansTSqlFormatterCmdLine.Program</StartupObject>
     <StartAction>Program</StartAction>
@@ -40,7 +40,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrameworkClassReplacements\SingleAssemblyResourceManager.cs" />
+    <Compile Include="..\PoorMansTSqlFormatterExeShared\SingleAssemblyResourceManager.cs">
+      <Link>FrameworkClassReplacements\SingleAssemblyResourceManager.cs</Link>
+    </Compile>
     <Compile Include="GeneralLanguageContent.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

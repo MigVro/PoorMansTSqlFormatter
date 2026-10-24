@@ -11,8 +11,8 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = (Resolve-Path "$PSScriptRoot\..\..\..").Path
 $libDir = Join-Path $OutDir '_lib'
-$dll = Join-Path $libDir 'PoorMansTSqlFormatterNetStandardLib.dll'
-dotnet build "$repoRoot\PoorMansTSqlFormatterNetStandardLib\PoorMansTSqlFormatterNetStandardLib.csproj" -c Debug -o $libDir -v q -nologo | Out-String -OutVariable buildLog | Out-Null
+$dll = Join-Path $libDir 'PoorMansTSqlFormatterLib.dll'
+dotnet build "$repoRoot\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj" -c Debug -o $libDir -v q -nologo | Out-String -OutVariable buildLog | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "Library build failed:`n$buildLog" }
 Add-Type -Path $dll
 
