@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: steps 0–2 done (2026-10-24); next is step 3. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: steps 0–3 done (2026-10-24); next is step 4. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -141,6 +141,8 @@ Result (2026-10-24):
 ```
 
 `Community` also covers Pro and Enterprise. The current manifest uses `Pro`, which leaves out Community.
+
+Result (2026-10-24): applied as above; the packaged VSIX carries both targets. `vswhere` shows CoreEditor 17.14 (VS 2022), 18.11 (VS 2026) and 18.11 (SSMS 22.11), so the prerequisite is met in all three. The SSMS reference project has no Prerequisites at all.
 
 ### 4. Code (`FormatterPackage.cs`)
 
