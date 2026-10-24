@@ -4,6 +4,37 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 ## [Unreleased]
 
+## [1.6.17] - 2026-10-24
+
+First release of the fork (MigVro/PoorMansTSqlFormatter).
+
+### Added
+
+* Combined VSIX (`PoorMansTSqlFormatterVSPackage`, amd64) for Visual Studio 2022/2026 and SSMS 22, with a new extension identity
+* GitHub Actions workflow that builds the VSIX and attaches it to the GitHub release for each version tag
+* TODOs.md, tracking known issues and important open upstream issues
+
+### Changed
+
+* Library moved to an SDK-style netstandard2.0 project; all other projects target .NET Framework 4.7.2
+* SSMSLib references the EnvDTE 17.0 NuGet package instead of the GAC envdte 8.0 assembly
+* VersionBump script reads the current version from the VSIX manifest, and keeps the UTF-8 BOM when run under PowerShell 7
+* README Known Issues moved to TODOs.md
+
+### Removed
+
+* VS 2019 VSPackage (replaced by the combined VSIX)
+* AppVeyor build configuration
+* LinqBridge dependency
+
+### Fixed
+
+* `char.ToUpperInvariant` shim in the netstandard library called `ToLowerInvariant`
+
+## [1.6.13] - 2019-07-28
+
+Upstream releases 1.6.14 to 1.6.16 have no changelog entries.
+
 ### Added 
 
 * "Version Bump" script, for simplifying the release process
