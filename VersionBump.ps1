@@ -3,26 +3,25 @@
 #
 # Expects one of 3 kinds of argument:
 #  1) a 3-part version number (MAJOR.MINOR.PATCH)
-#  2) one of "major", "minor" or "patch", to bump with respect to the version in appveyor.yml
-#  3) no argument at all - this will bump "patch" wrt appveyor.yml
+#  2) one of "major", "minor" or "patch", to bump with respect to the version in the VSIX manifest
+#  3) no argument at all - this will bump "patch" wrt the VSIX manifest
 #
 # Expects all files to be UTF-8, with Windows linebreaks, and with BOM
 #
-# Expects to be called from the project root, for "relative" version bumps. (so it finds the appveyor yaml file)
+# Expects to be called from the project root, for "relative" version bumps. (so it finds the VSIX manifest)
 #
 # Can also be called from any folder hierarchy with an "absolute" version, but beware:
 #  This will update ANYTHING that looks like a 3-part version string (with or without 4th-part wildcard) in file with a target pattern/extension
 #
 
-$VersionSourceFile = 'appveyor.yml';
-$VersionSourcePattern = '(\d+)\.(\d+)\.(\d+)(?=\.\{build\})'; #the 3 capture groups must be major, minor, patch
-$ReplacePathPattern = '(AssemblyInfo\.cs)|(appveyor\.yml)|(FormatterPackage\.cs)|(source\.extension\.vsixmanifest)$'
+$VersionSourceFile = 'PoorMansTSqlFormatterVSPackage\source.extension.vsixmanifest';
+$VersionSourcePattern = '(?<=<Identity .*Version=")(\d+)\.(\d+)\.(\d+)'; #the 3 capture groups must be major, minor, patch
+$ReplacePathPattern = '(AssemblyInfo\.cs)|(FormatterPackage\.cs)|(source\.extension\.vsixmanifest)$'
 $ReplacePathExcludePattern = 'packages'
 $ReplaceVersionPatterns = @(
   '(?<=AssemblyVersion\(")\d+\.\d+\.\d+(?=(\.\*)?")',
   '(?<=\<Identity.*")\d+\.\d+\.\d+(?=(\.\*)?")', 
-  '(?<=InstalledProductRegistration.*")\d+\.\d+\.\d+(?=(\.\*)?")', 
-  $VersionSourcePattern #happens to be constructed for a safe replace also (lookbehind for non-replaceable bit)
+  '(?<=InstalledProductRegistration.*")\d+\.\d+\.\d+(?=(\.\*)?")'
   )
 
 function Get-BasisVersion {

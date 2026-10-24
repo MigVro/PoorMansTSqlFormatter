@@ -19,7 +19,7 @@ msbuild PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj /restore /p:Con
 
 - Building `PoorMansTSqlFormatterVSPackage` also deploys it to the VS 2026 experimental instance (`devenv /rootsuffix Exp`); don't additionally install it there with VSIXInstaller.
 
-- Solution platforms: `x86`, `x64`, `PureDotNet`. `x86`/`x64` exist for the Notepad++ plugin (UnmanagedExports); CI also passes `/p:PlatformToolset=v140_xp`.
+- Solution platforms: `x86`, `x64`, `PureDotNet`. `x86`/`x64` exist for the Notepad++ plugin (UnmanagedExports).
 - The WinMerge setup project (VS Installer Projects) and the WinMerge VB6 COM plugin need extra tooling and manual steps — see `BUILDING.txt`.
 - `ExternalBuildTools/` (fart.exe, ILRepack), `packages/`, and `PoorMansTSqlFormatterTest/References/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
 
@@ -56,6 +56,6 @@ UI strings come in `.resx` triples (neutral, `.es`, `.fr`); keep keys in sync ac
 
 ## Versioning
 
-`VersionBump.ps1` (run from the repo root): `.\VersionBump.ps1 [major|minor|patch|X.Y.Z]`. The source of truth is `version:` in `appveyor.yml`; the script rewrites `AssemblyInfo.cs`, `FormatterPackage.cs` (`InstalledProductRegistration`) and `source.extension.vsixmanifest` (`<Identity ... Version>`). It expects those files to be **UTF-8 with BOM and CRLF**, so preserve both when editing.
+`VersionBump.ps1` (run from the repo root): `.\VersionBump.ps1 [major|minor|patch|X.Y.Z]`. The source of truth is `<Identity ... Version>` in `PoorMansTSqlFormatterVSPackage\source.extension.vsixmanifest`; the script rewrites `AssemblyInfo.cs`, `FormatterPackage.cs` (`InstalledProductRegistration`) and `source.extension.vsixmanifest` (`<Identity ... Version>`). It expects those files to be **UTF-8 with BOM and CRLF**, so preserve both when editing.
 
-Release packaging is manual (see the end of `BUILDING.txt`). `appveyor.yml` only builds and publishes the Notepad++ plugin artifacts; GitHub Actions (`.github/workflows/vsix.yml`) builds the VSIX and attaches it to the GitHub release when a version tag (e.g. `1.6.17`) is pushed.
+Release packaging is manual (see the end of `BUILDING.txt`). GitHub Actions (`.github/workflows/vsix.yml`) builds the VSIX and attaches it to the GitHub release when a version tag (e.g. `1.6.17`) is pushed.

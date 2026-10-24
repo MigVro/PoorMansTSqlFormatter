@@ -166,7 +166,7 @@ Afterwards, update `CLAUDE.md` (build commands, the target list under Architectu
 
 ### 6. CI (done 2026-10-24)
 
-GitHub Actions (`.github/workflows/vsix.yml`, `windows-2022`) builds the VSIX in Release on pushes to `master`, PRs and version tags, uploads it as an artifact, and attaches it to the GitHub release on tags. `appveyor.yml` is unchanged and still covers only the Notepad++ plugin.
+GitHub Actions (`.github/workflows/vsix.yml`, `windows-2022`) builds the VSIX in Release on pushes to `master`, PRs and version tags, uploads it as an artifact, and attaches it to the GitHub release on tags. `appveyor.yml` (Notepad++ only, VS 2017 image) was removed; `VersionBump.ps1` now reads the version from the VSIX manifest.
 
 ### 7. Testing
 
