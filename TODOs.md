@@ -19,4 +19,17 @@
 - [ ] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272).
 - [ ] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298).
 - [ ] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
+- [ ] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth`.
+- [ ] (2026-10-24) Option: insert explicit `AS` for implicit table and column aliases. Check first whether the parser can reliably identify implicit aliases.
+- [ ] (2026-10-24) Opt-in option: add `;` wherever a statement may be terminated, including block `END` → `END;` (deprecated to omit; required before `WITH`/`MERGE`). Only apply when the parse has no errors. Never after `CASE ... END` or `GO`. Verify against SQL Server first: `END TRY;` before `BEGIN CATCH`, and `END;` before `ELSE`.
+- [ ] (2026-10-24) Option: operator/name standardization — `!=` → `<>`, consistent casing of built-in functions and data types. Check what `UppercaseKeywords` already covers; overlaps TaoK#272.
+- [ ] (2026-10-24) Option: vertical alignment of column names/types/nullability in `CREATE TABLE` and `DECLARE` blocks (needs block measurement before output).
+- [ ] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.
+- [ ] (2026-10-24) VSIX: shared settings from a solution/repo file (`.sqlformat` or `.editorconfig`) so a team formats consistently; currently settings are per user.
+- [ ] (2026-10-24) VSIX: opt-in format-on-save for `.sql` files.
+- [ ] (2026-10-24) VSIX: report parse errors in an info bar or the Output pane instead of injecting the warning banner; option to skip formatting when errors occur.
+- [ ] (2026-10-24) VSIX: "Minify/Obfuscate T-SQL" command using the existing `TSqlObfuscatingFormatter`.
+- [ ] (2026-10-24) VSIX: "Copy as HTML" command using the existing `HtmlPageWrapper` (colorized output to clipboard).
+- [ ] (2026-10-24) VSIX: check whether the format command is in the editor context menu; add it if not.
+- [ ] (2026-10-24) VSIX: verify a format is undone in a single step (one undo context); wrap it if not.
 - [x] (2026-10-24) CI for the VSIX (plan step 6): GitHub Actions workflow `.github/workflows/vsix.yml` builds it and attaches it to releases on version tags.
