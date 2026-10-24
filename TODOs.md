@@ -6,4 +6,17 @@
 - [ ] (2026-10-24) Verify VSIX settings survive major VS 2026 / SSMS 22 upgrades, and whether they are shared between VS and SSMS.
 - [ ] (2026-10-24) Replace the old FxCop item with the .NET analyzers (`<EnableNETAnalyzers>` / `<AnalysisLevel>`), at least on the library.
 - [ ] (2026-10-24) Decide on table hints without `WITH` (compat level 80): drop support and treat only `WITH (...)` as hints, or keep parsing them as function arguments.
+- [ ] (2026-10-24) `IF EXISTS` qualifier parsed as an `IF` statement, e.g. `DROP PROCEDURE IF EXISTS` raises parse errors (upstream TaoK#268, TaoK#203).
+- [ ] (2026-10-24) Nested JOINs (with or without parens) give false syntax errors and poor formatting (upstream TaoK#288, TaoK#30).
+- [ ] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151).
+- [ ] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112).
+- [ ] (2026-10-24) Parse Service Broker statements (`BEGIN DIALOG`, ...) and the `WAITFOR` container (upstream TaoK#179, TaoK#237).
+- [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).
+- [ ] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).
+- [ ] (2026-10-24) `[noformat]...[/noformat]` adds a line feed before `[/noformat]` on every format (upstream TaoK#292).
+- [ ] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192).
+- [ ] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
+- [ ] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272).
+- [ ] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298).
+- [ ] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
 - [x] (2026-10-24) CI for the VSIX (plan step 6): GitHub Actions workflow `.github/workflows/vsix.yml` builds it and attaches it to releases on version tags.
