@@ -66,9 +66,7 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
 
 ### Longer-term enhancements / additions
 
-* Compiled mono library + bulk formatting tool download (eg for use on SVN server)
 * Documentation of Xml structure and class usage
-    * Keeping track of versioning and documentation more carefully: http://semver.org/
 
 ### License & Credits
 
