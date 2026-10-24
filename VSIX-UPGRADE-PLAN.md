@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: steps 1 (860a8c7) and 0 done (2026-10-24); next is step 2. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: steps 0–2 done (2026-10-24); next is step 3. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -115,6 +115,13 @@ Open:
   - `Microsoft.VSSDK.BuildTools` 17.x.
   - Pick exact versions from NuGet at implementation time.
 - `TargetFrameworkVersion`: v4.6 → v4.7.2.
+
+Result (2026-10-24):
+- `PoorMansTSqlFormatterVSPackage` (ProjectGuid `{626E0A59-8FC7-4733-997E-46391F1830C4}`) added to the solution; all platforms map to Any CPU.
+- `Microsoft.VisualStudio.SDK` 17.0.32112.339 (`ExcludeAssets="runtime"`), `Microsoft.VSSDK.BuildTools` 17.14.2142. The envdte/envdte80/stdole references come from the SDK package now.
+- Step 0 identity applied (manifest, `FormatterPackage.cs`, `.vsct`); `AssemblyInfo.cs` and `VSPackage.resx` names and descriptions updated.
+- Builds with `/restore` and produces a `.vsix` with the lib, PluginShared, SSMSLib and their es/fr satellites.
+- Left as is: the code namespace is still `PoorMansTSqlFormatterSSMSPackage`; CS1616 from the empty `AssemblyKeyFile("")` in `AssemblyInfo.cs` (inherited); the manifest still has the 2019 install targets until step 3; VSTHRD010 warnings until step 4.
 
 ### 3. Manifest
 
