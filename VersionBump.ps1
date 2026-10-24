@@ -18,6 +18,8 @@ $VersionSourceFile = 'PoorMansTSqlFormatterVSPackage\source.extension.vsixmanife
 $VersionSourcePattern = '(?<=<Identity .*Version=")(\d+)\.(\d+)\.(\d+)'; #the 3 capture groups must be major, minor, patch
 $ReplacePathPattern = '(AssemblyInfo\.cs)|(FormatterPackage\.cs)|(source\.extension\.vsixmanifest)$'
 $ReplacePathExcludePattern = 'packages'
+# PowerShell 6+ writes "UTF8" without BOM
+$WriteEncoding = if ($PSVersionTable.PSVersion.Major -ge 6) { 'utf8BOM' } else { 'UTF8' }
 $ReplaceVersionPatterns = @(
   '(?<=AssemblyVersion\(")\d+\.\d+\.\d+(?=(\.\*)?")',
   '(?<=\<Identity.*")\d+\.\d+\.\d+(?=(\.\*)?")', 
@@ -65,7 +67,7 @@ function Set-VersionInFile {
       }
     }
 
-    Set-Content -Path $TmpFile -Value $FileContents -Encoding UTF8
+    Set-Content -Path $TmpFile -Value $FileContents -Encoding $WriteEncoding
 
     Move-Item $TmpFile $MatchingFile.FullName -force
   }
