@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: steps 0–4 done (2026-10-24); next is step 7 (testing), then step 5 (cleanup). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: steps 0–4 and 7 done (2026-10-24); next is step 5 (cleanup). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -95,7 +95,7 @@ Result:
 
 Changes beyond the plan:
 - Library: `<Deterministic>false</Deterministic>`, because `AssemblyInfo.cs` uses `1.6.16.*`.
-- SSMSLib: added a `Microsoft.CSharp` reference. On .NET 4 the embedded EnvDTE interop types return `dynamic`.
+- SSMSLib: added a `Microsoft.CSharp` reference. On .NET 4 the embedded EnvDTE interop types return `dynamic`. Superseded in step 7, see there.
 - WebDemo: `ReferenceOutputAssembly=false` on the JSLib reference. On v2.0 it was silently ignored; now it caused duplicate-type errors.
 - `SingleAssemblyResourceManager`: fall back to `culture.Parent` inside the override. .NET 4 no longer does that walk in `GetString`, so the merged exes threw `MissingManifestResourceException`.
   The Demo and CmdLine copies were merged into `PoorMansTSqlFormatterExeShared/SingleAssemblyResourceManager.cs`, which both projects link as source.
@@ -176,6 +176,11 @@ Afterwards, update `CLAUDE.md` (build commands, the target list under Architectu
 - **VS 2022:** install the VSIX.
 - **SSMS 22:** SSMS has no experimental instance. Install with VSIXInstaller, then attach the debugger to `Ssms.exe`.
 - In each host, check the Tools-menu commands (Format, Options), the enable/disable state with no active document, and that settings persist.
+
+Smoke test (2026-10-24, Debug build): installed with `VSIXInstaller /quiet` into VS 2022 and SSMS 22, and deployed into VS 2026 Exp by the build. In all three hosts the ActivityLog (`/log`) shows `Begin/End package load [FormatterPackage]` with no errors.
+- VS 2026 Exp: a command-line build of the project deploys into Exp too (`DeployExtension` defaults to true), so don't also install there with VSIXInstaller. Doing both left a stale CodeBase, then (after uninstalling) a disabled extension. Fixed by re-enabling it under `ExtensionManager\EnabledExtensions` (`vsregedit`) and touching `Extensions\extensions.configurationchanged`.
+- First manual run (VS 2022, SSMS 22): Format failed with `MissingMethodException` on `GenericVSHelper.FormatSqlInTextDoc(EnvDTE80.DTE2)`. Cause: SSMSLib's envdte/envdte80 references had `EmbedInteropTypes=True`, inert on v2.0 but active since step 1, so SSMSLib carried its own embedded `DTE2` while the VSIX used the SDK's. Fix: SSMSLib uses `PackageReference EnvDTE80` 17.0.32112.339 (`ExcludeAssets="runtime"`), the same as the VSIX's SDK, so both resolve the types to `Microsoft.VisualStudio.Interop`. The `Microsoft.CSharp` reference is no longer needed and was removed.
+- Manual check by Jon (2026-10-24): Format works in SSMS 22, VS 2022 and VS 2026 Exp (`devenv /rootsuffix Exp`; the extension is only deployed to the Exp instance there).
 
 ## Phase 2: .NET modernisation (after the VSIX ships)
 
