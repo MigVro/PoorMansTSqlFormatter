@@ -4,20 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Poor Man's T-SQL Formatter: a coarse, fault-tolerant T-SQL tokenizer/parser/formatter library (.NET 2.0, netstandard1.0, and JS via Bridge.NET), plus hosts that wrap it (WinForms demo, web demo, command-line, SSMS add-in/package, VS 2013/2019 VSIX, Notepad++ and WinMerge plugins). Licensed AGPL v3; source files carry the AGPL header.
+Poor Man's T-SQL Formatter: a coarse, fault-tolerant T-SQL tokenizer/parser/formatter library (netstandard2.0, and JS via Bridge.NET), plus hosts that wrap it (WinForms demo, web demo, command-line, a combined VS 2022/2026 + SSMS 22 VSIX, Notepad++ and WinMerge plugins). Licensed AGPL v3; source files carry the AGPL header.
 
-Fork of `TaoK/PoorMansTSqlFormatter` (remote `github`); `origin` is a private Gitea. Active work: combined VS 2022/2026 + SSMS 21/22 VSIX — see `VSIX-UPGRADE-PLAN.md` and `TODOs.md`.
+Fork of `TaoK/PoorMansTSqlFormatter` (remote `github`); `origin` is a private Gitea. Active work: combined VS 2022/2026 + SSMS 22 VSIX — see `VSIX-UPGRADE-PLAN.md` and `TODOs.md`.
 
 ## Build
 
+`msbuild` is not on PATH; use Visual Studio's MSBuild (`C:\dev\vs\2026\Community\MSBuild\Current\Bin\MSBuild.exe`). `/restore` is required (SDK-style library, `PackageReference` in SSMSLib and the VSIX).
+
 ```
-msbuild PoorMansTSqlFormatter.sln /m /p:Configuration=Debug /p:Platform=PureDotNet
-msbuild PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj /p:Configuration=Debug
-msbuild PoorMansTSqlFormatterNetStandard.sln
+msbuild PoorMansTSqlFormatter.sln /restore /m /p:Configuration=Debug /p:Platform=PureDotNet
+msbuild PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj /restore /p:Configuration=Debug
 ```
 
+- Building `PoorMansTSqlFormatterVSPackage` also deploys it to the VS 2026 experimental instance (`devenv /rootsuffix Exp`); don't additionally install it there with VSIXInstaller.
+
 - Solution platforms: `x86`, `x64`, `PureDotNet`. `x86`/`x64` exist for the Notepad++ plugin (UnmanagedExports); CI also passes `/p:PlatformToolset=v140_xp`.
-- Setup projects (WiX, VS Installer Projects) and the WinMerge VB6 COM plugin need extra tooling and manual steps — see `BUILDING.txt`.
+- The WinMerge setup project (VS Installer Projects) and the WinMerge VB6 COM plugin need extra tooling and manual steps — see `BUILDING.txt`.
 - `ExternalBuildTools/` (fart.exe, ILRepack), `packages/`, and `PoorMansTSqlFormatterTest/References/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
 
 ## Tests
@@ -34,7 +37,7 @@ Tests are data-driven from `PoorMansTSqlFormatterTest/Data/`:
 
 ## Architecture
 
-**Single source, multiple targets.** All library code lives in `PoorMansTSqlFormatterLibShared/`, which is not a project itself. `PoorMansTSqlFormatterLib` (.NET 2.0), `PoorMansTSqlFormatterLib_35`, `PoorMansTSqlFormatterNetStandardLib` (netstandard1.0) and `PoorMansTSqlFormatterJSLib` (Bridge.NET → JS) each compile `..\PoorMansTSqlFormatterLibShared\**\*.cs`. Code there must therefore stay compatible with C#/.NET 2.0 (LinqBridge provides LINQ), netstandard1.0, **and** Bridge.NET transpilation. Target-specific shims live in each project (e.g. `NetStandardLib/NetUtils.cs`).
+**Single source, multiple targets.** All library code lives in `PoorMansTSqlFormatterLibShared/`, which is not a project itself. `PoorMansTSqlFormatterLib` (SDK-style, netstandard2.0) and `PoorMansTSqlFormatterJSLib` (Bridge.NET → JS) each compile `..\PoorMansTSqlFormatterLibShared\**\*.cs`. Code there must therefore stay compatible with netstandard2.0 **and** Bridge.NET transpilation. Target-specific shims live in each project (e.g. `PoorMansTSqlFormatterLib/NetUtils.cs`). All other projects target .NET Framework 4.7.2.
 
 **Pipeline** (`SqlFormattingManager` orchestrates):
 1. `ISqlTokenizer` → `TSqlStandardTokenizer` → `ITokenList`
@@ -45,8 +48,8 @@ Parsing is deliberately coarse and must not throw on unknown constructs; errors 
 
 **Host layers:**
 - `PoorMansTSqlFormatterPluginShared` — WinForms settings/about dialogs, `ISqlSettings`, and es/fr localized resources shared by the editor plugins.
-- `PoorMansTSqlFormatterSSMSLib` — `GenericVSHelper` (formatting the active document, hotkey setup, `isVisualStudio` only changes the default hotkey) and `Settings`; shared by the SSMS add-in, SSMS package and VS packages.
-- `PoorMansTSqlFormatterSSMSPackage`, `PoorMansTSqlFormatterVSPackage2013`, `PoorMansTSqlFormatterVSPackage2019` — VSIX packages (`source.extension.vsixmanifest`, `FormatterPackage.cs`, `.vsct`).
+- `PoorMansTSqlFormatterSSMSLib` — `GenericVSHelper` (formatting the active document, hotkey setup, `isVisualStudio` only changes the default hotkey) and `Settings`; used by the VSIX.
+- `PoorMansTSqlFormatterVSPackage` — one amd64 VSIX (`AsyncPackage`) for VS 2022/2026 and SSMS 22 (`source.extension.vsixmanifest`, `FormatterPackage.cs`, `.vsct`). Output: `bin\<Config>\PoorMansTSqlFormatterVSPackage.vsix`.
 - `PoorMansTSqlFormatterCmdLine` / `PoorMansTSqlFormatterDemo` — merged into single assemblies with ILRepack after build.
 
 UI strings come in `.resx` triples (neutral, `.es`, `.fr`); keep keys in sync across all three.

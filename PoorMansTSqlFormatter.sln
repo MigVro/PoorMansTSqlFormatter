@@ -29,8 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterSSMSLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterJSLib", "PoorMansTSqlFormatterJSLib\PoorMansTSqlFormatterJSLib.csproj", "{944E63B9-65A4-4139-BD42-096E1B15EF86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSPackage2019", "PoorMansTSqlFormatterVSPackage2019\PoorMansTSqlFormatterVSPackage2019.csproj", "{A160C033-3357-4BBB-9BF6-7B7D9971AD65}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSPackage", "PoorMansTSqlFormatterVSPackage\PoorMansTSqlFormatterVSPackage.csproj", "{626E0A59-8FC7-4733-997E-46391F1830C4}"
 EndProject
 Global
@@ -133,18 +131,6 @@ Global
 		{944E63B9-65A4-4139-BD42-096E1B15EF86}.Release|PureDotNet.Build.0 = Release|Any CPU
 		{944E63B9-65A4-4139-BD42-096E1B15EF86}.Release|x64.ActiveCfg = Release|Any CPU
 		{944E63B9-65A4-4139-BD42-096E1B15EF86}.Release|x86.ActiveCfg = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|PureDotNet.ActiveCfg = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|PureDotNet.Build.0 = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x64.Build.0 = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x86.Build.0 = Debug|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|PureDotNet.ActiveCfg = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|PureDotNet.Build.0 = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x64.ActiveCfg = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x64.Build.0 = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x86.ActiveCfg = Release|Any CPU
-		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x86.Build.0 = Release|Any CPU
 		{626E0A59-8FC7-4733-997E-46391F1830C4}.Debug|PureDotNet.ActiveCfg = Debug|Any CPU
 		{626E0A59-8FC7-4733-997E-46391F1830C4}.Debug|PureDotNet.Build.0 = Debug|Any CPU
 		{626E0A59-8FC7-4733-997E-46391F1830C4}.Debug|x64.ActiveCfg = Debug|Any CPU
