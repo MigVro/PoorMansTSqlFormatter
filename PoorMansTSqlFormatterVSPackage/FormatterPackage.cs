@@ -48,8 +48,6 @@ namespace PoorMansTSqlFormatterVSPackage
 
         public static readonly Guid guidPoorMansTSqlFormatterSSMSPackageCmdSet = new Guid(guidPoorMansTSqlFormatterSSMSPackageCmdSetString);
 
-        //TODO: figure out how to deal with signing... where to keep the key, etc.
-
         private GenericVSHelper _SSMSHelper;
 
         public FormatterPackage()
@@ -89,23 +87,24 @@ namespace PoorMansTSqlFormatterVSPackage
 
         private void FormatSqlCallback(object sender, EventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             DTE2 dte = (DTE2)GetService(typeof(DTE));
             _SSMSHelper.FormatSqlInTextDoc(dte);
         }
 
         private void SqlOptionsCallback(object sender, EventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             _SSMSHelper.GetUpdatedFormattingOptionsFromUser();
         }
 
-        private void QueryFormatButtonStatus(object sender, EventArgs e) 
+        private void QueryFormatButtonStatus(object sender, EventArgs e)
         {
-            var queryingCommand = sender as OleMenuCommand;
-            DTE2 dte = (DTE2)GetService(typeof(DTE));
-            if (queryingCommand != null && dte.ActiveDocument != null && !dte.ActiveDocument.ReadOnly)
-                queryingCommand.Enabled = true;
-            else
-                queryingCommand.Enabled = false;
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (!(sender is OleMenuCommand queryingCommand))
+                return;
+
+            queryingCommand.Enabled = GetService(typeof(DTE)) is DTE2 dte && dte.ActiveDocument != null && !dte.ActiveDocument.ReadOnly;
         }
     }
 }

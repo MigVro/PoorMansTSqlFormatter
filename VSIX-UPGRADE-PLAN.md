@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: steps 0–3 done (2026-10-24); next is step 4. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: steps 0–4 done (2026-10-24); next is step 7 (testing), then step 5 (cleanup). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -149,6 +149,13 @@ Result (2026-10-24): applied as above; the packaged VSIX carries both targets. `
 - Add `ThreadHelper.ThrowIfNotOnUIThread()` to the two command callbacks and to `QueryFormatButtonStatus`, which use DTE. The 17.x analyzers (VSTHRD010) flag them otherwise.
 - Update version strings and the `InstalledProductRegistration` text.
 - Existing bug, not approved yet: `QueryFormatButtonStatus` dereferences `queryingCommand` in the `else` branch even when it's null. Ask before fixing.
+
+Result (2026-10-24):
+- `ThreadHelper.ThrowIfNotOnUIThread()` added to both callbacks and `QueryFormatButtonStatus`.
+- Null bug fixed (approved): `QueryFormatButtonStatus` returns early for a non-`OleMenuCommand` sender and null-checks the DTE service (VSSDK006).
+- Version strings stay with `VersionBump.ps1`; the `InstalledProductRegistration` text comes from `VSPackage.resx`, updated in step 2.
+- Manifest `.NET Framework` dependency raised from `[4.5,)` to `[4.7.2,)` (approved).
+- Builds with no warnings.
 
 ### 5. Solution cleanup
 
