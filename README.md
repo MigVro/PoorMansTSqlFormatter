@@ -82,9 +82,6 @@ This project uses several external libraries:
 
 * NDesk.Options, for command-line parsing: The NDesk.Options library is licensed under 
     the MIT/X11 license, and its homepage is here: http://www.ndesk.org/Options
-* LinqBridge, for convenience, supporting extension methods and Linq-to-Objects 
-    despite this being a .Net 2.0 library. LinqBridge is licensed under the BSD 3-clause 
-    license, and its homepage is here: http://code.google.com/p/linqbridge/
 * NUnit, for automated testing. NUnit is licensed under a custom open-source license
     based on the zlib/libpng license, and its homepage is: http://www.nunit.org/
 * UnmanagedExports (DLLExport), for exporting .Net code to Notepad++ plugin environment
