@@ -58,9 +58,7 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
  
 ### Known Issues / Todo
 
-* Handling of DDL Triggers (eg "FOR LOGON")
-* Formatting/indenting of ranking functions 
-* FxCop checking
+* See [TODOs.md](TODOs.md)
 * And other stuff that is tracked in the GitHub issues list
 
 
