@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: steps 0–5 and 7 done (2026-10-24); next is step 6 (CI decision). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: all steps done (2026-10-24). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -164,11 +164,9 @@ Remove `PoorMansTSqlFormatterVSPackage2019` from `PoorMansTSqlFormatter.sln` and
 Afterwards, update `CLAUDE.md` (build commands, the target list under Architecture, host layers) and the packaging steps in `BUILDING.txt`.
 `CLAUDE.md` also puts `NetUtils.cs` in `NetStandardLib`; it's in `PoorMansTSqlFormatterLib`.
 
-### 6. CI (needs a decision)
+### 6. CI (done 2026-10-24)
 
-`appveyor.yml` can't build the new VSIX as it stands. Options:
-- Switch to the VS 2022 image and add the `.vsix` as an artifact. The deploy token must be filled in before releases can be published.
-- Leave CI on Notepad++ only and package the VSIX by hand, as now.
+GitHub Actions (`.github/workflows/vsix.yml`, `windows-2022`) builds the VSIX in Release on pushes to `master`, PRs and version tags, uploads it as an artifact, and attaches it to the GitHub release on tags. `appveyor.yml` is unchanged and still covers only the Notepad++ plugin.
 
 ### 7. Testing
 

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Poor Man's T-SQL Formatter: a coarse, fault-tolerant T-SQL tokenizer/parser/formatter library (netstandard2.0, and JS via Bridge.NET), plus hosts that wrap it (WinForms demo, web demo, command-line, a combined VS 2022/2026 + SSMS 22 VSIX, Notepad++ and WinMerge plugins). Licensed AGPL v3; source files carry the AGPL header.
 
-Fork of `TaoK/PoorMansTSqlFormatter` (remote `github`); `origin` is a private Gitea. Active work: combined VS 2022/2026 + SSMS 22 VSIX — see `VSIX-UPGRADE-PLAN.md` and `TODOs.md`.
+Fork of `TaoK/PoorMansTSqlFormatter`; `origin` is the GitHub fork `MigVro/PoorMansTSqlFormatter`, `gitea` is a private Gitea mirror. Active work: combined VS 2022/2026 + SSMS 22 VSIX — see `VSIX-UPGRADE-PLAN.md` and `TODOs.md`.
 
 ## Build
 
@@ -58,4 +58,4 @@ UI strings come in `.resx` triples (neutral, `.es`, `.fr`); keep keys in sync ac
 
 `VersionBump.ps1` (run from the repo root): `.\VersionBump.ps1 [major|minor|patch|X.Y.Z]`. The source of truth is `version:` in `appveyor.yml`; the script rewrites `AssemblyInfo.cs`, `FormatterPackage.cs` (`InstalledProductRegistration`) and `source.extension.vsixmanifest` (`<Identity ... Version>`). It expects those files to be **UTF-8 with BOM and CRLF**, so preserve both when editing.
 
-Release packaging is manual (see the end of `BUILDING.txt`). `appveyor.yml` only builds and publishes the Notepad++ plugin artifacts.
+Release packaging is manual (see the end of `BUILDING.txt`). `appveyor.yml` only builds and publishes the Notepad++ plugin artifacts; GitHub Actions (`.github/workflows/vsix.yml`) builds the VSIX and attaches it to the GitHub release when a version tag (e.g. `1.6.17`) is pushed.
