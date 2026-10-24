@@ -1,9 +1,18 @@
 ﻿
 ## Poor Man's T-SQL Formatter
 
-This is a small free .Net 2.0 and JS library (with demo winforms program, web service,
-SSMS and Visual Studio Addin, Command-line utility, Notepad++ plugin, and WinMerge 
-plugin) for reformatting T-SQL code.
+This is a small free .NET Standard 2.0 and JS library (with demo winforms program, web
+service, Visual Studio 2022/2026 and SSMS 22 extension, Command-line utility, Notepad++
+plugin, and WinMerge plugin) for reformatting T-SQL code.
+
+### This fork
+
+* The library targets netstandard2.0 (SDK-style project); the other projects target
+    .NET Framework 4.7.2.
+* The old SSMS/Visual Studio add-ins and the VS 2019 VSPackage are replaced by a single
+    VSIX (`PoorMansTSqlFormatterVSPackage`) for Visual Studio 2022/2026 and SSMS 22.
+* Building needs Visual Studio 2022/2026 with the "Visual Studio extension development"
+    workload; command-line builds need `msbuild /restore`. See `BUILDING.txt`.
 
 
 
