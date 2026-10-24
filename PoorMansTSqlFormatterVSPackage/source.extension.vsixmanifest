@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="9dddad8b-2f6c-4754-878b-d745a9757336" Version="1.6.16" Language="en-US" Publisher="Miguel Vrolijk" />
+    <Identity Id="9dddad8b-2f6c-4754-878b-d745a9757336" Version="1.6.17" Language="en-US" Publisher="Miguel Vrolijk" />
     <DisplayName>Poor Man's T-Sql Formatter</DisplayName>
     <Description xml:space="preserve">A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2022/2026 and SSMS 22.</Description>
     <MoreInfo>http://architectshack.com/PoorMansTSqlFormatter.ashx</MoreInfo>
