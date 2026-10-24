@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: step 1 done (2026-10-24, uncommitted); next is step 0 + step 2. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: steps 1 (860a8c7) and 0 done (2026-10-24); next is step 2. Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
 
 ## Goal
 
@@ -57,6 +57,12 @@ Checked on the dev machine on 2026-10-24:
   - `source.extension.vsixmanifest`: `Identity Id`, `Publisher`, `DisplayName`, `Description`.
   - `FormatterPackage.cs`: `guidPoorMansTSqlFormatterSSMSPackagePkgString`, `guidPoorMansTSqlFormatterSSMSPackageCmdSetString`.
   - `FormatterPackage.vsct`: the matching `GuidSymbol` values in `<Symbols>`.
+- Result (2026-10-24):
+  - Manifest `Identity Id`: `9dddad8b-2f6c-4754-878b-d745a9757336`
+  - Package GUID: `3b6013e1-dacf-4460-9527-6e70ac0c8a50`
+  - Command set GUID: `8739db1c-8326-48a3-9c08-95a756c64c0e`
+  - `Publisher`: `Miguel Vrolijk`; `DisplayName`: `Poor Man's T-Sql Formatter`
+  - New key: `PoorMansTSqlFormatterVSPackage\Key.snk` (created ahead of the step 2 project).
 
 ### 1. Library to netstandard2.0, hosts to v4.7.2
 
