@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 //Please note, most of this code is duplicated across the SSMS Package, VS2015 extension, and VS2019 extension. 
 // Descriptions, GUIDs, Early SSMS support, and Async loading support differ.
 // (it would make sense to improve this at some point)
-namespace PoorMansTSqlFormatterSSMSPackage
+namespace PoorMansTSqlFormatterVSPackage
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]  //General VSPackage hookup, 
     [InstalledProductRegistration("#ProductName", "#ProductDescription", "1.6.16")]  //Package Medatada, references to VSPackage.resx resource keys

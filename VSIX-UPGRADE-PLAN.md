@@ -121,7 +121,8 @@ Result (2026-10-24):
 - `Microsoft.VisualStudio.SDK` 17.0.32112.339 (`ExcludeAssets="runtime"`), `Microsoft.VSSDK.BuildTools` 17.14.2142. The envdte/envdte80/stdole references come from the SDK package now.
 - Step 0 identity applied (manifest, `FormatterPackage.cs`, `.vsct`); `AssemblyInfo.cs` and `VSPackage.resx` names and descriptions updated.
 - Builds with `/restore` and produces a `.vsix` with the lib, PluginShared, SSMSLib and their es/fr satellites.
-- Left as is: the code namespace is still `PoorMansTSqlFormatterSSMSPackage`; CS1616 from the empty `AssemblyKeyFile("")` in `AssemblyInfo.cs` (inherited); the manifest still has the 2019 install targets until step 3; VSTHRD010 warnings until step 4.
+- Follow-up (approved): code namespace renamed to `PoorMansTSqlFormatterVSPackage`; empty `AssemblyKeyFile("")` removed (CS1616); referenced projects' `.pdb` files kept out of the VSIX by a csproj target (still copied to `bin`).
+- Left as is: the manifest still has the 2019 install targets until step 3; VSTHRD010 warnings until step 4.
 
 ### 3. Manifest
 
