@@ -32,7 +32,7 @@ From `$ARGUMENTS` or by asking, establish:
 pwsh -File .claude/skills/add-format-test/render.ps1 -InputFile <scratch input> -OutDir <scratch dir> [-Configs "<cfg1>","<cfg2>"] [-NoParsed]
 ```
 
-The script builds `PoorMansTSqlFormatterNetStandardLib` (same shared source as the tested .NET 2.0 lib) and writes `ParsedSql/<name>.txt` and `StandardFormatSql/<name>[(<cfg>)].txt` with BOM. It reproduces every existing expected output exactly.
+The script builds `PoorMansTSqlFormatterLib` (the library the tests reference) and writes `ParsedSql/<name>.txt` and `StandardFormatSql/<name>[(<cfg>)].txt` with BOM. It reproduces every existing expected output exactly.
 
 ## 4. Review — stop here
 
