@@ -18,7 +18,7 @@
 - [ ] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
 - [ ] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272).
 - [ ] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298).
-- [ ] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
+- [x] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
 - [ ] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth`.
 - [ ] (2026-10-24) Option: insert explicit `AS` for implicit table and column aliases. Check first whether the parser can reliably identify implicit aliases.
 - [ ] (2026-10-24) Opt-in option: add `;` wherever a statement may be terminated, including block `END` → `END;` (deprecated to omit; required before `WITH`/`MERGE`). Only apply when the parse has no errors. Never after `CASE ... END` or `GO`. Verify against SQL Server first: `END TRY;` before `BEGIN CATCH`, and `END;` before `ELSE`.

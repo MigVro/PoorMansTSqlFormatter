@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
@@ -305,7 +306,7 @@ namespace PoorMansTSqlFormatterCmdLine
             {
                 if (fsEntry is FileInfo)
                 {
-                    if (extensions.Contains(fsEntry.Extension))
+                    if (extensions.Contains(fsEntry.Extension, StringComparer.OrdinalIgnoreCase))
                     {
                         ReFormatFile((FileInfo)fsEntry, formattingManager, backups, allowParsingErrors, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered);
                         fileFound = true;
