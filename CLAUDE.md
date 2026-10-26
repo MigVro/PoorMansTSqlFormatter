@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Poor Man's T-SQL Formatter: a coarse, fault-tolerant T-SQL tokenizer/parser/formatter library (netstandard2.0, and JS via Bridge.NET), plus hosts that wrap it (WinForms demo, web demo, command-line, a combined VS 2022/2026 + SSMS 22 VSIX, Notepad++ and WinMerge plugins). Licensed AGPL v3; source files carry the AGPL header.
 
-Fork of `TaoK/PoorMansTSqlFormatter`; `origin` is the GitHub fork `MigVro/PoorMansTSqlFormatter`, `gitea` is a private Gitea mirror. Active work: combined VS 2022/2026 + SSMS 22 VSIX — see `VSIX-UPGRADE-PLAN.md` and `TODOs.md`.
+Fork of `TaoK/PoorMansTSqlFormatter`; `origin` is the GitHub fork `MigVro/PoorMansTSqlFormatter`, `gitea` is a private Gitea mirror. Open work is in `TODOs.md`; `VSIX-UPGRADE-PLAN.md` is the history of the combined VSIX upgrade.
 
 ## Build
 

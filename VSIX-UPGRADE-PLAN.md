@@ -1,6 +1,6 @@
 # Combined VSIX upgrade plan (VS 2022/2026 + SSMS 22)
 
-Status: all steps done (2026-10-24). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5.
+Status: all steps done (2026-10-24). Revised 2026-10-24: the netstandard2.0 library from Phase 2 is pulled forward so nothing needs .NET Framework 3.5. This file is a historical record; the current layout and build steps are in `CLAUDE.md`.
 
 ## Goal
 
@@ -21,8 +21,7 @@ The solution must build without the .NET Framework 3.5 Windows feature.
 - No `.nuspec` in the repo, so the library isn't published as a NuGet package from here. Dropping v2.0/3.5 affects only users of the DLL downloads.
 - `PoorMansTSqlFormatterLib/NetUtils.cs` (`ToXmlDoc`, `char.ToLowerInvariant`/`ToUpperInvariant` extensions) is still needed on netstandard2.0.
 - `SIMPLIFIEDFW` strips the COM attributes from `SqlFormattingManager` (used by the WinMerge VB6 plugin) and replaces the invariant string conversions. The netstandard2.0 build must not define it.
-- Build tooling: `msbuild` is not on PATH on the dev machine, and the `dotnet` SDK (10.0.402) builds only the SDK-style `PoorMansTSqlFormatterNetStandardLib`. Old-style csproj and VSSDK targets need Visual Studio's MSBuild.
-- `appveyor.yml` uses the VS 2017 image, publishes only the Notepad++ artifacts, and its GitHub deploy token is still a `!!TODO!!` placeholder.
+- Build tooling: `msbuild` is not on PATH on the dev machine. Old-style csproj and VSSDK targets need Visual Studio's MSBuild.
 - `VersionBump.ps1` finds files by name pattern (`AssemblyInfo.cs`, `FormatterPackage.cs`, `source.extension.vsixmanifest`), so the new project is picked up without script changes.
 - The formatter tests only run in the NUnit 2.5.10 GUI. They cover the library, not the hosts, so the VSIX needs manual testing (step 6).
 
@@ -201,5 +200,5 @@ Decisions needed before starting:
 Known work:
 - Tests: `Utils.GetTestContentFolder` resolves `..\..\Data` from the working directory, and that breaks with the `bin\<Config>\net10.0` output folder. The expected-output files must stay byte-identical.
 - `VersionBump.ps1`: SDK-style projects carry the version in the csproj, or in `Directory.Build.props`, rather than `AssemblyInfo.cs`, so the script needs updating.
-- `appveyor.yml` and `BUILDING.txt`: switch to `dotnet build`/`dotnet test` where possible.
+- `BUILDING.txt`: switch to `dotnet build`/`dotnet test` where possible.
 - Unverified: whether VSSDK supports SDK-style csproj for VSIX projects in 17.x; check when planning this phase.

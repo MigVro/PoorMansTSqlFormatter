@@ -29,7 +29,7 @@ The PoorMansTSqlFormatterVSPackage project produces a single 64-bit VSIX for Vis
    instance ("devenv /rootsuffix Exp"); don't additionally install it there with VSIXInstaller.
  - For SSMS 22, install it with VSIXInstaller.exe from the SSMS install folder, eg: VSIXInstaller.exe /instanceIds:<SSMS instance id> PoorMansTSqlFormatterVSPackage.vsix
 
-The WinMerge Plugin preparation is reasonably complex/painful, especially on a recent (Vista/Win7 x64) dev machine:
+The WinMerge Plugin preparation is reasonably complex/painful:
  - Open a command prompt as administrator
  - Navigate to the "PoorMansTSqlFormatterWinMergePlugin" folder in the command prompt
  - Run the "Initialize_GetLibAsCOM.bat" file; this should give you a warning but succeed
@@ -37,7 +37,7 @@ The WinMerge Plugin preparation is reasonably complex/painful, especially on a r
  - Check that the "PoorMansTSqlFormatterLib.tlb" reference does not show up as "MISSING" (if it does, review previous steps and/or remove and add the reference again)
  - In VB6, "Make" the "TSqlFormatWMPlugin.dll" file.
    - This will probably spit out an error like "Error accessing the system registry", which can be ignored, as the DLL was created (the error concerns the COM registrtion, which we will do later in the .Net setup project anyway)
- - In VS2008, "Rebuild" the WinMerge Plugin Setup project.
+ - In Visual Studio (with the Installer Projects extension), "Rebuild" the WinMerge Plugin Setup project.
 
 The packaging and release process is currently completely manual:
  - Bump the version with VersionBump.ps1 (updates AssemblyInfo, FormatterPackage.cs and the VSIX manifest), and the WinMerge setup project version by hand
