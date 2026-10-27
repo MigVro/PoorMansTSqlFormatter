@@ -2,7 +2,7 @@ $payload = [Console]::In.ReadToEnd() | ConvertFrom-Json
 $path = ($payload.tool_input.file_path -replace '\\', '/')
 if (-not $path) { exit 0 }
 
-$denied = @('/packages/', '/ExternalBuildTools/', '/PoorMansTSqlFormatterTest/References/', '.snk')
+$denied = @('/packages/', '/ExternalBuildTools/', '.snk')
 $ask = @('/PoorMansTSqlFormatterTest/Data/ParsedSql/', '/PoorMansTSqlFormatterTest/Data/StandardFormatSql/')
 
 function Write-Decision($decision, $reason) {
