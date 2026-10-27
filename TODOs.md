@@ -12,8 +12,8 @@
 - [ ] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112).
 - [ ] (2026-10-24) Parse Service Broker statements (`BEGIN DIALOG`, ...) and the `WAITFOR` container (upstream TaoK#179, TaoK#237).
 - [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).
-- [ ] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).
-- [ ] (2026-10-24) `[noformat]...[/noformat]` adds a line feed before `[/noformat]` on every format (upstream TaoK#292).
+- [x] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).
+- [x] (2026-10-24) `[noformat]...[/noformat]` adds a line feed before `[/noformat]` on every format (upstream TaoK#292).
 - [ ] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192).
 - [ ] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
 - [ ] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272).

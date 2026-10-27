@@ -463,6 +463,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                             state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                             state.WordSeparatorExpected = false;
                             state.BreakExpected = false;
+                            state.SourceBreakPending = false;
                         }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
@@ -479,6 +480,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                                 state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                             state.WordSeparatorExpected = false;
                             state.BreakExpected = false;
+                            state.SourceBreakPending = false;
                         }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
@@ -703,8 +705,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlStructureConstants.ENAME_BINARY_VALUE:
                     WhiteSpace_SeparateWords(state);
-                    state.AddOutputContent("0x");
-                    state.AddOutputContent(contentElement.TextValue.Substring(2).ToUpperInvariant());
+                    state.AddOutputContent("0x" + contentElement.TextValue.Substring(2).ToUpperInvariant());
                     state.WordSeparatorExpected = true;
                     break;
 
