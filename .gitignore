@@ -67,3 +67,4 @@ _ReSharper*/
 
 # JS library copied into the web demo by Postbuild_CopyJSLib.bat
 PoorMansTSqlFormatterWebDemo/JSLibReference/
+UninstallSSMS.cmd
