@@ -61,6 +61,7 @@ namespace PoorMansTSqlFormatterWebDemo
                 false,
 				true,
                 false,
+                false,
                 false
                 );
         }
@@ -93,7 +94,8 @@ namespace PoorMansTSqlFormatterWebDemo
             bool enableKeywordSubstitution,
 			bool expandInLists,
 			bool collapseBlankLines,
-			bool stripTrailingWhitespace
+			bool stripTrailingWhitespace,
+			bool trailingBooleanOperators
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -118,7 +120,8 @@ namespace PoorMansTSqlFormatterWebDemo
                         KeywordStandardization = keywordStandardization,
 						ExpandInLists = expandInLists,
 						CollapseBlankLines = collapseBlankLines,
-						StripTrailingWhitespace = stripTrailingWhitespace
+						StripTrailingWhitespace = stripTrailingWhitespace,
+						TrailingBooleanOperators = trailingBooleanOperators
                     });
 
             }

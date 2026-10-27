@@ -274,6 +274,18 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["StripTrailingWhitespace"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TrailingBooleanOperators {
+            get {
+                return ((bool)(this["TrailingBooleanOperators"]));
+            }
+            set {
+                this["TrailingBooleanOperators"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

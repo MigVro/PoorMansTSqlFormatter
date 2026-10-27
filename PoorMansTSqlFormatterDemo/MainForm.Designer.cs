@@ -69,6 +69,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_EnableKeywordStandardization = new System.Windows.Forms.CheckBox();
             this.chk_CollapseBlankLines = new System.Windows.Forms.CheckBox();
             this.chk_StripTrailingWhitespace = new System.Windows.Forms.CheckBox();
+            this.chk_TrailingBooleanOperators = new System.Windows.Forms.CheckBox();
             this.txt_ClauseBreaks = new System.Windows.Forms.TextBox();
             this.lbl_ClauseBreaks = new System.Windows.Forms.Label();
             this.txt_StatementBreaks = new System.Windows.Forms.TextBox();
@@ -287,6 +288,7 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_Options.Controls.Add(this.chk_ExpandCommaLists);
             this.grp_Options.Controls.Add(this.chk_CollapseBlankLines);
             this.grp_Options.Controls.Add(this.chk_StripTrailingWhitespace);
+            this.grp_Options.Controls.Add(this.chk_TrailingBooleanOperators);
             resources.ApplyResources(this.grp_Options, "grp_Options");
             this.grp_Options.Name = "grp_Options";
             this.grp_Options.TabStop = false;
@@ -327,6 +329,13 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_StripTrailingWhitespace.Name = "chk_StripTrailingWhitespace";
             this.chk_StripTrailingWhitespace.UseVisualStyleBackColor = true;
             this.chk_StripTrailingWhitespace.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+            //
+            // chk_TrailingBooleanOperators
+            //
+            resources.ApplyResources(this.chk_TrailingBooleanOperators, "chk_TrailingBooleanOperators");
+            this.chk_TrailingBooleanOperators.Name = "chk_TrailingBooleanOperators";
+            this.chk_TrailingBooleanOperators.UseVisualStyleBackColor = true;
+            this.chk_TrailingBooleanOperators.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
             // 
             // txt_ClauseBreaks
             // 
@@ -717,6 +726,7 @@ namespace PoorMansTSqlFormatterDemo
         private System.Windows.Forms.CheckBox chk_EnableKeywordStandardization;
         private System.Windows.Forms.CheckBox chk_CollapseBlankLines;
         private System.Windows.Forms.CheckBox chk_StripTrailingWhitespace;
+        private System.Windows.Forms.CheckBox chk_TrailingBooleanOperators;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;

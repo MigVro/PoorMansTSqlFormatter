@@ -107,6 +107,7 @@ namespace PoorMansTSqlFormatterDemo
             chk_EnableKeywordStandardization.Checked = Properties.Settings.Default.EnableKeywordStandardization;
             chk_CollapseBlankLines.Checked = Properties.Settings.Default.CollapseBlankLines;
             chk_StripTrailingWhitespace.Checked = Properties.Settings.Default.StripTrailingWhitespace;
+            chk_TrailingBooleanOperators.Checked = Properties.Settings.Default.TrailingBooleanOperators;
 
             radio_Formatting_Identity.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_IDENTITY, StringComparison.InvariantCultureIgnoreCase);
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
@@ -155,6 +156,7 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.EnableKeywordStandardization = chk_EnableKeywordStandardization.Checked;
             Properties.Settings.Default.CollapseBlankLines = chk_CollapseBlankLines.Checked;
             Properties.Settings.Default.StripTrailingWhitespace = chk_StripTrailingWhitespace.Checked;
+            Properties.Settings.Default.TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked;
 
             if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
             Properties.Settings.Default.IdentityColoring = chk_IdentityColoring.Checked;
@@ -192,6 +194,7 @@ namespace PoorMansTSqlFormatterDemo
 						KeywordStandardization = chk_EnableKeywordStandardization.Checked,
 						CollapseBlankLines = chk_CollapseBlankLines.Checked,
 						StripTrailingWhitespace = chk_StripTrailingWhitespace.Checked,
+						TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked,
 						NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
 						NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
 					});

@@ -159,6 +159,9 @@
   <data name="chk_StripTrailingWhitespace.Text" xml:space="preserve">
     <value>Quitar Espacios al Final de L&#237;nea</value>
   </data>
+  <data name="chk_TrailingBooleanOperators.Text" xml:space="preserve">
+    <value>AND/OR al Final de L&#237;nea</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Saltos de linea por Cláusula:</value>
   </data>

@@ -195,6 +195,7 @@ coloring=true
 keywordStandardization=true
 collapseBlankLines=false
 stripTrailingWhitespace=false
+trailingBooleanOperators=false
 randomizeColor=false
 randomizeLineLengths=false
 randomizeKeywordCase=false
