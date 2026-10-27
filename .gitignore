@@ -63,7 +63,7 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
-.vs/*
+.vs/
 
 # JS library copied into the web demo by Postbuild_CopyJSLib.bat
 PoorMansTSqlFormatterWebDemo/JSLibReference/
