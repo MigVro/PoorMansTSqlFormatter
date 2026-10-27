@@ -153,6 +153,12 @@
   <data name="chk_StandardizeKeywords.Text" xml:space="preserve">
     <value>Normalisation de Mots-Clé</value>
   </data>
+  <data name="chk_CollapseBlankLines.Text" xml:space="preserve">
+    <value>R&#233;duire les Lignes Vides</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Text" xml:space="preserve">
+    <value>Supprimer les Espaces en Fin de Ligne</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Fins de Ligne par Clause:</value>
   </data>

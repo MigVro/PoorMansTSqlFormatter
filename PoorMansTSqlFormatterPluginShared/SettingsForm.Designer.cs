@@ -61,6 +61,8 @@ namespace PoorMansTSqlFormatterPluginShared
             this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
             this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
             this.chk_StandardizeKeywords = new System.Windows.Forms.CheckBox();
+            this.chk_CollapseBlankLines = new System.Windows.Forms.CheckBox();
+            this.chk_StripTrailingWhitespace = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -109,6 +111,8 @@ namespace PoorMansTSqlFormatterPluginShared
             this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
             this.flowLayoutPanel1.Controls.Add(this.chk_BreakJoinOnSections);
             this.flowLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
+            this.flowLayoutPanel1.Controls.Add(this.chk_CollapseBlankLines);
+            this.flowLayoutPanel1.Controls.Add(this.chk_StripTrailingWhitespace);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
             // chk_ExpandCommaLists
@@ -170,6 +174,18 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.chk_StandardizeKeywords, "chk_StandardizeKeywords");
             this.chk_StandardizeKeywords.Name = "chk_StandardizeKeywords";
             this.chk_StandardizeKeywords.UseVisualStyleBackColor = true;
+            // 
+            // chk_CollapseBlankLines
+            // 
+            resources.ApplyResources(this.chk_CollapseBlankLines, "chk_CollapseBlankLines");
+            this.chk_CollapseBlankLines.Name = "chk_CollapseBlankLines";
+            this.chk_CollapseBlankLines.UseVisualStyleBackColor = true;
+            // 
+            // chk_StripTrailingWhitespace
+            // 
+            resources.ApplyResources(this.chk_StripTrailingWhitespace, "chk_StripTrailingWhitespace");
+            this.chk_StripTrailingWhitespace.Name = "chk_StripTrailingWhitespace";
+            this.chk_StripTrailingWhitespace.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -324,6 +340,8 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.Label lbl_MaxLineWidth;
         private System.Windows.Forms.CheckBox chk_SpaceAfterExpandedComma;
         private System.Windows.Forms.CheckBox chk_StandardizeKeywords;
+        private System.Windows.Forms.CheckBox chk_CollapseBlankLines;
+        private System.Windows.Forms.CheckBox chk_StripTrailingWhitespace;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;

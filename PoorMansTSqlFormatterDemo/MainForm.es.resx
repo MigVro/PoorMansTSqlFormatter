@@ -133,6 +133,12 @@
   <data name="chk_EnableKeywordStandardization.Text" xml:space="preserve">
     <value>Activar Estandarización de Palabras Clave</value>
   </data>
+  <data name="chk_CollapseBlankLines.Text" xml:space="preserve">
+    <value>Contraer Líneas en Blanco</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Text" xml:space="preserve">
+    <value>Quitar Espacios al Final de Línea</value>
+  </data>
   <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
     <value>Expandir Condiciones BETWEEN</value>
   </data>

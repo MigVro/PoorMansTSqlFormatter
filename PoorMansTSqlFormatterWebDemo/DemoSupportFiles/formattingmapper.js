@@ -19,6 +19,8 @@ var PageFormattingMapper = function() {
         stdOptions.UppercaseKeywords = options.uppercaseKeywords == "true";
         stdOptions.HTMLColoring = enableHtml && options.coloring == "true";
         stdOptions.KeywordStandardization = options.keywordStandardization == "true";
+        stdOptions.CollapseBlankLines = options.collapseBlankLines == "true";
+        stdOptions.StripTrailingWhitespace = options.stripTrailingWhitespace == "true";
         return new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.$ctor1(stdOptions);
       case 'identity':
         return new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(enableHtml);

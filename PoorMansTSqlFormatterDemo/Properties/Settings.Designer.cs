@@ -253,6 +253,30 @@ namespace PoorMansTSqlFormatterDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CollapseBlankLines {
+            get {
+                return ((bool)(this["CollapseBlankLines"]));
+            }
+            set {
+                this["CollapseBlankLines"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StripTrailingWhitespace {
+            get {
+                return ((bool)(this["StripTrailingWhitespace"]));
+            }
+            set {
+                this["StripTrailingWhitespace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EN")]
         public string UILanguage {
             get {

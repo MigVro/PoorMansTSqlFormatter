@@ -486,6 +486,66 @@
   <data name="&gt;&gt;chk_StandardizeKeywords.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="chk_CollapseBlankLines.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_CollapseBlankLines.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 211</value>
+  </data>
+  <data name="chk_CollapseBlankLines.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chk_CollapseBlankLines.Size" type="System.Drawing.Size, System.Drawing">
+    <value>247, 29</value>
+  </data>
+  <data name="chk_CollapseBlankLines.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="chk_CollapseBlankLines.Text" xml:space="preserve">
+    <value>Collapse Blank Lines</value>
+  </data>
+  <data name="&gt;&gt;chk_CollapseBlankLines.Name" xml:space="preserve">
+    <value>chk_CollapseBlankLines</value>
+  </data>
+  <data name="&gt;&gt;chk_CollapseBlankLines.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_CollapseBlankLines.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_CollapseBlankLines.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 211</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 29</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="chk_StripTrailingWhitespace.Text" xml:space="preserve">
+    <value>Strip Trailing Whitespace</value>
+  </data>
+  <data name="&gt;&gt;chk_StripTrailingWhitespace.Name" xml:space="preserve">
+    <value>chk_StripTrailingWhitespace</value>
+  </data>
+  <data name="&gt;&gt;chk_StripTrailingWhitespace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_StripTrailingWhitespace.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_StripTrailingWhitespace.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
   <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>24, 320</value>
   </data>
