@@ -29,7 +29,7 @@
 - [x] (2026-10-27) Wire `StripTrailingWhitespace` and `CollapseBlankLines` into the hosts: SettingsForm (+ es/fr resx), Demo MainForm/Settings, CmdLine (`/cbl`, `/stw`), web demo JS mapper.
 - [ ] (2026-10-27) Demo `MainForm`: `chk_EnableKeywordStandardization` (y=673) and the two new whitespace checkboxes (y=717, 761) are not visible; the options group is shorter than its content. Fix the layout in the VS designer.
 - [ ] (2026-10-27) Demo `MainForm`: the Options menu check marks (Display Token List/Parsed SQL/Formatting Options Area) render as oversized blue boxes; likely the same high-DPI scaling problem as the layout item above. Not verified against the committed version.
-- [ ] (2026-10-27) Web demo `FormatterService.asmx.cs`: add `collapseBlankLines` / `stripTrailingWhitespace` parameters (breaking signature change, needs approval).
+- [x] (2026-10-27) Web demo `FormatterService.asmx.cs`: add `collapseBlankLines` / `stripTrailingWhitespace` parameters (breaking signature change, needs approval).
 - [ ] (2026-10-27) Opt-in option: write explicit join types (`JOIN` → `INNER JOIN`, `LEFT JOIN` → `LEFT OUTER JOIN`, same for `RIGHT`/`FULL`). Token-level rewrite; never touch `CROSS`/`APPLY`.
 - [ ] (2026-10-27) Option: trailing `AND`/`OR` placement (operator at end of line) as an alternative to the current leading placement; today only `ExpandBooleanExpressions` controls this.
 - [ ] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.

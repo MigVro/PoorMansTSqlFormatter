@@ -59,7 +59,9 @@ namespace PoorMansTSqlFormatterWebDemo
                 false,
                 false,
                 false,
-				true
+				true,
+                false,
+                false
                 );
         }
 
@@ -89,7 +91,9 @@ namespace PoorMansTSqlFormatterWebDemo
             bool randomizeKeywordCase,
             bool preserveComments,
             bool enableKeywordSubstitution,
-			bool expandInLists
+			bool expandInLists,
+			bool collapseBlankLines,
+			bool stripTrailingWhitespace
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -112,7 +116,9 @@ namespace PoorMansTSqlFormatterWebDemo
                         UppercaseKeywords = uppercaseKeywords,
                         HTMLColoring = coloring,
                         KeywordStandardization = keywordStandardization,
-						ExpandInLists = expandInLists
+						ExpandInLists = expandInLists,
+						CollapseBlankLines = collapseBlankLines,
+						StripTrailingWhitespace = stripTrailingWhitespace
                     });
 
             }
