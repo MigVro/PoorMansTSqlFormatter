@@ -76,6 +76,7 @@
     <Content Include="Data\InputSql\28_BadNestingDontCrash.txt" />
     <Content Include="Data\InputSql\29_Special_Regions.txt" />
     <Content Include="Data\InputSql\30_WhitespaceCleanup.txt" />
+    <Content Include="Data\InputSql\31_DropIfExists.txt" />
     <Content Include="Data\ParsedSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\ParsedSql\03_SimpleSelect_MS.txt" />
     <Content Include="Data\ParsedSql\04_MiscProceduralSample_Unstructured.txt" />
@@ -100,6 +101,7 @@
     <Content Include="Data\ParsedSql\27_OtherSqlFlavourSupport.txt" />
     <Content Include="Data\ParsedSql\29_Special_Regions.txt" />
     <Content Include="Data\ParsedSql\30_WhitespaceCleanup.txt" />
+    <Content Include="Data\ParsedSql\31_DropIfExists.txt" />
     <Content Include="Data\StandardFormatSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\StandardFormatSql\03_SimpleSelect_MS.txt" />
     <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured.txt" />
@@ -137,6 +139,7 @@
     <Content Include="Data\StandardFormatSql\30_WhitespaceCleanup%28MaxLineWidth=30,NewStatementLineBreaks=3,StripTrailingWhitespace=true%29.txt" />
     <Content Include="Data\StandardFormatSql\30_WhitespaceCleanup%28MaxLineWidth=30,NewStatementLineBreaks=3,StripTrailingWhitespace=true,CollapseBlankLines=true%29.txt" />
     <Content Include="Data\StandardFormatSql\30_WhitespaceCleanup.txt" />
+    <Content Include="Data\StandardFormatSql\31_DropIfExists.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

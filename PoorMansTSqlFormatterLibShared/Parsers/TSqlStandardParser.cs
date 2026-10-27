@@ -762,6 +762,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value, whileContainerOpen);
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
                         }
+                        else if (IsIfExistsQualifier(tokenList, significantTokensString, significantTokenPositions))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
                         else if (significantTokensString.StartsWith("IF "))
                         {
                             sqlTree.ConsiderStartingNewStatement();
@@ -1383,6 +1387,26 @@ namespace PoorMansTSqlFormatterLib.Parsers
             }
 
             return phrase;
+        }
+
+        private static bool IsIfExistsQualifier(ITokenList tokenList, string significantTokensString, List<int> significantTokenPositions)
+        {
+            //"DROP ... IF EXISTS name" vs. the statement "IF EXISTS (subquery)": only the latter has a parenthesis next
+            if (!significantTokensString.StartsWith("IF EXISTS "))
+                return false;
+
+            int nextID = significantTokenPositions[1] + 1;
+            while (nextID < tokenList.Count
+                && (tokenList[nextID].Type == SqlTokenType.WhiteSpace
+                    || tokenList[nextID].Type == SqlTokenType.SingleLineComment
+                    || tokenList[nextID].Type == SqlTokenType.MultiLineComment
+                    )
+                )
+            {
+                nextID++;
+            }
+
+            return nextID < tokenList.Count && tokenList[nextID].Type != SqlTokenType.OpenParens;
         }
 
         private List<int> GetSignificantTokenPositions(ITokenList tokenList, int tokenID, int searchDistance)
