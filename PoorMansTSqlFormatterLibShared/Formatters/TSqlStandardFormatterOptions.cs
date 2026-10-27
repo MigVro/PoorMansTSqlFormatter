@@ -47,6 +47,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			ExpandInLists = true;
 			NewClauseLineBreaks = 1;
 			NewStatementLineBreaks = 2;
+			StripTrailingWhitespace = false;
+			CollapseBlankLines = false;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -82,6 +84,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "ExpandInLists") ExpandInLists = Convert.ToBoolean(value);
 				else if (key == "NewClauseLineBreaks") NewClauseLineBreaks = Convert.ToInt32(value);
 				else if (key == "NewStatementLineBreaks") NewStatementLineBreaks = Convert.ToInt32(value);
+				else if (key == "StripTrailingWhitespace") StripTrailingWhitespace = Convert.ToBoolean(value);
+				else if (key == "CollapseBlankLines") CollapseBlankLines = Convert.ToBoolean(value);
 				else throw new ArgumentException("Unknown option: " + key);
             }
 
@@ -110,7 +114,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			if (ExpandInLists != _defaultOptions.ExpandInLists) overrides.Add("ExpandInLists", ExpandInLists.ToString());
 			if (NewClauseLineBreaks != _defaultOptions.NewClauseLineBreaks) overrides.Add("NewClauseLineBreaks", NewClauseLineBreaks.ToString());
 			if (NewStatementLineBreaks != _defaultOptions.NewStatementLineBreaks) overrides.Add("NewStatementLineBreaks", NewStatementLineBreaks.ToString());
-    
+			if (StripTrailingWhitespace != _defaultOptions.StripTrailingWhitespace) overrides.Add("StripTrailingWhitespace", StripTrailingWhitespace.ToString());
+			if (CollapseBlankLines != _defaultOptions.CollapseBlankLines) overrides.Add("CollapseBlankLines", CollapseBlankLines.ToString());
+
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
            
@@ -144,6 +150,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 		public bool ExpandInLists { get; set; }
 		public int NewClauseLineBreaks { get; set; }
 		public int NewStatementLineBreaks { get; set; }
+		public bool StripTrailingWhitespace { get; set; }
+		public bool CollapseBlankLines { get; set; }
 
     }
 }

@@ -1,0 +1,19 @@
+﻿IF 1 = 1
+BEGIN
+	SELECT
+		'literal keeps trailing space 
+
+
+
+and its blank lines'
+		AS Literal
+		,ColumnOne
+		,ColumnTwo
+	FROM dbo.SomeTable
+	WHERE ColumnOne = 1;
+
+
+	UPDATE dbo.SomeTable
+	SET ColumnOne = 2
+		-- comment keeps trailing space
+END;

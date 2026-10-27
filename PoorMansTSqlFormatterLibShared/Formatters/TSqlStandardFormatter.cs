@@ -131,7 +131,52 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 else
                     state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
             }
-            return state.DumpOutput();
+            return CleanWhiteSpace(state.DumpOutput());
+        }
+
+        private string CleanWhiteSpace(string output)
+        {
+            if (Options.HTMLColoring || !(Options.StripTrailingWhitespace || Options.CollapseBlankLines))
+                return output;
+
+            ITokenList tokens = new Tokenizers.TSqlStandardTokenizer().TokenizeSQL(output);
+            IToken previous = null;
+            foreach (IToken token in tokens)
+            {
+                CleanWhiteSpaceToken(token, previous);
+                previous = token;
+            }
+
+            //the identity formatter re-emits every token exactly, including comment/string delimiters
+            return new TSqlIdentityFormatter { ErrorOutputPrefix = "" }.FormatSQLTokens(tokens);
+        }
+
+        private static bool IsSingleLineComment(IToken token)
+        {
+            return token != null
+                && (token.Type == SqlTokenType.SingleLineComment || token.Type == SqlTokenType.SingleLineCommentCStyle);
+        }
+
+        private void CleanWhiteSpaceToken(IToken token, IToken previous)
+        {
+            if (IsSingleLineComment(token) && Options.StripTrailingWhitespace)
+            {
+                token.Value = Regex.Replace(token.Value, @"[ \t]+(?=[\r\n]|$)", "");
+                return;
+            }
+
+            if (token.Type != SqlTokenType.WhiteSpace)
+                return;
+
+            if (Options.StripTrailingWhitespace)
+                token.Value = Regex.Replace(token.Value, @"[ \t]+(?=[\r\n])", "");
+
+            if (Options.CollapseBlankLines)
+            {
+                //a single-line comment token already ends with its own line break
+                int keptLineBreaks = IsSingleLineComment(previous) ? 1 : 2;
+                token.Value = Regex.Replace(token.Value, @"((?:[ \t]*(?:\r\n|\n|\r)){" + keptLineBreaks + @"})(?:[ \t]*(?:\r\n|\n|\r))+", "$1");
+            }
         }
 
         private void ProcessSqlNodeList(IEnumerable<Node> rootList, TSqlStandardFormattingState state)

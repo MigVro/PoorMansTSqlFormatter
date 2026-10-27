@@ -1,0 +1,10 @@
+﻿<SqlRoot><SqlStatement><Clause><IfStatement><ContainerOpen><OtherKeyword>IF</OtherKeyword></ContainerOpen><BooleanExpression><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><EqualsSign>=</EqualsSign><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+</WhiteSpace></BooleanExpression><ContainerSingleStatementBody><SqlStatement><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><String>literal keeps trailing space 
+
+
+
+and its blank lines</String><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Literal</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ColumnOne</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ColumnTwo</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>SomeTable</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ColumnOne</Other><WhiteSpace> </WhiteSpace><EqualsSign>=</EqualsSign><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Semicolon>;</Semicolon><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>UPDATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>SomeTable</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ColumnOne</Other><WhiteSpace> </WhiteSpace><EqualsSign>=</EqualsSign><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace><SingleLineComment> comment keeps trailing space   
+</SingleLineComment></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><Semicolon>;</Semicolon><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerSingleStatementBody></IfStatement></Clause></SqlStatement></SqlRoot>

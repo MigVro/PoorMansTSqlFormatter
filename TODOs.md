@@ -24,8 +24,9 @@
 - [ ] (2026-10-24) Opt-in option: add `;` wherever a statement may be terminated, including block `END` → `END;` (deprecated to omit; required before `WITH`/`MERGE`). Only apply when the parse has no errors. Never after `CASE ... END` or `GO`. Verify against SQL Server first: `END TRY;` before `BEGIN CATCH`, and `END;` before `ELSE`.
 - [ ] (2026-10-24) Option: operator/name standardization — `!=` → `<>`, consistent casing of built-in functions and data types. Check what `UppercaseKeywords` already covers; overlaps TaoK#272.
 - [ ] (2026-10-24) Option: vertical alignment of column names/types/nullability in `CREATE TABLE` and `DECLARE` blocks (needs block measurement before output).
-- [ ] (2026-10-27) Option: collapse runs of blank lines to a single blank line (whitespace only; check how it interacts with `NewStatementLineBreaks`).
-- [ ] (2026-10-27) Option: strip trailing whitespace from every output line.
+- [x] (2026-10-27) Option: collapse runs of blank lines to a single blank line (`CollapseBlankLines`; library only).
+- [x] (2026-10-27) Option: strip trailing whitespace from every output line (`StripTrailingWhitespace`; library only; string literal and block comment content is left alone).
+- [ ] (2026-10-27) Wire `StripTrailingWhitespace` and `CollapseBlankLines` into the hosts: SettingsForm (+ es/fr resx), Demo MainForm/Settings, CmdLine, web demo (formattingmapper.js, FormatterService).
 - [ ] (2026-10-27) Opt-in option: write explicit join types (`JOIN` → `INNER JOIN`, `LEFT JOIN` → `LEFT OUTER JOIN`, same for `RIGHT`/`FULL`). Token-level rewrite; never touch `CROSS`/`APPLY`.
 - [ ] (2026-10-27) Option: trailing `AND`/`OR` placement (operator at end of line) as an alternative to the current leading placement; today only `ExpandBooleanExpressions` controls this.
 - [ ] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.
