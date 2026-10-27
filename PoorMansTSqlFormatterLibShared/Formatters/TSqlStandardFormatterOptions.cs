@@ -110,7 +110,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			if (ExpandInLists != _defaultOptions.ExpandInLists) overrides.Add("ExpandInLists", ExpandInLists.ToString());
 			if (NewClauseLineBreaks != _defaultOptions.NewClauseLineBreaks) overrides.Add("NewClauseLineBreaks", NewClauseLineBreaks.ToString());
 			if (NewStatementLineBreaks != _defaultOptions.NewStatementLineBreaks) overrides.Add("NewStatementLineBreaks", NewStatementLineBreaks.ToString());
-			NewStatementLineBreaks = 2;
     
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
