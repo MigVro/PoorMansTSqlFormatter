@@ -1735,7 +1735,7 @@
     <value>6</value>
   </data>
   <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 1288</value>
+    <value>512, 1340</value>
   </data>
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1753,7 +1753,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,80,Percent,100" /&gt;&lt;Rows Styles="Absolute,48,Absolute,680,Absolute,48,Absolute,95,Absolute,48,Absolute,280" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,80,Percent,100" /&gt;&lt;Rows Styles="Absolute,48,Absolute,810,Absolute,48,Absolute,95,Absolute,48,Absolute,280" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1771,7 +1771,7 @@
     <value>6, 6, 6, 6</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>524, 1250</value>
+    <value>524, 1302</value>
   </data>
   <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
