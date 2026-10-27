@@ -643,6 +643,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlStructureConstants.ENAME_PERIOD:
+                    state.WordSeparatorExpected = false;
+                    WhiteSpace_BreakAsExpected(state);
+                    state.NoWrapNext = true;
+                    state.AddOutputContent(FormatOperator(contentElement.TextValue), SqlHtmlConstants.CLASS_OPERATOR);
+                    state.NoWrapNext = true;
+                    break;
+
                 case SqlStructureConstants.ENAME_SEMICOLON:
                 case SqlStructureConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                     //always ignores requested word spacing, and doesn't request a following space either.
@@ -885,6 +892,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public bool WordSeparatorExpected { get; set; }
             public bool SourceBreakPending { get; set; }
             public int AdditionalBreaksExpected { get; set; }
+            public bool NoWrapNext { get; set; }
 
             public bool UnIndentInitialBreak { get; set; }
             public int IndentLevel { get; private set; }
@@ -911,8 +919,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             public override void AddOutputContent(string content, string htmlClassName)
             {
-                if (CurrentLineHasContent && (content.Length + CurrentLineLength > MaxLineWidth))
+                if (!NoWrapNext && CurrentLineHasContent && (content.Length + CurrentLineLength > MaxLineWidth))
                     WhiteSpace_BreakToNextLine();
+                NoWrapNext = false;
 
                 if (SpecialRegionActive == null)
                     base.AddOutputContent(content, htmlClassName);

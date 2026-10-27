@@ -1,0 +1,4 @@
+﻿SELECT c
+	,a.b.SomeColumnName
+FROM dbo.SomeTable
+WHERE x = [dbo].[SomeTable].[SomeColumnName]

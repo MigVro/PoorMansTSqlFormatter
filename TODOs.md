@@ -32,7 +32,7 @@
 - [x] (2026-10-27) Web demo `FormatterService.asmx.cs`: add `collapseBlankLines` / `stripTrailingWhitespace` parameters (breaking signature change, needs approval).
 - [ ] (2026-10-27) Opt-in option: write explicit join types (`JOIN` → `INNER JOIN`, `LEFT JOIN` → `LEFT OUTER JOIN`, same for `RIGHT`/`FULL`). Token-level rewrite; never touch `CROSS`/`APPLY`.
 - [x] (2026-10-27) Option: trailing `AND`/`OR` placement (`TrailingBooleanOperators`; wired into SettingsForm, Demo, CmdLine `/tbo`, web demo).
-- [ ] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.
+- [x] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.
 - [ ] (2026-10-24) VSIX: shared settings from a solution/repo file (`.sqlformat` or `.editorconfig`) so a team formats consistently; currently settings are per user.
 - [ ] (2026-10-24) VSIX: opt-in format-on-save for `.sql` files.
 - [ ] (2026-10-24) VSIX: report parse errors in an info bar or the Output pane instead of injecting the warning banner; option to skip formatting when errors occur.
