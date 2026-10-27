@@ -23,7 +23,7 @@ The solution must build without the .NET Framework 3.5 Windows feature.
 - `SIMPLIFIEDFW` strips the COM attributes from `SqlFormattingManager` (used by the WinMerge VB6 plugin) and replaces the invariant string conversions. The netstandard2.0 build must not define it.
 - Build tooling: `msbuild` is not on PATH on the dev machine. Old-style csproj and VSSDK targets need Visual Studio's MSBuild.
 - `VersionBump.ps1` finds files by name pattern (`AssemblyInfo.cs`, `FormatterPackage.cs`, `source.extension.vsixmanifest`), so the new project is picked up without script changes.
-- The formatter tests only run in the NUnit 2.5.10 GUI. They cover the library, not the hosts, so the VSIX needs manual testing (step 6).
+- The formatter tests only run in the NUnit 2.5.10 GUI (now NUnit 3 console runner). They cover the library, not the hosts, so the VSIX needs manual testing (step 6).
 
 ## Decisions
 

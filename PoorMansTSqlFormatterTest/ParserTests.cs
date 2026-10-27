@@ -42,7 +42,7 @@ namespace PoorMansTSqlFormatterTests
             _parser = new TSqlStandardParser();
         }
 
-        public IEnumerable<string> GetParsedSqlFileNames()
+        public static IEnumerable<string> GetParsedSqlFileNames()
         {
             return Utils.FolderFileNameIterator(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER));
         }

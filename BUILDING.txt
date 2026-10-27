@@ -10,7 +10,7 @@ Some dependencies are internal/bundled:
  - fart.exe, a GPLv2 file search-replace tool used for pre-build "ComponentResourceManager" replacement
  - ILRepack.exe, an Apache 2.0 assembly-merging tool for post-build merging into a single assembly for command-line and demo projects
  - NDesk.Options, a command-line-option-parsing library released under a MIT/X11-style license
- - NUnit (including UI runner assemblies for plugin-free debugging) for the tests project
+ - NUnit 3 and NUnit.ConsoleRunner (NuGet, restored at build time) for the tests project
  - Bridge.Net, a C#-to-JS transpiler, released under the Apache license
  - Microsoft.VisualStudio.SDK and Microsoft.VSSDK.BuildTools (NuGet, restored at build time) for Visual Studio Extensibility Package compilation
 

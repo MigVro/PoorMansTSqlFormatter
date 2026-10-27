@@ -85,7 +85,7 @@ namespace PoorMansTSqlFormatterTests
             }
         }
 
-        public IEnumerable<string> GetStandardFormatSqlFileNames()
+        public static IEnumerable<string> GetStandardFormatSqlFileNames()
         {
             return Utils.FolderFileNameIterator(Utils.GetTestContentFolder("StandardFormatSql"));
         }

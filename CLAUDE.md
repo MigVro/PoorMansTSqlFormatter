@@ -21,11 +21,11 @@ msbuild PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj /restore /p:Con
 
 - Solution platforms: `x86`, `x64`, `PureDotNet`. `x86`/`x64` exist for the Notepad++ plugin (UnmanagedExports).
 - The WinMerge setup project (VS Installer Projects) and the WinMerge VB6 COM plugin need extra tooling and manual steps — see `BUILDING.txt`.
-- `ExternalBuildTools/` (fart.exe, ILRepack), `packages/`, and `PoorMansTSqlFormatterTest/References/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
+- `ExternalBuildTools/` (fart.exe, ILRepack), and `packages/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
 
 ## Tests
 
-`PoorMansTSqlFormatterTests` is an **Exe** that launches the vendored NUnit 2.5.10 GUI runner on itself (`Program.cs`); there is no console runner in the repo. Build it, run `PoorMansTSqlFormatterTest\bin\<Config>\PoorMansTSqlFormatterTests.exe`, and select a single test or fixture in the GUI.
+`PoorMansTSqlFormatterTests` is a NUnit 3 library (`PackageReference` to `NUnit` and `NUnit.ConsoleRunner`). Build it with `/restore`, then from `PoorMansTSqlFormatterTest\bin\<Config>` run `%USERPROFILE%\.nuget\packages\nunit.consolerunner\3.17.0\tools\nunit3-console.exe PoorMansTSqlFormatterTests.dll`; filter with `--where "test =~ Parser"`.
 
 Tests are data-driven from `PoorMansTSqlFormatterTest/Data/`:
 - `InputSql/` — source SQL; each file becomes a `TestCaseSource` case.
