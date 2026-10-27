@@ -448,9 +448,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlStructureConstants.ENAME_AND_OPERATOR:
                 case SqlStructureConstants.ENAME_OR_OPERATOR:
-                    if (Options.ExpandBooleanExpressions)
+                    if (Options.ExpandBooleanExpressions && !Options.TrailingBooleanOperators)
                         state.BreakExpected = true;
                     ProcessSqlNode(contentElement.ChildByName(SqlStructureConstants.ENAME_OTHERKEYWORD), state);
+                    if (Options.ExpandBooleanExpressions && Options.TrailingBooleanOperators)
+                        state.BreakExpected = true;
                     break;
 
                 case SqlStructureConstants.ENAME_COMMENT_MULTILINE:

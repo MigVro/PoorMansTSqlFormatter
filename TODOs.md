@@ -31,7 +31,7 @@
 - [x] (2026-10-27) Demo `MainForm`: the Options menu check marks (Display Token List/Parsed SQL/Formatting Options Area) render as oversized blue boxes; likely the same high-DPI scaling problem as the layout item above. Not verified against the committed version.
 - [x] (2026-10-27) Web demo `FormatterService.asmx.cs`: add `collapseBlankLines` / `stripTrailingWhitespace` parameters (breaking signature change, needs approval).
 - [ ] (2026-10-27) Opt-in option: write explicit join types (`JOIN` → `INNER JOIN`, `LEFT JOIN` → `LEFT OUTER JOIN`, same for `RIGHT`/`FULL`). Token-level rewrite; never touch `CROSS`/`APPLY`.
-- [ ] (2026-10-27) Option: trailing `AND`/`OR` placement (operator at end of line) as an alternative to the current leading placement; today only `ExpandBooleanExpressions` controls this.
+- [x] (2026-10-27) Option: trailing `AND`/`OR` placement (`TrailingBooleanOperators`; library only, hosts not wired yet).
 - [ ] (2026-10-24) Never split multi-part names (`dbo.SomeTable`, `s.Column`) across lines when wrapping at `MaxLineWidth` (default behaviour, no option). Wrapping is per token in `TSqlStandardFormattingState.AddOutputContent`, so it can break around the `.`.
 - [ ] (2026-10-24) VSIX: shared settings from a solution/repo file (`.sqlformat` or `.editorconfig`) so a team formats consistently; currently settings are per user.
 - [ ] (2026-10-24) VSIX: opt-in format-on-save for `.sql` files.
