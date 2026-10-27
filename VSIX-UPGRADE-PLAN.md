@@ -38,8 +38,7 @@ The solution must build without the .NET Framework 3.5 Windows feature.
 
 Checked on the dev machine on 2026-10-24:
 
-- [x] VS 2022 Community 17.14 and VS 2026 Community 18.11. MSBuild: `C:\dev\vs\2026\Community\MSBuild\Current\Bin\MSBuild.exe`.
-- [x] `sn.exe` (Windows SDK, NETFX 4.8 Tools).
+- [x] VS 2022 Community 17.14 and VS 2026 Community 18.11.- [x] `sn.exe` (Windows SDK, NETFX 4.8 Tools).
 - [x] **Visual Studio extension development** workload: installed in VS 2022 and VS 2026 (`VSSDK` folder present).
 - [x] SSMS 22.11 (`C:\dev\ssms\22\Release`).
 - SSMS 21: not installed; the SSMS range is narrowed to `[22.0,23.0)`.

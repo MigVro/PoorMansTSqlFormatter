@@ -10,7 +10,7 @@ Fork of `TaoK/PoorMansTSqlFormatter`; `origin` is the GitHub fork `MigVro/PoorMa
 
 ## Build
 
-`msbuild` is not on PATH; use Visual Studio's MSBuild (`C:\dev\vs\2026\Community\MSBuild\Current\Bin\MSBuild.exe`). `/restore` is required (SDK-style library, `PackageReference` in SSMSLib and the VSIX).
+`msbuild` is not on PATH; use Visual Studio's MSBuild. `/restore` is required (SDK-style library, `PackageReference` in SSMSLib and the VSIX).
 
 ```
 msbuild PoorMansTSqlFormatter.sln /restore /m /p:Configuration=Debug /p:Platform=PureDotNet
