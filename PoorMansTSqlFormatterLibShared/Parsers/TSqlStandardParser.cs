@@ -1503,6 +1503,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("SET")
                     || uppercaseValue.Equals("SETUSER")
                     || uppercaseValue.Equals("SHUTDOWN")
+                    || uppercaseValue.Equals("THROW")
                     || uppercaseValue.Equals("TRUNCATE")
                     || uppercaseValue.Equals("UPDATE")
                     || uppercaseValue.Equals("USE")
@@ -2160,6 +2161,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("TEXTSIZE", KeywordType.OtherKeyword);
             KeywordList.Add("TEXTVALID", KeywordType.FunctionKeyword);
             KeywordList.Add("THEN", KeywordType.OtherKeyword);
+            KeywordList.Add("THROW", KeywordType.OtherKeyword);
             KeywordList.Add("TIME", KeywordType.DataTypeKeyword); //not strictly-speaking true, can also be keyword in WAITFOR TIME
             KeywordList.Add("TIMESTAMP", KeywordType.DataTypeKeyword);
             KeywordList.Add("TINYINT", KeywordType.DataTypeKeyword);
