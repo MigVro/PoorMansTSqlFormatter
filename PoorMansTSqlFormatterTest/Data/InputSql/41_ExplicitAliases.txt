@@ -1,0 +1,17 @@
+﻿/* implicit aliases get an explicit AS; anything unclear is left alone */
+SELECT a.x foo, a.y AS bar, 'lit' lbl, COUNT(*) cnt, (SELECT 1) sub,
+    CASE WHEN a.z = 1 THEN 2 END c2, a.x + 1 [sum], @v = 3, alias2 = a.col,
+    SUM(q) OVER (PARTITION BY p) w, a.b, 5 five
+FROM dbo.T a
+    INNER JOIN (SELECT 1 q) d ON a.id = d.q
+    LEFT JOIN dbo.U u2 WITH (NOLOCK) ON u2.id = a.id
+    CROSS APPLY dbo.F(a.id) f1,
+    dbo.V v1;
+
+SELECT TOP 10 a.x foo, a.y bar FROM dbo.T;
+SELECT a.ts AT TIME ZONE 'UTC' z, a.y yy FROM dbo.T;
+SELECT NEXT VALUE FOR dbo.Seq n;
+UPDATE x SET c = 1 FROM dbo.X x WHERE x.id = 1;
+INSERT INTO dbo.T (a) SELECT b bb FROM dbo.U uu;
+SELECT a COLLATE Latin1_General_CI_AS, b COLLATE Latin1_General_CI_AS c FROM dbo.T;
+SELECT a x INTO #t FROM dbo.T

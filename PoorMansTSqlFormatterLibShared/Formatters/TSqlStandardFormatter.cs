@@ -236,9 +236,114 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 TrailingBooleanOperators = Options.TrailingBooleanOperators,
                 NewClauseLineBreaks = 0,
                 NewStatementLineBreaks = 0,
-                SmartExpand = false
+                SmartExpand = false,
+                ExplicitAliases = Options.ExplicitAliases
             };
             return new TSqlStandardFormatter(flatOptions) { ErrorOutputPrefix = "" }.FormatSQLTree(scope).Trim();
+        }
+
+        //an implicit alias is a name straight after an operand (`x foo`, `dbo.T t`), with nothing after it but the
+        // end of the item. Anything not clearly an alias is left alone, as a wrongly inserted AS would break the SQL.
+        private static bool IsImplicitAlias(Node name)
+        {
+            Node parent = name.Parent;
+            bool inSelectList = IsSelectClause(parent);
+            if (!inSelectList && !parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET))
+                return false;
+
+            Node previous = name.PreviousSibling();
+            while (previous != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(previous.Name))
+                previous = previous.PreviousSibling();
+            if (previous == null || !IsOperandEnd(previous, inSelectList)
+                || (previous.Name.Equals(SqlStructureConstants.ENAME_OTHERNODE) && previous.TextValue.Equals("COLLATE", StringComparison.OrdinalIgnoreCase)))
+                return false;
+
+            Node next = name.NextSibling();
+            while (next != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(next.Name))
+                next = next.NextSibling();
+            if (!inSelectList && IsTableHint(next))
+            {
+                next = next.NextSibling();
+                while (next != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(next.Name))
+                    next = next.NextSibling();
+                next = next.NextSibling();
+                while (next != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(next.Name))
+                    next = next.NextSibling();
+            }
+            if (next != null && !next.Name.Equals(SqlStructureConstants.ENAME_COMMA))
+                return false;
+
+            return !inSelectList || !IsSpecialSelectItem(name);
+        }
+
+        private static bool IsSelectClause(Node clause)
+        {
+            if (!clause.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                return false;
+
+            Node first = clause.Children.FirstOrDefault(c => !SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(c.Name));
+            return first != null
+                && first.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                && first.TextValue.Equals("SELECT", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsOperandEnd(Node node, bool inSelectList)
+        {
+            switch (node.Name)
+            {
+                case SqlStructureConstants.ENAME_OTHERNODE:
+                case SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME:
+                case SqlStructureConstants.ENAME_QUOTED_STRING:
+                case SqlStructureConstants.ENAME_FUNCTION_PARENS:
+                case SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS:
+                    return true;
+                case SqlStructureConstants.ENAME_STRING:
+                case SqlStructureConstants.ENAME_NUMBER_VALUE:
+                case SqlStructureConstants.ENAME_BINARY_VALUE:
+                case SqlStructureConstants.ENAME_MONETARY_VALUE:
+                case SqlStructureConstants.ENAME_EXPRESSION_PARENS:
+                case SqlStructureConstants.ENAME_OVER_PARENS:
+                case SqlStructureConstants.ENAME_CASE_STATEMENT:
+                    return inSelectList;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsTableHint(Node node)
+        {
+            if (node == null || !node.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                || !node.TextValue.Equals("WITH", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            Node parens = node.NextSibling();
+            while (parens != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(parens.Name))
+                parens = parens.NextSibling();
+            return parens != null && parens.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS);
+        }
+
+        //select items whose words the tokenizer can't tell from a name: `TOP 10 x`, `x AT TIME ZONE tz`, `NEXT VALUE FOR s`.
+        private static bool IsSpecialSelectItem(Node name)
+        {
+            for (Node node = name.PreviousSibling(); node != null && !node.Name.Equals(SqlStructureConstants.ENAME_COMMA); node = node.PreviousSibling())
+            {
+                if (node.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD) && node.TextValue.Equals("TOP", StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (node.Name.Equals(SqlStructureConstants.ENAME_OTHERNODE)
+                    && (node.TextValue.Equals("AT", StringComparison.OrdinalIgnoreCase) || node.TextValue.Equals("NEXT", StringComparison.OrdinalIgnoreCase)))
+                    return true;
+            }
+            return false;
+        }
+
+        private void WriteImplicitAs(Node name, TSqlStandardFormattingState state)
+        {
+            if (!Options.ExplicitAliases || !IsImplicitAlias(name))
+                return;
+
+            WhiteSpace_SeparateWords(state);
+            state.AddOutputContent(FormatKeyword("AS"), SqlHtmlConstants.CLASS_KEYWORD);
+            state.WordSeparatorExpected = true;
         }
 
         private static bool IsTableHintParens(Node parens)
@@ -735,12 +840,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME:
+                    WriteImplicitAs(contentElement, state);
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent("[" + contentElement.TextValue.Replace("]", "]]") + "]");
                     state.WordSeparatorExpected = true;
                     break;
 
                 case SqlStructureConstants.ENAME_QUOTED_STRING:
+                    WriteImplicitAs(contentElement, state);
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent("\"" + contentElement.TextValue.Replace("\"", "\"\"") + "\"");
                     state.WordSeparatorExpected = true;
@@ -836,6 +943,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_OTHERNODE:
                 case SqlStructureConstants.ENAME_MONETARY_VALUE:
                 case SqlStructureConstants.ENAME_LABEL:
+                    if (contentElement.Name.Equals(SqlStructureConstants.ENAME_OTHERNODE))
+                        WriteImplicitAs(contentElement, state);
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent(contentElement.TextValue);
                     state.WordSeparatorExpected = true;
