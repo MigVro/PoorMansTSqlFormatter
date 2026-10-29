@@ -166,14 +166,14 @@ namespace PoorMansTSqlFormatterSSMSLib
             }
         }
 
-        public void GetUpdatedFormattingOptionsFromUser()
+        public void GetUpdatedFormattingOptionsFromUser(IntPtr ownerHandle)
         {
             if (_getKeyBindingScopeNameDelegate != null)
                 GetVSHotkeyIntoSettings();
 
             PluginShared.SettingsForm settings = new PluginShared.SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"), _getKeyBindingScopeNameDelegate == null ? null : new PluginShared.SettingsForm.FixHotkeyDefault(FixHotkeyDefault));
 
-            if (settings.ShowDialog() == DialogResult.OK)
+            if (PluginShared.Utils.ShowDialogCenteredOn(settings, ownerHandle) == DialogResult.OK)
             {
                 _formattingManager = PluginShared.Utils.GetFormattingManager(Properties.Settings.Default);
                 if (_getKeyBindingScopeNameDelegate != null)

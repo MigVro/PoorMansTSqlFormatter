@@ -88,14 +88,17 @@ namespace PoorMansTSqlFormatterVSPackage
         private void FormatSqlCallback(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            DTE2 dte = (DTE2)GetService(typeof(DTE));
+            if (!(GetService(typeof(DTE)) is DTE2 dte))
+                return;
+
             _SSMSHelper.FormatSqlInTextDoc(dte);
         }
 
         private void SqlOptionsCallback(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            _SSMSHelper.GetUpdatedFormattingOptionsFromUser();
+            IntPtr ownerHandle = GetService(typeof(DTE)) is DTE2 dte ? dte.MainWindow.HWnd : IntPtr.Zero;
+            _SSMSHelper.GetUpdatedFormattingOptionsFromUser(ownerHandle);
         }
 
         private void QueryFormatButtonStatus(object sender, EventArgs e)

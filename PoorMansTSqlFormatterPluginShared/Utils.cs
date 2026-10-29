@@ -38,5 +38,24 @@ namespace PoorMansTSqlFormatterPluginShared
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
             return formattingManager;
         }
+
+        public static System.Windows.Forms.DialogResult ShowDialogCenteredOn(System.Windows.Forms.Form form, System.IntPtr ownerHandle)
+        {
+            if (ownerHandle == System.IntPtr.Zero)
+                return form.ShowDialog();
+
+            form.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            return form.ShowDialog(new WindowHandleOwner(ownerHandle));
+        }
+
+        private sealed class WindowHandleOwner : System.Windows.Forms.IWin32Window
+        {
+            public WindowHandleOwner(System.IntPtr handle)
+            {
+                Handle = handle;
+            }
+
+            public System.IntPtr Handle { get; }
+        }
     }
 }

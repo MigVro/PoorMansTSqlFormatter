@@ -148,7 +148,7 @@ namespace PoorMansTSqlFormatterNppPlugin
         internal static void formattingOptionsCommand()
         {
             SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
-            if (settings.ShowDialog() == DialogResult.OK)
+            if (Utils.ShowDialogCenteredOn(settings, PluginBase.nppData._nppHandle) == DialogResult.OK)
             {
                 _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
             }
