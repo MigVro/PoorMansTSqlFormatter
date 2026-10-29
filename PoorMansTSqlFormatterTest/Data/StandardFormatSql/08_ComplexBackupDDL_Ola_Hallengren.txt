@@ -1157,9 +1157,7 @@ BEGIN
 							END
 
 					SELECT @CurrentCommand02 = @CurrentCommand02 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1267,9 +1265,7 @@ BEGIN
 							END
 
 					SELECT @CurrentCommand02 = @CurrentCommand02 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1314,9 +1310,7 @@ BEGIN
 							END
 
 					SELECT @CurrentCommand02 = @CurrentCommand02 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1355,9 +1349,7 @@ BEGIN
 					SET @CurrentCommand02 = 'DECLARE @ReturnCode int EXECUTE @ReturnCode = master.dbo.xp_ss_backup @database = N''' + REPLACE(@CurrentDatabase, '''', '''''') + ''''
 
 					SELECT @CurrentCommand02 = @CurrentCommand02 + ', ' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) = 1
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) = 1
 								THEN '@filename'
 							ELSE '@backupfile'
 							END + ' = N''' + REPLACE(CurrentFilePath, '''', '''''') + ''''
@@ -1416,9 +1408,7 @@ BEGIN
 					SET @CurrentCommand03 = 'RESTORE VERIFYONLY FROM'
 
 					SELECT @CurrentCommand03 = @CurrentCommand03 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1431,9 +1421,7 @@ BEGIN
 					SET @CurrentCommand03 = 'DECLARE @ReturnCode int EXECUTE @ReturnCode = master.dbo.xp_restore_verifyonly'
 
 					SELECT @CurrentCommand03 = @CurrentCommand03 + ' @filename = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1448,9 +1436,7 @@ BEGIN
 					SET @CurrentCommand03 = 'RESTORE VERIFYONLY FROM'
 
 					SELECT @CurrentCommand03 = @CurrentCommand03 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1465,9 +1451,7 @@ BEGIN
 					SET @CurrentCommand03 = 'RESTORE VERIFYONLY FROM'
 
 					SELECT @CurrentCommand03 = @CurrentCommand03 + ' DISK = N''' + REPLACE(CurrentFilePath, '''', '''''') + '''' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) <> @NumberOfFiles
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) <> @NumberOfFiles
 								THEN ','
 							ELSE ''
 							END
@@ -1480,9 +1464,7 @@ BEGIN
 					SET @CurrentCommand03 = 'DECLARE @ReturnCode int EXECUTE @ReturnCode = master.dbo.xp_ss_verify @database = N''' + REPLACE(@CurrentDatabase, '''', '''''') + ''''
 
 					SELECT @CurrentCommand03 = @CurrentCommand03 + ', ' + CASE 
-							WHEN ROW_NUMBER() OVER (
-									ORDER BY CurrentFilePath ASC
-									) = 1
+							WHEN ROW_NUMBER() OVER (ORDER BY CurrentFilePath ASC) = 1
 								THEN '@filename'
 							ELSE '@backupfile'
 							END + ' = N''' + REPLACE(CurrentFilePath, '''', '''''') + ''''

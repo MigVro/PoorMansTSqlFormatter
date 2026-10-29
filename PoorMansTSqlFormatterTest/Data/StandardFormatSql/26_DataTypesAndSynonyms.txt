@@ -133,8 +133,9 @@ INSERT #Children (
 SELECT EmployeeID
 	,ManagerID
 	,ROW_NUMBER() OVER (
-		PARTITION BY ManagerID ORDER BY ManagerID
-		)
+		PARTITION BY ManagerID
+		ORDER BY ManagerID
+	)
 FROM #EmployeeDemo
 GO
 

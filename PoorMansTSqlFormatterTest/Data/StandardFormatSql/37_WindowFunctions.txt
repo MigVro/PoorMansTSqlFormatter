@@ -1,0 +1,42 @@
+﻿SELECT a
+	,ROW_NUMBER() OVER (
+		PARTITION BY b, c
+		ORDER BY d DESC, e
+	) AS rn
+	,SUM(x) OVER (
+		PARTITION BY b
+		ORDER BY d
+		ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+	) AS s
+	,COUNT(*) OVER () AS n
+FROM t
+ORDER BY a;
+
+SELECT RANK() OVER (ORDER BY x) AS r
+	,LAG(x, 1) OVER (PARTITION BY k) AS l
+	,SUM(y) OVER (
+		ORDER BY rows, range
+		ROWS 3 PRECEDING
+	) AS z
+FROM t
+WHERE x IN (
+		SELECT ROW_NUMBER() OVER (
+				PARTITION BY p
+				ORDER BY q
+			)
+		FROM u
+		)
+GROUP BY k;
+
+WITH cte
+AS (
+	SELECT id
+		,ROW_NUMBER() OVER (
+			PARTITION BY grp
+			ORDER BY id
+		) AS rn
+	FROM t
+	)
+SELECT id
+FROM cte
+WHERE rn = 1;

@@ -72,6 +72,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_DDL_PARENS:
 				case SqlStructureConstants.ENAME_FUNCTION_PARENS:
 				case SqlStructureConstants.ENAME_IN_PARENS:
+				case SqlStructureConstants.ENAME_OVER_PARENS:
 				case SqlStructureConstants.ENAME_EXPRESSION_PARENS:
                 case SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS:
                     state.AddOutputContent("(");

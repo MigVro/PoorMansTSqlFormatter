@@ -179,6 +179,45 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
         }
 
+        private static List<Node> GetWindowSectionStarts(Node overParens)
+        {
+            List<Node> starts = new List<Node>();
+            List<Node> content = overParens.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).ToList();
+            for (int i = 0; i < content.Count; i++)
+            {
+                Node next = i + 1 < content.Count ? content[i + 1] : null;
+                if (IsWindowSectionStart(content[i], next))
+                    starts.Add(content[i]);
+            }
+            return starts;
+        }
+
+        private static bool IsWindowSectionStart(Node element, Node next)
+        {
+            if (element.TextValue == null)
+                return false;
+
+            string text = element.TextValue.ToUpperInvariant();
+            if (element.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD))
+                return text.Equals("PARTITION") || text.Equals("ORDER");
+
+            if (!element.Name.Equals(SqlStructureConstants.ENAME_OTHERNODE) || !(text.Equals("ROWS") || text.Equals("RANGE")))
+                return false;
+
+            //ROWS/RANGE are not reserved: only a frame start when followed by what a frame bound starts with
+            if (next == null)
+                return false;
+
+            if (next.Name.Equals(SqlStructureConstants.ENAME_BETWEEN_CONDITION) || next.Name.Equals(SqlStructureConstants.ENAME_NUMBER_VALUE))
+                return true;
+
+            if (next.TextValue == null)
+                return false;
+
+            string nextText = next.TextValue.ToUpperInvariant();
+            return nextText.Equals("UNBOUNDED") || nextText.Equals("CURRENT");
+        }
+
         private void ProcessSqlNodeList(IEnumerable<Node> rootList, TSqlStandardFormattingState state)
         {
             foreach (Node contentElement in rootList)
@@ -356,7 +395,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
                     state.IncrementIndent();
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND), state.IncrementIndent());
-                    if (Options.ExpandBetweenConditions)
+                    if (Options.ExpandBetweenConditions && !contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS))
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_CLOSE), state.DecrementIndent());
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND), state.IncrementIndent());
@@ -372,6 +411,32 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.AddOutputContent(FormatOperator("("), SqlHtmlConstants.CLASS_OPERATOR);
                     ProcessSqlNodeList(contentElement.Children, state.IncrementIndent());
                     state.DecrementIndent();
+                    WhiteSpace_BreakAsExpected(state);
+                    state.AddOutputContent(FormatOperator(")"), SqlHtmlConstants.CLASS_OPERATOR);
+                    state.WordSeparatorExpected = true;
+                    break;
+
+                case SqlStructureConstants.ENAME_OVER_PARENS:
+                    List<Node> windowSectionStarts = GetWindowSectionStarts(contentElement);
+                    bool expandWindow = windowSectionStarts.Count > 1;
+                    WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(FormatOperator("("), SqlHtmlConstants.CLASS_OPERATOR);
+                    state.WordSeparatorExpected = false;
+                    if (expandWindow)
+                        state.IncrementIndent();
+                    foreach (Node windowChild in contentElement.Children)
+                    {
+                        if (expandWindow && windowSectionStarts.Contains(windowChild))
+                            state.BreakExpected = true;
+                        ProcessSqlNode(windowChild, state);
+                    }
+                    if (expandWindow)
+                    {
+                        state.DecrementIndent();
+                        state.BreakExpected = true;
+                    }
+                    else
+                        state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
                     state.AddOutputContent(FormatOperator(")"), SqlHtmlConstants.CLASS_OPERATOR);
                     state.WordSeparatorExpected = true;
@@ -606,6 +671,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         if ((Options.ExpandCommaLists
 								&& !(contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
 									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
+									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS)
 									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
 									)
 								)
@@ -622,6 +688,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         if ((Options.ExpandCommaLists
 								&& !(contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
 									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
+									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS)
 									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
 									)
 								)

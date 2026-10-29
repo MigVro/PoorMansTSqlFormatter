@@ -130,10 +130,9 @@ EXEC master.dbo.sp_MSforeachdb @command1 = 'USE [?] INSERT INTO #temp EXECUTE ('
 WITH DBCC_CTE
 AS (
 	SELECT ROW_NUMBER() OVER (
-			PARTITION BY ServerName
-			,DBName
-			,LastCleanDBCCDate ORDER BY LastCleanDBCCDate
-			) RowID
+			PARTITION BY ServerName, DBName, LastCleanDBCCDate
+			ORDER BY LastCleanDBCCDate
+		) RowID
 	FROM #DBCCResults
 	)
 DELETE

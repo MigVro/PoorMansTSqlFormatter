@@ -130,10 +130,9 @@ Description:  Shows what I look for when I take over existing servers.
 <span class="SQLKeyword">WITH</span> DBCC_CTE
 <span class="SQLKeyword">AS</span> <span class="SQLOperator">(</span>
 	<span class="SQLKeyword">SELECT</span> ROW_NUMBER<span class="SQLOperator">(</span><span class="SQLOperator">)</span> <span class="SQLKeyword">OVER</span> <span class="SQLOperator">(</span>
-			<span class="SQLKeyword">PARTITION</span> <span class="SQLKeyword">BY</span> ServerName
-			<span class="SQLOperator">,</span>DBName
-			<span class="SQLOperator">,</span>LastCleanDBCCDate <span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> LastCleanDBCCDate
-			<span class="SQLOperator">)</span> RowID
+			<span class="SQLKeyword">PARTITION</span> <span class="SQLKeyword">BY</span> ServerName<span class="SQLOperator">,</span> DBName<span class="SQLOperator">,</span> LastCleanDBCCDate
+			<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> LastCleanDBCCDate
+		<span class="SQLOperator">)</span> RowID
 	<span class="SQLKeyword">FROM</span> #DBCCResults
 	<span class="SQLOperator">)</span>
 <span class="SQLKeyword">DELETE</span>

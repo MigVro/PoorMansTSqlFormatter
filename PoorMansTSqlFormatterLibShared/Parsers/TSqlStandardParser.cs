@@ -135,6 +135,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
 									)
 							)
 							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_IN_PARENS, "");
+						else if (lastNonCommentParensSibling != null
+									&& lastNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+									&& lastNonCommentParensSibling.TextValue.ToUpperInvariant().Equals("OVER")
+									)
+							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OVER_PARENS, "");
 						else if (IsLatestTokenAMiscName(sqlTree))
 							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_FUNCTION_PARENS, "");
 						else
@@ -158,6 +163,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDL_PARENS)
 							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
 							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
+							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS)
 							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_EXPRESSION_PARENS)
                             || sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)
                             )
