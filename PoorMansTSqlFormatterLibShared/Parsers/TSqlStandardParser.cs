@@ -986,6 +986,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
+                        else if (IsReferentialAction(tokenList, tokenID))
+                        {
+                            sqlTree.EscapeAnySelectionTarget();
+                            sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
                         else if (significantTokensString.StartsWith("UPDATE "))
                         {
                             if (sqlTree.NewStatementDue)
@@ -1608,6 +1613,21 @@ namespace PoorMansTSqlFormatterLib.Parsers
             IToken previous = tokenList[previousID];
             return previous.Type == SqlTokenType.Comma
                 || PermissionStatementStarters.Any(starter => IsUnquotedWord(previous, starter));
+        }
+
+        private static bool IsReferentialAction(ITokenList tokenList, int tokenID)
+        {
+            IToken token = tokenList[tokenID];
+            bool isSetNull = IsUnquotedWord(token, "SET");
+            if (!isSetNull && !IsUnquotedWord(token, "DELETE") && !IsUnquotedWord(token, "UPDATE"))
+                return false;
+
+            int eventID = isSetNull ? GetPreviousSignificantTokenID(tokenList, tokenID) : tokenID;
+            if (eventID < 0 || (isSetNull && !IsUnquotedWord(tokenList[eventID], "DELETE") && !IsUnquotedWord(tokenList[eventID], "UPDATE")))
+                return false;
+
+            int onID = GetPreviousSignificantTokenID(tokenList, eventID);
+            return onID >= 0 && IsUnquotedWord(tokenList[onID], "ON");
         }
 
         private static bool IsUnquotedWord(IToken token, string word)
