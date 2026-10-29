@@ -13,6 +13,9 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
     VSIX (`PoorMansTSqlFormatterVSPackage`) for Visual Studio 2022/2026 and SSMS 22.
 * Building needs Visual Studio 2022/2026 with the "Visual Studio extension development"
     workload; command-line builds need `msbuild /restore`. See `BUILDING.txt`.
+* Additional formatting options: trailing boolean operators, smart expand, explicit
+    aliases, semicolon insertion, column alignment, whitespace stripping and blank-line
+    collapsing. See `CHANGELOG.md`.
 
 
 

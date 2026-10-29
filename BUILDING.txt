@@ -28,6 +28,7 @@ The PoorMansTSqlFormatterVSPackage project produces a single 64-bit VSIX for Vis
  - For VS 2022/2026 you can just double-click on the VSIX file. Building the project also deploys it to the VS experimental
    instance ("devenv /rootsuffix Exp"); don't additionally install it there with VSIXInstaller.
  - For SSMS 22, install it with VSIXInstaller.exe from the SSMS install folder, eg: VSIXInstaller.exe /instanceIds:<SSMS instance id> PoorMansTSqlFormatterVSPackage.vsix
+ - To remove it from SSMS 22 again, close SSMS and run Scripts\UninstallSSMS.cmd.
 
 The WinMerge Plugin preparation is reasonably complex/painful:
  - Open a command prompt as administrator
@@ -47,6 +48,9 @@ The packaging and release process is currently completely manual:
  - Upload the archives to website
  - Change website to reference the new archives
  - Update Notepad++ plugin manager admin site to reflect the new version (in staging - actual live publishing is done by site administrator)
+
+To run the tests, build PoorMansTSqlFormatterTests with /restore, then from PoorMansTSqlFormatterTest\bin\<Config> run the NUnit 3 console runner
+(%USERPROFILE%\.nuget\packages\nunit.consolerunner\3.17.0\tools\nunit3-console.exe PoorMansTSqlFormatterTests.dll). The working directory matters: the test data is found via ..\..\Data.
 
 If you encounter any issues building this project, please don't hesitate to contact me: my email address starts with tao, and is 
 hosted at klerks dot biz.

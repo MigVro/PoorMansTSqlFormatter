@@ -4,6 +4,36 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 ## [Unreleased]
 
+### Added
+
+* Standard formatter options, exposed in the settings form, Demo, CmdLine and web demo:
+    * `StripTrailingWhitespace` and `CollapseBlankLines`
+    * `TrailingBooleanOperators`: AND/OR at the end of the line
+    * `SmartExpand`
+    * `ExplicitAliases` (`/ea`): insert AS for implicit aliases
+    * `AddSemicolons` (`/sc`): terminate statements with `;`
+    * `AlignColumns` (`/ac`): align column names and types
+* Table hint, operator and function standardization in the standard formatter
+* Parser and formatter support for DDL triggers, nested JOINs, window function OVER clauses, `WITH XMLNAMESPACES`, THROW and `CREATE OR ALTER`
+* `Scripts/UninstallSSMS.cmd`, for removing the VSIX from SSMS 22
+* .NET analyzers enabled in the library (default rule set)
+
+### Changed
+
+* Tests use NUnit 3 and its console runner instead of the NUnit 2.5 GUI runner
+* Settings dialog is centered on the host main window
+
+### Fixed
+
+* CmdLine matches file extensions case-insensitively, so `.SQL` files are formatted (TaoK#242)
+* CmdLine writes GO only between files in single-output mode, and detects trailing GO more strictly
+* `ToSerializedString` no longer resets `NewStatementLineBreaks` to 2
+* Binary literals are kept intact, and no extra line break is added before `[/noformat]`
+* Standard formatter never wraps around the period in multi-part names
+* Parser keeps ALTER COLUMN, DROP COLUMN, DROP CONSTRAINT and `ALTER DATABASE ... SET` inside their statements
+* Parser treats IF EXISTS after DROP as a qualifier, and DEFINITION as a keyword only after VIEW
+* Resource lookup compares culture names ordinally
+
 ## [1.6.17] - 2026-10-24
 
 First release of the fork (MigVro/PoorMansTSqlFormatter).
