@@ -48,7 +48,8 @@ namespace PoorMansTSqlFormatterExeShared
  
         protected override ResourceSet InternalGetResourceSet(CultureInfo culture, bool createIfNotExists, bool tryParents)
         {
-            ResourceSet rs = (ResourceSet)this.ResourceSets[culture];
+            CultureInfo requestedCulture = culture;
+            ResourceSet rs = (ResourceSet)this.ResourceSets[requestedCulture];
             if (rs == null)
             {
                 Stream store = null;
@@ -75,9 +76,9 @@ namespace PoorMansTSqlFormatterExeShared
                 {
                     rs = new ResourceSet(store);
                     //save for later.
-                    AddResourceSet(this.ResourceSets, culture, ref rs);
+                    AddResourceSet(this.ResourceSets, requestedCulture, ref rs);
                 }
-                else if (tryParents && !culture.Equals(CultureInfo.InvariantCulture))
+                else if (tryParents && culture.Name.Length > 0)
                 {
                     rs = InternalGetResourceSet(culture.Parent, createIfNotExists, tryParents);
                 }

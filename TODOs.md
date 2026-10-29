@@ -9,7 +9,7 @@
 - [x] (2026-10-24) `IF EXISTS` qualifier parsed as an `IF` statement, e.g. `DROP PROCEDURE IF EXISTS` raises parse errors (upstream TaoK#268, TaoK#203).
 - [ ] (2026-10-24) Nested JOINs (with or without parens) give false syntax errors and poor formatting (upstream TaoK#288, TaoK#30).
 - [x] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151). Also covers `DROP COLUMN` and `DROP CONSTRAINT`.
-- [x] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112). Works before `SELECT` (optionally followed by CTEs); not tested before `INSERT`/`UPDATE`/`DELETE`.
+- [x] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112). Works before `SELECT` (optionally followed by CTEs), `INSERT`, `UPDATE` and `DELETE`.
 - [ ] (2026-10-24) Parse Service Broker statements (`BEGIN DIALOG`, ...) and the `WAITFOR` container (upstream TaoK#179, TaoK#237).
 - [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).
 - [x] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).
@@ -17,7 +17,7 @@
 - [x] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192). Fixed for the command line `-o:file` mode only (separator between files, none after the last or after a file already ending in `GO`); not reproducible in the library. Behaviour change: no `GO` is written after the last file. `GO <count>` is not detected as a separator.
 - [x] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
 - [x] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272). Fixed for `DEFINITION` only (keyword only after `VIEW`); other contextual keywords still uppercase.
-- [x] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298). Neutral-culture check in `SingleAssemblyResourceManager` now compares culture names ordinally (case-insensitive).
+- [x] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298). Not reproduced; defensive fix only: `SingleAssemblyResourceManager` now compares culture names ordinally (case-insensitive), no longer uses `CultureInfo.Equals`, and caches resource sets under the requested culture.
 - [x] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
 - [ ] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth`.
 - [ ] (2026-10-24) Option: insert explicit `AS` for implicit table and column aliases. Check first whether the parser can reliably identify implicit aliases.
