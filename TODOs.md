@@ -1,6 +1,6 @@
 # TODOs
 
-- [ ] (2026-10-24) Add Arm64 support to the combined VSIX: add `<ProductArchitecture>arm64</ProductArchitecture>` install targets for VS 2026 and SSMS 22 (both ship Arm64 builds). Untested; needs an Arm64 machine to verify. See `VSIX-UPGRADE-PLAN.md`.
+- [ ] (2026-10-24) Add Arm64 support to the combined VSIX: add `<ProductArchitecture>arm64</ProductArchitecture>` install targets for VS 2026 and SSMS 22 (both ship Arm64 builds). Untested; needs an Arm64 machine to verify.
 - [x] (2026-10-24) Parse DDL triggers (`FOR LOGON`, `ON ALL SERVER` / `ON DATABASE`). Event lists (`FOR CREATE_TABLE, DROP_TABLE`) are now a `TriggerCondition`, also after `WITH` options (`WITH EXECUTE AS`, `WITH ENCRYPTION`), which was broken for DML triggers too.
 - [x] (2026-10-24) Format/indent ranking and window functions (`OVER (PARTITION BY ... ORDER BY ...)`). `OVER (...)` is now its own `OverParens` node; sections break onto separate lines when there are two or more, commas stay inline, and `ROWS`/`RANGE` frames stay on one line. Named windows (`WINDOW w AS (...)`) are not handled.
 - [ ] (2026-10-24) Verify VSIX settings survive major VS 2026 / SSMS 22 upgrades, and whether they are shared between VS and SSMS.
@@ -47,3 +47,11 @@
   - Limits: WinForms has no real theming. `CheckBox` glyphs, `NumericUpDown` and the title bar only partly follow the colors, so dark mode will be approximate. Acceptable only if "mostly right" is fine; otherwise leave the dialog system-themed.
   - Uncertain: whether SSMS 22 exposes the same theme services (`VSColorTheme`, `EnvironmentColors`) to extensions as VS does. It is VS-shell based and should, but verify with a quick spike before committing to the work.
 - [x] (2026-10-24) CI for the VSIX (plan step 6): GitHub Actions workflow `.github/workflows/vsix.yml` builds it and attaches it to releases on version tags.
+- [ ] (2026-10-29) .NET modernisation. In-process VS/SSMS extensions and the Notepad++ plugin must stay on .NET Framework; the rest can move to .NET 10:
+  - `CmdLine` → `net10.0` and `Demo` → `net10.0-windows` (WinForms), single-file publish replacing ILRepack.
+  - `Tests` → `net10.0`, NUnit 4, `dotnet test`. `Utils.GetTestContentFolder` resolves `..\..\Data` from the working directory and breaks with the `bin\<Config>\net10.0` output folder; expected-output files must stay byte-identical.
+  - `PluginShared`, `SSMSLib`, `NppPlugin`, VSIX → .NET Framework 4.8 (SDK-style where VSSDK and UnmanagedExports allow; unverified whether VSSDK 17.x supports SDK-style csproj for VSIX).
+  - `VersionBump.ps1` must handle versions in csproj / `Directory.Build.props` instead of `AssemblyInfo.cs`; `BUILDING.txt` should switch to `dotnet build` / `dotnet test` where possible.
+  - Decisions needed first: keep JSLib (Bridge.NET, abandoned) frozen, which means the shared source must still compile under Bridge.NET, or drop it; drop WebDemo (Web Forms) or rewrite it on ASP.NET Core.
+- [ ] (2026-10-29) WinMerge setup project (`PoorMansTSqlFormatterWinMergePlugin.Setup.vdproj`) still packages LinqBridge.dll, the removed SSMSPackage output (~40 dependencies) and `PoorMansTSqlFormatterLib\obj\Debug\PoorMansTSqlFormatterLib.dll` (now under `netstandard2.0\`). Fix in VS with the Installer Projects extension.
+- [ ] (2026-10-29) Manual tests still open: Notepad++ loading the v4.7.2 plugin; es/fr resources in the merged Demo/CmdLine exes; registering the `tlbexp` type library from the netstandard2.0 lib for the WinMerge VB6 plugin.
