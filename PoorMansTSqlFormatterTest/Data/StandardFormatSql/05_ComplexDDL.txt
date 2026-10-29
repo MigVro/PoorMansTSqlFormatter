@@ -268,7 +268,7 @@ Modifications:
 			WHERE ParentObject = @TableName
 
 			INSERT INTO @Definition (FieldValue)
-			SELECT ',CONSTRAINT [' + name + '] CHECK ' + DEFINITION
+			SELECT ',CONSTRAINT [' + name + '] CHECK ' + definition
 			FROM sys.check_constraints
 			WHERE OBJECT_NAME(parent_object_id) = @TableName
 

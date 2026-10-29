@@ -1104,7 +1104,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             string newNodeName = SqlStructureConstants.ENAME_OTHERNODE;
                             KeywordType matchedKeywordType;
-                            if (KeywordList.TryGetValue(token.Value.ToUpperInvariant(), out matchedKeywordType))
+                            if (!IsContextualKeywordUsedAsIdentifier(tokenList, tokenID)
+                                && KeywordList.TryGetValue(token.Value.ToUpperInvariant(), out matchedKeywordType))
                             {
                                 switch (matchedKeywordType)
                                 {
@@ -1511,6 +1512,25 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("WHILE")
                     )
                 );
+        }
+
+        private static bool IsContextualKeywordUsedAsIdentifier(ITokenList tokenList, int tokenID)
+        {
+            if (!tokenList[tokenID].Value.Equals("DEFINITION", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            for (int previousID = tokenID - 1; previousID >= 0; previousID--)
+            {
+                IToken previous = tokenList[previousID];
+                if (previous.Type == SqlTokenType.WhiteSpace
+                    || previous.Type == SqlTokenType.SingleLineComment
+                    || previous.Type == SqlTokenType.SingleLineCommentCStyle
+                    || previous.Type == SqlTokenType.MultiLineComment)
+                    continue;
+
+                return !previous.Value.Equals("VIEW", StringComparison.OrdinalIgnoreCase);
+            }
+            return true;
         }
 
         private static bool IsClauseStarter(IToken token)

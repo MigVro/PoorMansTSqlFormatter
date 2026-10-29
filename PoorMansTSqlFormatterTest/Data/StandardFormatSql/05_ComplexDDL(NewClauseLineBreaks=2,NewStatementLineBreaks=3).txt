@@ -324,7 +324,7 @@ Modifications:
 
 			INSERT INTO @Definition (FieldValue)
 			
-			SELECT ',CONSTRAINT [' + name + '] CHECK ' + DEFINITION
+			SELECT ',CONSTRAINT [' + name + '] CHECK ' + definition
 			
 			FROM sys.check_constraints
 			
