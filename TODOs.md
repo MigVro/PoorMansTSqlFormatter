@@ -40,4 +40,10 @@
 - [ ] (2026-10-24) VSIX: "Copy as HTML" command using the existing `HtmlPageWrapper` (colorized output to clipboard).
 - [ ] (2026-10-24) VSIX: check whether the format command is in the editor context menu; add it if not.
 - [ ] (2026-10-24) VSIX: verify a format is undone in a single step (one undo context); wrap it if not.
+- [ ] (2026-10-29) VSIX: make `SettingsForm` follow the VS / SSMS 22 theme (dark mode). Possible in principle; not started. Findings and recommendation:
+  - Colors: `VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey)` and sibling keys (text, border, button, control), plus `VSColorTheme.ThemeChanged` to re-apply while the dialog is open.
+  - Placement: `PoorMansTSqlFormatterPluginShared` must not reference VS assemblies (the Notepad++ plugin shares it). Add an optional theming hook (`Action<Form>`) that `FormatterPackage` passes through `GenericVSHelper.GetUpdatedFormattingOptionsFromUser` into `Utils.ShowDialogCenteredOn` / the form. Notepad++ keeps the default look. Changes a public signature, needs approval.
+  - Implementation: walk the control tree recursively setting `BackColor` / `ForeColor`; buttons and text boxes need `FlatStyle.Flat` with themed borders. The title bar needs `DwmSetWindowAttribute` (immersive dark mode) for a dark theme. `AboutBox` (opened from the form) needs the same treatment.
+  - Limits: WinForms has no real theming. `CheckBox` glyphs, `NumericUpDown` and the title bar only partly follow the colors, so dark mode will be approximate. Acceptable only if "mostly right" is fine; otherwise leave the dialog system-themed.
+  - Uncertain: whether SSMS 22 exposes the same theme services (`VSColorTheme`, `EnvironmentColors`) to extensions as VS does. It is VS-shell based and should, but verify with a quick spike before committing to the work.
 - [x] (2026-10-24) CI for the VSIX (plan step 6): GitHub Actions workflow `.github/workflows/vsix.yml` builds it and attaches it to releases on version tags.
