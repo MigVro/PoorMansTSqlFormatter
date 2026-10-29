@@ -65,6 +65,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.chk_StripTrailingWhitespace = new System.Windows.Forms.CheckBox();
             this.chk_TrailingBooleanOperators = new System.Windows.Forms.CheckBox();
             this.chk_SmartExpand = new System.Windows.Forms.CheckBox();
+            this.chk_ExplicitAliases = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -117,11 +118,13 @@ namespace PoorMansTSqlFormatterPluginShared
             this.tableLayoutPanel1.Controls.Add(this.chk_StripTrailingWhitespace);
             this.tableLayoutPanel1.Controls.Add(this.chk_TrailingBooleanOperators);
             this.tableLayoutPanel1.Controls.Add(this.chk_SmartExpand);
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExplicitAliases);
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -213,6 +216,12 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.chk_SmartExpand, "chk_SmartExpand");
             this.chk_SmartExpand.Name = "chk_SmartExpand";
             this.chk_SmartExpand.UseVisualStyleBackColor = true;
+            // 
+            // chk_ExplicitAliases
+            // 
+            resources.ApplyResources(this.chk_ExplicitAliases, "chk_ExplicitAliases");
+            this.chk_ExplicitAliases.Name = "chk_ExplicitAliases";
+            this.chk_ExplicitAliases.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -371,6 +380,7 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.CheckBox chk_StripTrailingWhitespace;
         private System.Windows.Forms.CheckBox chk_TrailingBooleanOperators;
         private System.Windows.Forms.CheckBox chk_SmartExpand;
+        private System.Windows.Forms.CheckBox chk_ExplicitAliases;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;

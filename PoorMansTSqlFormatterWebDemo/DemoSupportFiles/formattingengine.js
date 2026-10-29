@@ -197,6 +197,7 @@ collapseBlankLines=false
 stripTrailingWhitespace=false
 trailingBooleanOperators=false
 smartExpand=false
+explicitAliases=false
 randomizeColor=false
 randomizeLineLengths=false
 randomizeKeywordCase=false

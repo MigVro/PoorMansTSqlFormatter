@@ -113,6 +113,7 @@ namespace PoorMansTSqlFormatterPluginShared
             chk_StripTrailingWhitespace.Checked = options.StripTrailingWhitespace;
             chk_TrailingBooleanOperators.Checked = options.TrailingBooleanOperators;
             chk_SmartExpand.Checked = options.SmartExpand;
+            chk_ExplicitAliases.Checked = options.ExplicitAliases;
 
             if (_supportsHotkey) txt_Hotkey.Text = (string)_settings["Hotkey"];
         }
@@ -138,7 +139,8 @@ namespace PoorMansTSqlFormatterPluginShared
                 CollapseBlankLines = chk_CollapseBlankLines.Checked,
                 StripTrailingWhitespace = chk_StripTrailingWhitespace.Checked,
                 TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked,
-                SmartExpand = chk_SmartExpand.Checked
+                SmartExpand = chk_SmartExpand.Checked,
+                ExplicitAliases = chk_ExplicitAliases.Checked
             };
 
             if (_supportsHotkey) _settings["Hotkey"] = txt_Hotkey.Text;

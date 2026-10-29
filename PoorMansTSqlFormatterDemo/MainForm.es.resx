@@ -145,6 +145,9 @@
   <data name="chk_SmartExpand.Text" xml:space="preserve">
     <value>Expansión Inteligente</value>
   </data>
+  <data name="chk_ExplicitAliases.Text" xml:space="preserve">
+    <value>Alias Explícitos</value>
+  </data>
   <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
     <value>Expandir Condiciones BETWEEN</value>
   </data>

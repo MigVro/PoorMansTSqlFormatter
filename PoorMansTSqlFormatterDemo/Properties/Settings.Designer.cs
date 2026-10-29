@@ -298,6 +298,18 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["SmartExpand"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExplicitAliases {
+            get {
+                return ((bool)(this["ExplicitAliases"]));
+            }
+            set {
+                this["ExplicitAliases"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -165,6 +165,9 @@
   <data name="chk_SmartExpand.Text" xml:space="preserve">
     <value>Expansi&#243;n Inteligente</value>
   </data>
+  <data name="chk_ExplicitAliases.Text" xml:space="preserve">
+    <value>Alias Expl&#237;citos</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Saltos de linea por Cláusula:</value>
   </data>

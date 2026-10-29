@@ -23,6 +23,7 @@ var PageFormattingMapper = function() {
         stdOptions.StripTrailingWhitespace = options.stripTrailingWhitespace == "true";
         stdOptions.TrailingBooleanOperators = options.trailingBooleanOperators == "true";
         stdOptions.SmartExpand = options.smartExpand == "true";
+        stdOptions.ExplicitAliases = options.explicitAliases == "true";
         return new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.$ctor1(stdOptions);
       case 'identity':
         return new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(enableHtml);

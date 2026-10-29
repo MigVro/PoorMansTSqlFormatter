@@ -900,6 +900,39 @@
   <data name="&gt;&gt;chk_SmartExpand.ZOrder" xml:space="preserve">
     <value>23</value>
   </data>
+  <data name="chk_ExplicitAliases.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_ExplicitAliases.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chk_ExplicitAliases.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 893</value>
+  </data>
+  <data name="chk_ExplicitAliases.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chk_ExplicitAliases.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 29</value>
+  </data>
+  <data name="chk_ExplicitAliases.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="chk_ExplicitAliases.Text" xml:space="preserve">
+    <value>Explicit Aliases</value>
+  </data>
+  <data name="&gt;&gt;chk_ExplicitAliases.Name" xml:space="preserve">
+    <value>chk_ExplicitAliases</value>
+  </data>
+  <data name="&gt;&gt;chk_ExplicitAliases.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExplicitAliases.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_ExplicitAliases.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
   <data name="txt_ClauseBreaks.Location" type="System.Drawing.Point, System.Drawing">
     <value>231, 183</value>
   </data>
@@ -1801,7 +1834,7 @@
     <value>6</value>
   </data>
   <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 1428</value>
+    <value>512, 1472</value>
   </data>
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1819,7 +1852,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,80,Percent,100" /&gt;&lt;Rows Styles="Absolute,48,Absolute,898,Absolute,48,Absolute,95,Absolute,48,Absolute,280" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,80,Percent,100" /&gt;&lt;Rows Styles="Absolute,48,Absolute,942,Absolute,48,Absolute,95,Absolute,48,Absolute,280" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1837,7 +1870,7 @@
     <value>6, 6, 6, 6</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>524, 1390</value>
+    <value>524, 1434</value>
   </data>
   <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

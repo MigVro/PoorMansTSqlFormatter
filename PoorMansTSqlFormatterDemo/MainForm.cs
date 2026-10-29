@@ -109,6 +109,7 @@ namespace PoorMansTSqlFormatterDemo
             chk_StripTrailingWhitespace.Checked = Properties.Settings.Default.StripTrailingWhitespace;
             chk_TrailingBooleanOperators.Checked = Properties.Settings.Default.TrailingBooleanOperators;
             chk_SmartExpand.Checked = Properties.Settings.Default.SmartExpand;
+            chk_ExplicitAliases.Checked = Properties.Settings.Default.ExplicitAliases;
 
             radio_Formatting_Identity.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_IDENTITY, StringComparison.InvariantCultureIgnoreCase);
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
@@ -159,6 +160,7 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.StripTrailingWhitespace = chk_StripTrailingWhitespace.Checked;
             Properties.Settings.Default.TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked;
             Properties.Settings.Default.SmartExpand = chk_SmartExpand.Checked;
+            Properties.Settings.Default.ExplicitAliases = chk_ExplicitAliases.Checked;
 
             if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
             Properties.Settings.Default.IdentityColoring = chk_IdentityColoring.Checked;
@@ -198,6 +200,7 @@ namespace PoorMansTSqlFormatterDemo
 						StripTrailingWhitespace = chk_StripTrailingWhitespace.Checked,
 						TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked,
 						SmartExpand = chk_SmartExpand.Checked,
+						ExplicitAliases = chk_ExplicitAliases.Checked,
 						NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
 						NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
 					});
