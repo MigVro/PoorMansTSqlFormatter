@@ -487,6 +487,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 && !ContentStartsWithKeyword(sqlTree.CurrentContainer, "SET")
                                 )
                             {
+                                sqlTree.EscapeToJoinAwaitingOn();
                                 sqlTree.StartNewContainer(SqlStructureConstants.ENAME_JOIN_ON_SECTION, token.Value, SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
                             else
@@ -750,7 +751,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (_JoinDetector.IsMatch(significantTokensString))
                         {
-                            sqlTree.ConsiderStartingNewClause();
+                            if (!sqlTree.StartNestedJoinIfApplicable())
+                                sqlTree.ConsiderStartingNewClause(false);
                             string joinText = _JoinDetector.Match(significantTokensString).Value;
                             int targetKeywordCount = joinText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
                             ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, targetKeywordCount);

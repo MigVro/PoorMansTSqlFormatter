@@ -202,6 +202,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlStructureConstants.ENAME_SQL_CLAUSE:
+                    bool isNestedJoin = contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE);
+                    if (isNestedJoin)
+                        state.BreakExpected = true;
                     state.UnIndentInitialBreak = true;
                     ProcessSqlNodeList(contentElement.Children, state.IncrementIndent());
                     state.DecrementIndent();

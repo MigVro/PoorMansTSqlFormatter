@@ -347,12 +347,18 @@ namespace PoorMansTSqlFormatterLib
             }
         }
 
-        internal void ConsiderStartingNewClause()
+        internal void ConsiderStartingNewClause(bool escapeNestedJoins = true)
         {
             EscapeAnySelectionTarget();
             EscapeAnyBetweenConditions();
             EscapePartialStatementContainers();
             EscapeJoinCondition();
+
+            while (escapeNestedJoins
+                && CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
+                && CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
+                )
+                CurrentContainer = CurrentContainer.Parent;
 
             if (CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
                 && HasNonWhiteSpaceNonSingleCommentContent(CurrentContainer)
@@ -386,6 +392,48 @@ namespace PoorMansTSqlFormatterLib
                 && PathNameMatches(1, SqlStructureConstants.ENAME_JOIN_ON_SECTION)
                 )
                 MoveToAncestorContainer(2);
+        }
+
+        internal bool IsJoinClauseAwaitingOn(Node clause)
+        {
+            if (!clause.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
+                || clause.ChildrenByName(SqlStructureConstants.ENAME_JOIN_ON_SECTION).Any()
+                )
+                return false;
+
+            Node firstEntry = GetFirstNonWhitespaceNonCommentChildElement(clause);
+            if (firstEntry == null || !firstEntry.Name.Equals(SqlStructureConstants.ENAME_COMPOUNDKEYWORD))
+                return false;
+
+            string joinText = firstEntry.GetAttributeValue(SqlStructureConstants.ANAME_SIMPLETEXT);
+            return joinText.EndsWith("JOIN", StringComparison.Ordinal) && !joinText.StartsWith("CROSS ", StringComparison.Ordinal);
+        }
+
+        internal bool StartNestedJoinIfApplicable()
+        {
+            EscapeAnySelectionTarget();
+            EscapeJoinCondition();
+
+            if (!IsJoinClauseAwaitingOn(CurrentContainer))
+                return false;
+
+            CurrentContainer = SaveNewElement(SqlStructureConstants.ENAME_SQL_CLAUSE, "");
+            return true;
+        }
+
+        internal void EscapeToJoinAwaitingOn()
+        {
+            Node original = CurrentContainer;
+            EscapeJoinCondition();
+
+            while (!IsJoinClauseAwaitingOn(CurrentContainer)
+                && CurrentContainer.Parent != null
+                && IsJoinClauseAwaitingOn(CurrentContainer.Parent)
+                )
+                CurrentContainer = CurrentContainer.Parent;
+
+            if (!IsJoinClauseAwaitingOn(CurrentContainer))
+                CurrentContainer = original;
         }
 
         internal bool FindValidBatchEnd()

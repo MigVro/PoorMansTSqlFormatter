@@ -1,0 +1,38 @@
+﻿SELECT *
+FROM a
+LEFT JOIN b
+	JOIN c ON b.id = c.id
+	ON a.id = b.id
+WHERE a.x = 1;
+
+SELECT *
+FROM a
+LEFT JOIN b
+	JOIN c
+		JOIN d ON c.id = d.id
+		ON b.id = c.id
+	ON a.id = b.id
+JOIN e ON e.id = a.id
+WHERE a.x = 1;
+
+SELECT *
+FROM a
+CROSS JOIN b
+JOIN c ON b.id = c.id
+CROSS APPLY f(a.id) x
+JOIN g ON g.id = a.id;
+
+SELECT *
+FROM a
+LEFT JOIN (
+	b JOIN c ON b.id = c.id
+	) ON a.id = b.id
+WHERE a.x = 1;
+
+SELECT *
+FROM a
+LEFT JOIN b
+	JOIN c ON b.id = c.id
+	JOIN d ON d.id = c.id
+	ON a.id = b.id
+WHERE a.x = 1;
