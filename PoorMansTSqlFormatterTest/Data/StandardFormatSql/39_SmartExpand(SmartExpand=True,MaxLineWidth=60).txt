@@ -1,0 +1,27 @@
+﻿SELECT a, b, c, CASE WHEN a = 1 THEN 'x' ELSE 'y' END AS k
+FROM t
+WHERE a IN (1, 2, 3)
+	AND b IN (
+		1000000
+		,2000000
+		,3000000
+		,4000000
+		,5000000
+		,6000000
+		)
+	AND c = CASE 
+		WHEN a = 1
+			THEN 'a very long literal value here'
+		WHEN a = 2
+			THEN 'another long literal value'
+		ELSE 'z'
+		END;
+
+SELECT col_one
+	,col_two
+	,col_three
+	,col_four
+	,col_five
+	,col_six
+FROM t2
+GROUP BY col_one, col_two;

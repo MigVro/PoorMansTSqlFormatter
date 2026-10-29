@@ -50,6 +50,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			StripTrailingWhitespace = false;
 			CollapseBlankLines = false;
 			TrailingBooleanOperators = false;
+			SmartExpand = false;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -88,6 +89,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "StripTrailingWhitespace") StripTrailingWhitespace = Convert.ToBoolean(value);
 				else if (key == "CollapseBlankLines") CollapseBlankLines = Convert.ToBoolean(value);
 					else if (key == "TrailingBooleanOperators") TrailingBooleanOperators = Convert.ToBoolean(value);
+				else if (key == "SmartExpand") SmartExpand = Convert.ToBoolean(value);
 				else throw new ArgumentException("Unknown option: " + key);
             }
 
@@ -119,6 +121,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			if (StripTrailingWhitespace != _defaultOptions.StripTrailingWhitespace) overrides.Add("StripTrailingWhitespace", StripTrailingWhitespace.ToString());
 			if (CollapseBlankLines != _defaultOptions.CollapseBlankLines) overrides.Add("CollapseBlankLines", CollapseBlankLines.ToString());
 				if (TrailingBooleanOperators != _defaultOptions.TrailingBooleanOperators) overrides.Add("TrailingBooleanOperators", TrailingBooleanOperators.ToString());
+			if (SmartExpand != _defaultOptions.SmartExpand) overrides.Add("SmartExpand", SmartExpand.ToString());
 
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
@@ -156,6 +159,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 		public bool StripTrailingWhitespace { get; set; }
 		public bool CollapseBlankLines { get; set; }
 		public bool TrailingBooleanOperators { get; set; }
+		public bool SmartExpand { get; set; }
 
     }
 }

@@ -179,6 +179,82 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
         }
 
+        private bool IsCommaListExpanded(Node comma, TSqlStandardFormattingState state)
+        {
+            Node parent = comma.Parent;
+            if (parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS))
+                return Options.ExpandInLists && !state.FitsOnLine(parent);
+
+            if (!Options.ExpandCommaLists
+                || parent.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
+                || parent.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
+                || parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS))
+                return false;
+
+            Node clause = parent;
+            while (clause != null && !clause.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                clause = clause.Parent;
+
+            return clause == null || !state.FitsOnLine(clause);
+        }
+
+        private bool IsCaseExpanded(Node caseNode, TSqlStandardFormattingState state)
+        {
+            while (caseNode != null && !caseNode.Name.Equals(SqlStructureConstants.ENAME_CASE_STATEMENT))
+                caseNode = caseNode.Parent;
+
+            return Options.ExpandCaseStatements && (caseNode == null || !state.FitsOnLine(caseNode));
+        }
+
+        private void DecideSmartExpand(Node scope, TSqlStandardFormattingState state, int prefixLength, int extraLength)
+        {
+            if (!Options.SmartExpand)
+                return;
+
+            string flat = FormatFlat(scope);
+            bool fits = flat.IndexOf('\n') < 0 && prefixLength + flat.Length + extraLength <= Options.MaxLineWidth;
+            state.SetFitsOnLine(scope, fits);
+        }
+
+        private string FormatFlat(Node scope)
+        {
+            TSqlStandardFormatterOptions flatOptions = new TSqlStandardFormatterOptions
+            {
+                IndentString = Options.IndentString,
+                SpacesPerTab = Options.SpacesPerTab,
+                MaxLineWidth = int.MaxValue / 2,
+                ExpandCommaLists = false,
+                TrailingCommas = Options.TrailingCommas,
+                SpaceAfterExpandedComma = Options.SpaceAfterExpandedComma,
+                ExpandBooleanExpressions = false,
+                ExpandBetweenConditions = false,
+                ExpandCaseStatements = false,
+                ExpandInLists = false,
+                UppercaseKeywords = Options.UppercaseKeywords,
+                KeywordStandardization = Options.KeywordStandardization,
+                BreakJoinOnSections = Options.BreakJoinOnSections,
+                TrailingBooleanOperators = Options.TrailingBooleanOperators,
+                NewClauseLineBreaks = 0,
+                NewStatementLineBreaks = 0,
+                SmartExpand = false
+            };
+            return new TSqlStandardFormatter(flatOptions) { ErrorOutputPrefix = "" }.FormatSQLTree(scope).Trim();
+        }
+
+        private static bool IsTableHintParens(Node parens)
+        {
+            if (!parens.Parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET))
+                return false;
+
+            Node previous = parens.PreviousSibling();
+            while (previous != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(previous.Name))
+                previous = previous.PreviousSibling();
+
+            return previous != null
+                && previous.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                && previous.TextValue.ToUpperInvariant().Equals("WITH");
+        }
+
         private static List<Node> GetWindowSectionStarts(Node overParens)
         {
             List<Node> starts = new List<Node>();
@@ -244,6 +320,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     bool isNestedJoin = contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE);
                     if (isNestedJoin)
                         state.BreakExpected = true;
+                    if (Options.ExpandCommaLists)
+                        DecideSmartExpand(contentElement, state, state.IndentLevel * state.IndentLength, 0);
                     state.UnIndentInitialBreak = true;
                     ProcessSqlNodeList(contentElement.Children, state.IncrementIndent());
                     state.DecrementIndent();
@@ -406,9 +484,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_DDLDETAIL_PARENS:
                 case SqlStructureConstants.ENAME_FUNCTION_PARENS:
 					//simply process sub-nodes - don't add space or expect any linebreaks (but respect linebreaks if necessary)
+                    if (IsTableHintParens(contentElement))
+                        WhiteSpace_SeparateWords(state);
                     state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
                     state.AddOutputContent(FormatOperator("("), SqlHtmlConstants.CLASS_OPERATOR);
+                    state.WordSeparatorExpected = false;
                     ProcessSqlNodeList(contentElement.Children, state.IncrementIndent());
                     state.DecrementIndent();
                     WhiteSpace_BreakAsExpected(state);
@@ -446,6 +527,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_EXPRESSION_PARENS:
                 case SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS:
 				case SqlStructureConstants.ENAME_IN_PARENS:
+					if (contentElement.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS) && Options.ExpandInLists)
+						DecideSmartExpand(contentElement, state, state.PrefixLength, 2);
 					WhiteSpace_SeparateWords(state);
 					if (contentElement.Name.Equals(SqlStructureConstants.ENAME_EXPRESSION_PARENS) || contentElement.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS))
                         state.IncrementIndent();
@@ -492,12 +575,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlStructureConstants.ENAME_CASE_STATEMENT:
+                    if (Options.ExpandCaseStatements)
+                        DecideSmartExpand(contentElement, state, state.PrefixLength, 0);
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
                     state.IncrementIndent();
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CASE_INPUT), state);
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CASE_WHEN), state);
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CASE_ELSE), state);
-                    if (Options.ExpandCaseStatements)
+                    if (IsCaseExpanded(contentElement, state))
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_CLOSE), state);
                     state.DecrementIndent();
@@ -506,7 +591,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_CASE_WHEN:
                 case SqlStructureConstants.ENAME_CASE_THEN:
                 case SqlStructureConstants.ENAME_CASE_ELSE:
-                    if (Options.ExpandCaseStatements)
+                    if (IsCaseExpanded(contentElement, state))
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state.IncrementIndent());
@@ -668,34 +753,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         WhiteSpace_BreakAsExpected(state);
                         state.AddOutputContent(FormatOperator(","), SqlHtmlConstants.CLASS_OPERATOR);
 
-                        if ((Options.ExpandCommaLists
-								&& !(contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
-									)
-								)
-							|| (Options.ExpandInLists
-								&& contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
-								)
-							)
+                        if (IsCommaListExpanded(contentElement, state))
                             state.BreakExpected = true;
                         else
                             state.WordSeparatorExpected = true;
                     }
                     else
                     {
-                        if ((Options.ExpandCommaLists
-								&& !(contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_OVER_PARENS)
-									|| contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
-									)
-								)
-							|| (Options.ExpandInLists
-								&& contentElement.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
-								)
-							)
+                        if (IsCommaListExpanded(contentElement, state))
                         {
                             state.WhiteSpace_BreakToNextLine();
                             state.AddOutputContent(FormatOperator(","), SqlHtmlConstants.CLASS_OPERATOR);
@@ -764,7 +829,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_FUNCTION_KEYWORD:
                     WhiteSpace_SeparateWords(state);
                     state.SetRecentKeyword(contentElement.TextValue);
-                    state.AddOutputContent(contentElement.TextValue, SqlHtmlConstants.CLASS_FUNCTION);
+                    state.AddOutputContent(FormatFunctionName(contentElement), SqlHtmlConstants.CLASS_FUNCTION);
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -817,8 +882,36 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 return outputKeyword.ToLowerInvariant();
         }
 
+        //built-in function names are only recased in call syntax, so that a column that happens to share a
+        // built-in function's name is never touched.
+        private string FormatFunctionName(Node functionKeyword)
+        {
+            if (!Options.KeywordStandardization || !IsFunctionCall(functionKeyword))
+                return functionKeyword.TextValue;
+
+            return Options.UppercaseKeywords ? functionKeyword.TextValue.ToUpperInvariant() : functionKeyword.TextValue.ToLowerInvariant();
+        }
+
+        private static bool IsFunctionCall(Node functionKeyword)
+        {
+            Node previous = functionKeyword.PreviousSibling();
+            while (previous != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(previous.Name))
+                previous = previous.PreviousSibling();
+            if (previous != null && previous.Name.Equals(SqlStructureConstants.ENAME_PERIOD))
+                return false;
+
+            Node next = functionKeyword.NextSibling();
+            while (next != null && SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(next.Name))
+                next = next.NextSibling();
+            return next != null && next.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS);
+        }
+
         private string FormatOperator(string operatorValue)
         {
+            string standardOperator;
+            if (KeywordMapping.TryGetValue(operatorValue, out standardOperator))
+                return standardOperator;
+
             if (Options.UppercaseKeywords)
                 return operatorValue.ToUpperInvariant();
             else
@@ -951,10 +1044,35 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 //CurrentLineLength = sourceState.CurrentLineLength;
                 CurrentLineLength = IndentLevel * IndentLength;
                 CurrentLineHasContent = sourceState.CurrentLineHasContent;
+                _fitsOnLine = sourceState._fitsOnLine;
+            }
+
+            private Dictionary<Node, bool> _fitsOnLine = new Dictionary<Node, bool>();
+
+            public bool FitsOnLine(Node scope)
+            {
+                bool fits;
+                return _fitsOnLine.TryGetValue(scope, out fits) && fits;
+            }
+
+            public void SetFitsOnLine(Node scope, bool fits)
+            {
+                _fitsOnLine[scope] = fits;
+            }
+
+            //where the next word will start, assuming a pending break goes to a fresh, indented line
+            public int PrefixLength
+            {
+                get
+                {
+                    if (BreakExpected || !CurrentLineHasContent)
+                        return IndentLevel * IndentLength;
+                    return CurrentLineLength + 1;
+                }
             }
 
             private string IndentString { get; set; }
-            private int IndentLength { get; set; }
+            public int IndentLength { get; private set; }
             private int MaxLineWidth { get; set; }
 
             public bool StatementBreakExpected { get; set; }

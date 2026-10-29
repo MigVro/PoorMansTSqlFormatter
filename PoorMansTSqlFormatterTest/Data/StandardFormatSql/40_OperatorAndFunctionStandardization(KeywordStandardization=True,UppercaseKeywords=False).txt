@@ -1,0 +1,14 @@
+﻿select count(*)
+	,getdate()
+	,cast(a as varchar(10))
+	,isnull(x, 0)
+	,dbo.GetDate()
+	,[count]
+	,count
+	,@@ROWCOUNT
+from t
+where a <> b
+	and a >= b
+	and c <= d
+	and e <> f
+	and 'a != b' = x;

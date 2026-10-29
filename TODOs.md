@@ -5,7 +5,7 @@
 - [x] (2026-10-24) Format/indent ranking and window functions (`OVER (PARTITION BY ... ORDER BY ...)`). `OVER (...)` is now its own `OverParens` node; sections break onto separate lines when there are two or more, commas stay inline, and `ROWS`/`RANGE` frames stay on one line. Named windows (`WINDOW w AS (...)`) are not handled.
 - [ ] (2026-10-24) Verify VSIX settings survive major VS 2026 / SSMS 22 upgrades, and whether they are shared between VS and SSMS.
 - [x] (2026-10-24) Enable the .NET analyzers (`<EnableNETAnalyzers>` / `<AnalysisLevel>`), at least on the library.
-- [ ] (2026-10-24) Decide on table hints without `WITH` (compat level 80): drop support and treat only `WITH (...)` as hints, or keep parsing them as function arguments.
+- [x] (2026-10-24) Decide on table hints without `WITH` (compat level 80): decided to drop support. Only `WITH (...)` after a table is a hint (inline, `WITH (NOLOCK, INDEX (ix))`, no expansion); `c (NOLOCK)` stays a plain function-style paren.
 - [x] (2026-10-24) `IF EXISTS` qualifier parsed as an `IF` statement, e.g. `DROP PROCEDURE IF EXISTS` raises parse errors (upstream TaoK#268, TaoK#203).
 - [x] (2026-10-24) Nested JOINs (with or without parens) give false syntax errors and poor formatting (upstream TaoK#288, TaoK#30). Unparenthesised nesting is detected as a non-CROSS join followed by another JOIN before its ON.
 - [x] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151). Also covers `DROP COLUMN` and `DROP CONSTRAINT`.
@@ -19,10 +19,10 @@
 - [x] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272). Fixed for `DEFINITION` only (keyword only after `VIEW`); other contextual keywords still uppercase.
 - [x] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298). Not reproduced; defensive fix only: `SingleAssemblyResourceManager` now compares culture names ordinally (case-insensitive), no longer uses `CultureInfo.Equals`, and caches resource sets under the requested culture.
 - [x] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
-- [ ] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth`.
+- [x] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth` (`SmartExpand`; wired into SettingsForm (+ es/fr resx), Demo, CmdLine `/se`, web demo). Decided per clause / `IN` / `CASE` by formatting it flat first; anything that would contain a line break (subqueries) expands. Boolean operators and `BETWEEN` are not affected.
 - [ ] (2026-10-24) Option: insert explicit `AS` for implicit table and column aliases. Check first whether the parser can reliably identify implicit aliases.
 - [ ] (2026-10-24) Opt-in option: add `;` wherever a statement may be terminated, including block `END` → `END;` (deprecated to omit; required before `WITH`/`MERGE`). Only apply when the parse has no errors. Never after `CASE ... END` or `GO`. Verify against SQL Server first: `END TRY;` before `BEGIN CATCH`, and `END;` before `ELSE`.
-- [ ] (2026-10-24) Option: operator/name standardization — `!=` → `<>`, consistent casing of built-in functions and data types. Check what `UppercaseKeywords` already covers; overlaps TaoK#272.
+- [x] (2026-10-24) Option: operator/name standardization — `!=` → `<>`, consistent casing of built-in functions and data types. Added to `KeywordStandardization`: `!=` → `<>`, `!<` → `>=`, `!>` → `<=`, and built-in function names follow `UppercaseKeywords`, but only in call syntax and never after a `.`. Data types were already covered.
 - [ ] (2026-10-24) Option: vertical alignment of column names/types/nullability in `CREATE TABLE` and `DECLARE` blocks (needs block measurement before output).
 - [x] (2026-10-27) Option: collapse runs of blank lines to a single blank line (`CollapseBlankLines`; library only).
 - [x] (2026-10-27) Option: strip trailing whitespace from every output line (`StripTrailingWhitespace`; library only; string literal and block comment content is left alone).

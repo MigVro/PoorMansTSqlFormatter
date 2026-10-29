@@ -139,7 +139,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 									&& lastNonCommentParensSibling.TextValue.ToUpperInvariant().Equals("OVER")
 									)
 							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OVER_PARENS, "");
-						else if (IsLatestTokenAMiscName(sqlTree))
+						else if (IsLatestTokenAMiscName(sqlTree) || IsTableHintParens(sqlTree, lastNonCommentParensSibling))
 							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_FUNCTION_PARENS, "");
 						else
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_EXPRESSION_PARENS, "");
@@ -1685,6 +1685,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
         {
             var latestContent = sqlTree.CurrentContainer.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).LastOrDefault();
             return latestContent != null && latestContent.Name.Equals(SqlStructureConstants.ENAME_COMMA);
+        }
+
+        private static bool IsTableHintParens(ParseTree sqlTree, Node lastSibling)
+        {
+            return sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET)
+                && lastSibling != null
+                && lastSibling.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                && lastSibling.TextValue.ToUpperInvariant().Equals("WITH");
         }
 
         private bool IsLatestTokenAMiscName(ParseTree sqlTree)
