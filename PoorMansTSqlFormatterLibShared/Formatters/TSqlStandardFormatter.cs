@@ -111,6 +111,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (sqlTreeDoc.Name == SqlStructureConstants.ENAME_SQL_ROOT && sqlTreeDoc.GetAttributeValue(SqlStructureConstants.ANAME_ERRORFOUND) == "1")
                 state.AddOutputContent(ErrorOutputPrefix);
 
+            state.TerminateStatements = Options.AddSemicolons
+                && sqlTreeDoc.GetAttributeValue(SqlStructureConstants.ANAME_ERRORFOUND) != "1";
+
             ProcessSqlNodeList(sqlTreeDoc.Children, state);
 
             WhiteSpace_BreakAsExpected(state);
@@ -346,6 +349,73 @@ namespace PoorMansTSqlFormatterLib.Formatters
             state.WordSeparatorExpected = true;
         }
 
+        //the `;` goes right after the statement's last content token, so it stays ahead of any trailing comment.
+        // Nested statements terminate themselves, and a few places must stay unterminated: `END TRY` (a syntax
+        // error before `BEGIN CATCH`) and statements owned by an outer one: MERGE actions and the query of a
+        // cursor declaration, where only the outer statement takes the `;`.
+        private static Node FindTerminatorTarget(Node statement)
+        {
+            if (IsOwnedStatement(statement))
+                return null;
+
+            Node node = statement;
+            while (true)
+            {
+                Node last = node.Children.LastOrDefault(c => !SqlStructureConstants.ENAMELIST_NONCONTENT.Contains(c.Name));
+                if (last == null || EndsUnterminated(last))
+                    return null;
+                if (IsTerminatorLeaf(last))
+                    return IsTerminatable(last) ? last : null;
+                node = last;
+            }
+        }
+
+        private static bool EndsUnterminated(Node last)
+        {
+            if (last.Name.Equals(SqlStructureConstants.ENAME_TRY_BLOCK))
+                return true;
+            return last.Name.Equals(SqlStructureConstants.ENAME_SQL_STATEMENT) && !IsOwnedStatement(last);
+        }
+
+        private static bool IsOwnedStatement(Node statement)
+        {
+            Node container = statement.Parent;
+            if (container == null)
+                return false;
+            if (container.Name.Equals(SqlStructureConstants.ENAME_MERGE_ACTION))
+                return true;
+            return container.Parent != null && container.Parent.Name.Equals(SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK);
+        }
+
+        private static bool IsTerminatorLeaf(Node node)
+        {
+            return !node.Children.Any()
+                || node.Name.Equals(SqlStructureConstants.ENAME_COMPOUNDKEYWORD)
+                || IsParens(node);
+        }
+
+        private static bool IsParens(Node node)
+        {
+            return node.Name.EndsWith("Parens", StringComparison.Ordinal);
+        }
+
+        private static bool IsTerminatable(Node leaf)
+        {
+            bool isEmptyContainer = !leaf.Children.Any() && leaf.TextValue.Length == 0 && !IsParens(leaf);
+            return !isEmptyContainer
+                && !leaf.Name.Equals(SqlStructureConstants.ENAME_SEMICOLON)
+                && !leaf.Name.Equals(SqlStructureConstants.ENAME_LABEL)
+                && !leaf.Parent.Name.Equals(SqlStructureConstants.ENAME_BATCH_SEPARATOR);
+        }
+
+        private void WriteTerminator(TSqlStandardFormattingState state)
+        {
+            state.WordSeparatorExpected = false;
+            state.NoWrapNext = true;
+            state.AddOutputContent(FormatOperator(";"), SqlHtmlConstants.CLASS_OPERATOR);
+            state.WordSeparatorExpected = true;
+        }
+
         private static bool IsTableHintParens(Node parens)
         {
             if (!parens.Parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET))
@@ -402,7 +472,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
         private void ProcessSqlNodeList(IEnumerable<Node> rootList, TSqlStandardFormattingState state)
         {
             foreach (Node contentElement in rootList)
+            {
                 ProcessSqlNode(contentElement, state);
+                if (state.TerminatorTargets.Contains(contentElement))
+                    WriteTerminator(state);
+            }
         }
 
         private void ProcessSqlNode(Node contentElement, TSqlStandardFormattingState state)
@@ -417,6 +491,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_SQL_STATEMENT:
                     WhiteSpace_SeparateStatements(contentElement, state);
                     state.ResetKeywords();
+                    if (state.TerminateStatements)
+                    {
+                        Node terminatorTarget = FindTerminatorTarget(contentElement);
+                        if (terminatorTarget != null)
+                            state.TerminatorTargets.Add(terminatorTarget);
+                    }
                     ProcessSqlNodeList(contentElement.Children, state);
                     state.StatementBreakExpected = true;
                     break;
@@ -1154,7 +1234,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 CurrentLineLength = IndentLevel * IndentLength;
                 CurrentLineHasContent = sourceState.CurrentLineHasContent;
                 _fitsOnLine = sourceState._fitsOnLine;
+                TerminateStatements = sourceState.TerminateStatements;
+                TerminatorTargets = sourceState.TerminatorTargets;
             }
+
+            public bool TerminateStatements { get; set; }
+            public HashSet<Node> TerminatorTargets = new HashSet<Node>();
 
             private Dictionary<Node, bool> _fitsOnLine = new Dictionary<Node, bool>();
 

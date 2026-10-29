@@ -1,0 +1,84 @@
+﻿SET NOCOUNT ON;
+
+SELECT a
+	,b
+FROM t
+WHERE x = 1; -- trailing comment
+
+SELECT (1); /* block comment */
+
+SELECT 3;-- already terminated
+
+IF 1 = 1
+BEGIN
+	SELECT 1;
+END;
+ELSE
+	SELECT 2;
+
+IF 1 = 1
+	SELECT 1;
+ELSE IF 2 = 2
+	SELECT 2;
+ELSE
+	SELECT 3;
+
+BEGIN TRY
+	SELECT 1;
+END TRY
+
+BEGIN CATCH
+	SELECT 2;
+END CATCH;
+
+WHILE 1 = 1
+BEGIN
+	BREAK;
+END;
+
+WITH c
+AS (
+	SELECT 1 a
+	)
+SELECT *
+FROM c;
+
+MERGE INTO t
+USING s
+	ON 1 = 0
+WHEN MATCHED
+	THEN
+		DELETE
+WHEN NOT MATCHED
+	THEN
+		INSERT (a)
+		VALUES (1);
+
+DECLARE c CURSOR
+FOR
+SELECT 1 a
+FOR READ ONLY;
+
+SELECT CASE 
+		WHEN 1 = 1
+			THEN 2
+		END;
+
+lbl:
+
+GOTO lbl;
+GO
+
+CREATE PROCEDURE p
+AS
+SELECT 1;
+GO
+
+CREATE PROCEDURE q
+AS
+BEGIN
+	SELECT 1;
+END;
+GO
+
+

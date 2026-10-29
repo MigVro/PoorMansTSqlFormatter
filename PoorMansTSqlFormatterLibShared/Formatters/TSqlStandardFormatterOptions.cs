@@ -52,6 +52,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			TrailingBooleanOperators = false;
 			SmartExpand = false;
 			ExplicitAliases = false;
+			AddSemicolons = false;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -92,6 +93,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 					else if (key == "TrailingBooleanOperators") TrailingBooleanOperators = Convert.ToBoolean(value);
 				else if (key == "SmartExpand") SmartExpand = Convert.ToBoolean(value);
 				else if (key == "ExplicitAliases") ExplicitAliases = Convert.ToBoolean(value);
+				else if (key == "AddSemicolons") AddSemicolons = Convert.ToBoolean(value);
 				else throw new ArgumentException("Unknown option: " + key);
             }
 
@@ -125,6 +127,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				if (TrailingBooleanOperators != _defaultOptions.TrailingBooleanOperators) overrides.Add("TrailingBooleanOperators", TrailingBooleanOperators.ToString());
 			if (SmartExpand != _defaultOptions.SmartExpand) overrides.Add("SmartExpand", SmartExpand.ToString());
 			if (ExplicitAliases != _defaultOptions.ExplicitAliases) overrides.Add("ExplicitAliases", ExplicitAliases.ToString());
+			if (AddSemicolons != _defaultOptions.AddSemicolons) overrides.Add("AddSemicolons", AddSemicolons.ToString());
 
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
@@ -164,6 +167,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 		public bool TrailingBooleanOperators { get; set; }
 		public bool SmartExpand { get; set; }
 		public bool ExplicitAliases { get; set; }
+		public bool AddSemicolons { get; set; }
 
     }
 }
