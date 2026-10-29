@@ -9,7 +9,7 @@
 - [x] (2026-10-24) `IF EXISTS` qualifier parsed as an `IF` statement, e.g. `DROP PROCEDURE IF EXISTS` raises parse errors (upstream TaoK#268, TaoK#203).
 - [ ] (2026-10-24) Nested JOINs (with or without parens) give false syntax errors and poor formatting (upstream TaoK#288, TaoK#30).
 - [x] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151). Also covers `DROP COLUMN` and `DROP CONSTRAINT`.
-- [ ] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112).
+- [x] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112). Works before `SELECT` (optionally followed by CTEs); not tested before `INSERT`/`UPDATE`/`DELETE`.
 - [ ] (2026-10-24) Parse Service Broker statements (`BEGIN DIALOG`, ...) and the `WAITFOR` container (upstream TaoK#179, TaoK#237).
 - [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).
 - [x] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).

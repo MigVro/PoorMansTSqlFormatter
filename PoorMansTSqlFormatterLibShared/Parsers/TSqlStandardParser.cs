@@ -147,7 +147,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         sqlTree.EscapeAnySingleOrPartialStatementContainers();
 
                         //check whether we expected to end the parens...
-                        if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
+                        if (IsXmlNamespacesDeclarationParens(sqlTree))
+                        {
+                            //unlike a CTE, "WITH XMLNAMESPACES (...)" has no AS block - what follows is the next
+                            // CTE (after a comma) or the statement itself
+                            sqlTree.MoveToAncestorContainer(2, SqlStructureConstants.ENAME_CTE_WITH_CLAUSE);
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT, "");
+                        }
+                        else if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS)
                             || sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDL_PARENS)
 							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_FUNCTION_PARENS)
 							|| sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
@@ -1397,6 +1404,19 @@ namespace PoorMansTSqlFormatterLib.Parsers
             }
 
             return phrase;
+        }
+
+        private static bool IsXmlNamespacesDeclarationParens(ParseTree sqlTree)
+        {
+            if (!sqlTree.PathNameMatches(0, SqlStructureConstants.ENAME_DDL_PARENS)
+                || !sqlTree.PathNameMatches(1, SqlStructureConstants.ENAME_CTE_ALIAS)
+                || !sqlTree.PathNameMatches(2, SqlStructureConstants.ENAME_CTE_WITH_CLAUSE)
+                )
+                return false;
+
+            Node aliasName = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.Parent);
+            return aliasName != null
+                && aliasName.TextValue.Equals("XMLNAMESPACES", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool IsIfExistsQualifier(ITokenList tokenList, string significantTokensString, List<int> significantTokenPositions)

@@ -1,0 +1,7 @@
+﻿WITH XMLNAMESPACES ('http://a.com/x' AS ns1, DEFAULT 'http://b.com/y')
+SELECT a.Id AS [ns1:Id], a.Name
+FROM dbo.A a
+FOR XML PATH('Row'), ROOT('Rows')
+;WITH XMLNAMESPACES ('http://c' AS c), cte AS (SELECT 1 AS x)
+SELECT x FROM cte
+;with cte2 (a, b) as (select 1, 2) select a from cte2
