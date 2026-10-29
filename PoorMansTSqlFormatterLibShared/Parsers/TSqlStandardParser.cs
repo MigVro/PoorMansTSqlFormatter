@@ -289,6 +289,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if ((significantTokensString.StartsWith("ALTER COLUMN ")
                                 || significantTokensString.StartsWith("DROP COLUMN ")
+                                || significantTokensString.StartsWith("DROP CONSTRAINT ")
                                 )
                             && sqlTree.PathNameMatches(0, SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)
                             )

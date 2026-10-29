@@ -8,7 +8,7 @@
 - [ ] (2026-10-24) Decide on table hints without `WITH` (compat level 80): drop support and treat only `WITH (...)` as hints, or keep parsing them as function arguments.
 - [x] (2026-10-24) `IF EXISTS` qualifier parsed as an `IF` statement, e.g. `DROP PROCEDURE IF EXISTS` raises parse errors (upstream TaoK#268, TaoK#203).
 - [ ] (2026-10-24) Nested JOINs (with or without parens) give false syntax errors and poor formatting (upstream TaoK#288, TaoK#30).
-- [x] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151). Also covers `DROP COLUMN`; `DROP CONSTRAINT` still splits into its own statement.
+- [x] (2026-10-24) Parse `ALTER TABLE ... ALTER COLUMN` (upstream TaoK#151). Also covers `DROP COLUMN` and `DROP CONSTRAINT`.
 - [ ] (2026-10-24) Parse `WITH XMLNAMESPACES` (upstream TaoK#112).
 - [ ] (2026-10-24) Parse Service Broker statements (`BEGIN DIALOG`, ...) and the `WAITFOR` container (upstream TaoK#179, TaoK#237).
 - [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).

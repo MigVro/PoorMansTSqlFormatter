@@ -4,4 +4,5 @@ ALTER TABLE dbo.Foo DROP COLUMN Baz
 ALTER TABLE dbo.Foo ADD Qux int NULL
 alter table dbo.Foo
     alter column Bar bigint not null
+ALTER TABLE dbo.Foo DROP CONSTRAINT DF_Foo_Bar
 SELECT 1
