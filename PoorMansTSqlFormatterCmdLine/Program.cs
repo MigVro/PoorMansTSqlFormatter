@@ -35,6 +35,7 @@ namespace PoorMansTSqlFormatterCmdLine
     class Program
     {
         private static SingleAssemblyResourceManager _generalResourceManager = null;
+        private static bool _lastFileEndedWithBatchSeparator = false;
 
         const string UILANGUAGE_EN = "EN";
         const string UILANGUAGE_FR = "FR";
@@ -325,6 +326,16 @@ namespace PoorMansTSqlFormatterCmdLine
             return fileFound;
         }
 
+        private static bool EndsWithBatchSeparator(string sql)
+        {
+            string trimmed = sql.TrimEnd();
+            if (!trimmed.EndsWith("GO", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            string beforeGo = trimmed.Substring(0, trimmed.Length - 2);
+            return beforeGo.Length == 0 || beforeGo.EndsWith("\n");
+        }
+
         private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, bool allowParsingErrors, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool failedBackup = false;
@@ -400,8 +411,11 @@ namespace PoorMansTSqlFormatterCmdLine
                     if (singleFileWriter != null)
                     {
                         //we'll assume that running out of disk space, and other while-you-are-writing errors, and not worth worrying about
+                        singleFileWriter.Flush();
+                        if (singleFileWriter.BaseStream.Position > 0 && !_lastFileEndedWithBatchSeparator)
+                            singleFileWriter.WriteLine("GO");
                         singleFileWriter.WriteLine(newFileContents);
-                        singleFileWriter.WriteLine("GO");
+                        _lastFileEndedWithBatchSeparator = EndsWithBatchSeparator(newFileContents);
                     }
                     else
                     {
