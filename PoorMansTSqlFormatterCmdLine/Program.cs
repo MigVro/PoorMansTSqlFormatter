@@ -357,7 +357,12 @@ namespace PoorMansTSqlFormatterCmdLine
 
                 int goID = GetPreviousSignificantTokenID(tokens, tokens.Count);
                 if (goID >= 0 && tokens[goID].Type == SqlTokenType.Number)
-                    goID = GetPreviousSignificantTokenID(tokens, goID);
+                {
+                    int countID = goID;
+                    goID = GetPreviousSignificantTokenID(tokens, countID);
+                    if (HasLineBreakBetween(tokens, goID, countID))
+                        return false;
+                }
 
                 if (goID < 0
                     || tokens[goID].Type != SqlTokenType.OtherNode
@@ -367,9 +372,20 @@ namespace PoorMansTSqlFormatterCmdLine
                 return goID == 0 || EndsLine(tokens[goID - 1]);
             }
 
+            private static bool HasLineBreakBetween(ITokenList tokens, int fromID, int toID)
+            {
+                for (int tokenID = fromID + 1; tokenID < toID; tokenID++)
+                {
+                    if (EndsLine(tokens[tokenID]))
+                        return true;
+                }
+                return false;
+            }
+
             private static bool EndsLine(IToken token)
             {
                 return token.Type == SqlTokenType.SingleLineComment
+                    || token.Type == SqlTokenType.SingleLineCommentCStyle
                     || (token.Type == SqlTokenType.WhiteSpace && token.Value.Contains("\n"));
             }
 
