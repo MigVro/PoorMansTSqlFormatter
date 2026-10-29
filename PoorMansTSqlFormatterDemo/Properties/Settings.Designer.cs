@@ -286,6 +286,18 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["TrailingBooleanOperators"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SmartExpand {
+            get {
+                return ((bool)(this["SmartExpand"]));
+            }
+            set {
+                this["SmartExpand"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

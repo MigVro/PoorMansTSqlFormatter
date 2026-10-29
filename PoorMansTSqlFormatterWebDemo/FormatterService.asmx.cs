@@ -62,6 +62,7 @@ namespace PoorMansTSqlFormatterWebDemo
 				true,
                 false,
                 false,
+                false,
                 false
                 );
         }
@@ -95,7 +96,8 @@ namespace PoorMansTSqlFormatterWebDemo
 			bool expandInLists,
 			bool collapseBlankLines,
 			bool stripTrailingWhitespace,
-			bool trailingBooleanOperators
+			bool trailingBooleanOperators,
+			bool smartExpand
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -121,7 +123,8 @@ namespace PoorMansTSqlFormatterWebDemo
 						ExpandInLists = expandInLists,
 						CollapseBlankLines = collapseBlankLines,
 						StripTrailingWhitespace = stripTrailingWhitespace,
-						TrailingBooleanOperators = trailingBooleanOperators
+						TrailingBooleanOperators = trailingBooleanOperators,
+						SmartExpand = smartExpand
                     });
 
             }

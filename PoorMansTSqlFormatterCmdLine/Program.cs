@@ -94,6 +94,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("cbl|collapseBlankLines", delegate(string v) { options.CollapseBlankLines = v != null; })
               .Add("stw|stripTrailingWhitespace", delegate(string v) { options.StripTrailingWhitespace = v != null; })
               .Add("tbo|trailingBooleanOperators", delegate(string v) { options.TrailingBooleanOperators = v != null; })
+              .Add("se|smartExpand", delegate(string v) { options.SmartExpand = v != null; })
 
               .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })

@@ -142,6 +142,9 @@
   <data name="chk_TrailingBooleanOperators.Text" xml:space="preserve">
     <value>AND/OR al Final de Línea</value>
   </data>
+  <data name="chk_SmartExpand.Text" xml:space="preserve">
+    <value>Expansión Inteligente</value>
+  </data>
   <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
     <value>Expandir Condiciones BETWEEN</value>
   </data>

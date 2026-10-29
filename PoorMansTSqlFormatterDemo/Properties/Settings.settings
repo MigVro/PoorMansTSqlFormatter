@@ -68,6 +68,9 @@
     <Setting Name="TrailingBooleanOperators" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SmartExpand" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="UILanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)">EN</Value>
     </Setting>

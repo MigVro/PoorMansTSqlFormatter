@@ -70,6 +70,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_CollapseBlankLines = new System.Windows.Forms.CheckBox();
             this.chk_StripTrailingWhitespace = new System.Windows.Forms.CheckBox();
             this.chk_TrailingBooleanOperators = new System.Windows.Forms.CheckBox();
+            this.chk_SmartExpand = new System.Windows.Forms.CheckBox();
             this.txt_ClauseBreaks = new System.Windows.Forms.TextBox();
             this.lbl_ClauseBreaks = new System.Windows.Forms.Label();
             this.txt_StatementBreaks = new System.Windows.Forms.TextBox();
@@ -289,6 +290,7 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_Options.Controls.Add(this.chk_CollapseBlankLines);
             this.grp_Options.Controls.Add(this.chk_StripTrailingWhitespace);
             this.grp_Options.Controls.Add(this.chk_TrailingBooleanOperators);
+            this.grp_Options.Controls.Add(this.chk_SmartExpand);
             resources.ApplyResources(this.grp_Options, "grp_Options");
             this.grp_Options.Name = "grp_Options";
             this.grp_Options.TabStop = false;
@@ -336,6 +338,13 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_TrailingBooleanOperators.Name = "chk_TrailingBooleanOperators";
             this.chk_TrailingBooleanOperators.UseVisualStyleBackColor = true;
             this.chk_TrailingBooleanOperators.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+            //
+            // chk_SmartExpand
+            //
+            resources.ApplyResources(this.chk_SmartExpand, "chk_SmartExpand");
+            this.chk_SmartExpand.Name = "chk_SmartExpand";
+            this.chk_SmartExpand.UseVisualStyleBackColor = true;
+            this.chk_SmartExpand.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
             // 
             // txt_ClauseBreaks
             // 
@@ -727,6 +736,7 @@ namespace PoorMansTSqlFormatterDemo
         private System.Windows.Forms.CheckBox chk_CollapseBlankLines;
         private System.Windows.Forms.CheckBox chk_StripTrailingWhitespace;
         private System.Windows.Forms.CheckBox chk_TrailingBooleanOperators;
+        private System.Windows.Forms.CheckBox chk_SmartExpand;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;

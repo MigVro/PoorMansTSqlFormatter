@@ -64,6 +64,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.chk_CollapseBlankLines = new System.Windows.Forms.CheckBox();
             this.chk_StripTrailingWhitespace = new System.Windows.Forms.CheckBox();
             this.chk_TrailingBooleanOperators = new System.Windows.Forms.CheckBox();
+            this.chk_SmartExpand = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -115,6 +116,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.flowLayoutPanel1.Controls.Add(this.chk_CollapseBlankLines);
             this.flowLayoutPanel1.Controls.Add(this.chk_StripTrailingWhitespace);
             this.flowLayoutPanel1.Controls.Add(this.chk_TrailingBooleanOperators);
+            this.flowLayoutPanel1.Controls.Add(this.chk_SmartExpand);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
             // chk_ExpandCommaLists
@@ -194,6 +196,12 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.chk_TrailingBooleanOperators, "chk_TrailingBooleanOperators");
             this.chk_TrailingBooleanOperators.Name = "chk_TrailingBooleanOperators";
             this.chk_TrailingBooleanOperators.UseVisualStyleBackColor = true;
+            //
+            // chk_SmartExpand
+            //
+            resources.ApplyResources(this.chk_SmartExpand, "chk_SmartExpand");
+            this.chk_SmartExpand.Name = "chk_SmartExpand";
+            this.chk_SmartExpand.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -351,6 +359,7 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.CheckBox chk_CollapseBlankLines;
         private System.Windows.Forms.CheckBox chk_StripTrailingWhitespace;
         private System.Windows.Forms.CheckBox chk_TrailingBooleanOperators;
+        private System.Windows.Forms.CheckBox chk_SmartExpand;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;

@@ -162,6 +162,9 @@
   <data name="chk_TrailingBooleanOperators.Text" xml:space="preserve">
     <value>AND/OR en Fin de Ligne</value>
   </data>
+  <data name="chk_SmartExpand.Text" xml:space="preserve">
+    <value>Expansion Intelligente</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Fins de Ligne par Clause:</value>
   </data>

@@ -196,6 +196,7 @@ keywordStandardization=true
 collapseBlankLines=false
 stripTrailingWhitespace=false
 trailingBooleanOperators=false
+smartExpand=false
 randomizeColor=false
 randomizeLineLengths=false
 randomizeKeywordCase=false
