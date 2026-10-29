@@ -64,6 +64,7 @@ namespace PoorMansTSqlFormatterWebDemo
                 false,
                 false,
                 false,
+                false,
                 false
                 );
         }
@@ -99,7 +100,8 @@ namespace PoorMansTSqlFormatterWebDemo
 			bool stripTrailingWhitespace,
 			bool trailingBooleanOperators,
 			bool smartExpand,
-			bool explicitAliases
+			bool explicitAliases,
+			bool addSemicolons
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -127,7 +129,8 @@ namespace PoorMansTSqlFormatterWebDemo
 						StripTrailingWhitespace = stripTrailingWhitespace,
 						TrailingBooleanOperators = trailingBooleanOperators,
 						SmartExpand = smartExpand,
-						ExplicitAliases = explicitAliases
+						ExplicitAliases = explicitAliases,
+						AddSemicolons = addSemicolons
                     });
 
             }

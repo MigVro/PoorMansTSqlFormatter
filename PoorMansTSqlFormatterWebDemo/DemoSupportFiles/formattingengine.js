@@ -198,6 +198,7 @@ stripTrailingWhitespace=false
 trailingBooleanOperators=false
 smartExpand=false
 explicitAliases=false
+addSemicolons=false
 randomizeColor=false
 randomizeLineLengths=false
 randomizeKeywordCase=false

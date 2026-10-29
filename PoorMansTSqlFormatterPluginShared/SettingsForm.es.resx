@@ -168,6 +168,9 @@
   <data name="chk_ExplicitAliases.Text" xml:space="preserve">
     <value>Alias Expl&#237;citos</value>
   </data>
+  <data name="chk_AddSemicolons.Text" xml:space="preserve">
+    <value>Agregar Punto y Coma</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Saltos de linea por Cláusula:</value>
   </data>

@@ -24,6 +24,7 @@ var PageFormattingMapper = function() {
         stdOptions.TrailingBooleanOperators = options.trailingBooleanOperators == "true";
         stdOptions.SmartExpand = options.smartExpand == "true";
         stdOptions.ExplicitAliases = options.explicitAliases == "true";
+        stdOptions.AddSemicolons = options.addSemicolons == "true";
         return new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.$ctor1(stdOptions);
       case 'identity':
         return new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(enableHtml);

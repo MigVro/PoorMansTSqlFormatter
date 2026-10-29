@@ -110,6 +110,7 @@ namespace PoorMansTSqlFormatterDemo
             chk_TrailingBooleanOperators.Checked = Properties.Settings.Default.TrailingBooleanOperators;
             chk_SmartExpand.Checked = Properties.Settings.Default.SmartExpand;
             chk_ExplicitAliases.Checked = Properties.Settings.Default.ExplicitAliases;
+            chk_AddSemicolons.Checked = Properties.Settings.Default.AddSemicolons;
 
             radio_Formatting_Identity.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_IDENTITY, StringComparison.InvariantCultureIgnoreCase);
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
@@ -161,6 +162,7 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked;
             Properties.Settings.Default.SmartExpand = chk_SmartExpand.Checked;
             Properties.Settings.Default.ExplicitAliases = chk_ExplicitAliases.Checked;
+            Properties.Settings.Default.AddSemicolons = chk_AddSemicolons.Checked;
 
             if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
             Properties.Settings.Default.IdentityColoring = chk_IdentityColoring.Checked;
@@ -201,6 +203,7 @@ namespace PoorMansTSqlFormatterDemo
 						TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked,
 						SmartExpand = chk_SmartExpand.Checked,
 						ExplicitAliases = chk_ExplicitAliases.Checked,
+						AddSemicolons = chk_AddSemicolons.Checked,
 						NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
 						NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
 					});

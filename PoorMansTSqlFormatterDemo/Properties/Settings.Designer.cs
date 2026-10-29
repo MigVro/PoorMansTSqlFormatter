@@ -310,6 +310,18 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["ExplicitAliases"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddSemicolons {
+            get {
+                return ((bool)(this["AddSemicolons"]));
+            }
+            set {
+                this["AddSemicolons"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

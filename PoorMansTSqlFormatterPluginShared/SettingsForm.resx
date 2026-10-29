@@ -634,6 +634,36 @@
     <value>tableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;chk_ExplicitAliases.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chk_AddSemicolons.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_AddSemicolons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>320, 262</value>
+  </data>
+  <data name="chk_AddSemicolons.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chk_AddSemicolons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 29</value>
+  </data>
+  <data name="chk_AddSemicolons.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="chk_AddSemicolons.Text" xml:space="preserve">
+    <value>Add Semicolons</value>
+  </data>
+  <data name="&gt;&gt;chk_AddSemicolons.Name" xml:space="preserve">
+    <value>chk_AddSemicolons</value>
+  </data>
+  <data name="&gt;&gt;chk_AddSemicolons.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_AddSemicolons.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_AddSemicolons.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">

@@ -148,6 +148,9 @@
   <data name="chk_ExplicitAliases.Text" xml:space="preserve">
     <value>Alias Explicites</value>
   </data>
+  <data name="chk_AddSemicolons.Text" xml:space="preserve">
+    <value>Ajouter Points-Virgules</value>
+  </data>
   <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
     <value>Étendre Conditions BETWEEN</value>
   </data>

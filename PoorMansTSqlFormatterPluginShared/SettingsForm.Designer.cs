@@ -66,6 +66,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.chk_TrailingBooleanOperators = new System.Windows.Forms.CheckBox();
             this.chk_SmartExpand = new System.Windows.Forms.CheckBox();
             this.chk_ExplicitAliases = new System.Windows.Forms.CheckBox();
+            this.chk_AddSemicolons = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -119,6 +120,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.tableLayoutPanel1.Controls.Add(this.chk_TrailingBooleanOperators);
             this.tableLayoutPanel1.Controls.Add(this.chk_SmartExpand);
             this.tableLayoutPanel1.Controls.Add(this.chk_ExplicitAliases);
+            this.tableLayoutPanel1.Controls.Add(this.chk_AddSemicolons);
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -222,6 +224,12 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.chk_ExplicitAliases, "chk_ExplicitAliases");
             this.chk_ExplicitAliases.Name = "chk_ExplicitAliases";
             this.chk_ExplicitAliases.UseVisualStyleBackColor = true;
+            // 
+            // chk_AddSemicolons
+            // 
+            resources.ApplyResources(this.chk_AddSemicolons, "chk_AddSemicolons");
+            this.chk_AddSemicolons.Name = "chk_AddSemicolons";
+            this.chk_AddSemicolons.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -381,6 +389,7 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.CheckBox chk_TrailingBooleanOperators;
         private System.Windows.Forms.CheckBox chk_SmartExpand;
         private System.Windows.Forms.CheckBox chk_ExplicitAliases;
+        private System.Windows.Forms.CheckBox chk_AddSemicolons;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;
