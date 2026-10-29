@@ -1,0 +1,4 @@
+﻿GRANT VIEW DEFINITION ON OBJECT::dbo.t TO u;
+DENY alter, view definition ON SCHEMA::dbo TO u;
+CREATE VIEW definition AS SELECT 1 AS definition;
+SELECT [view] definition FROM t;

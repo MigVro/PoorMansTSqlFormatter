@@ -1543,23 +1543,55 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 );
         }
 
+        private static readonly Dictionary<string, string> ContextualKeywordLeadIns = new Dictionary<string, string>
+        {
+            { "DEFINITION", "VIEW" }
+        };
+
+        private static readonly HashSet<string> PermissionStatementStarters = new HashSet<string> { "GRANT", "DENY", "REVOKE" };
+
         private static bool IsContextualKeywordUsedAsIdentifier(ITokenList tokenList, int tokenID)
         {
-            if (!tokenList[tokenID].Value.Equals("DEFINITION", StringComparison.OrdinalIgnoreCase))
+            string leadIn;
+            if (!ContextualKeywordLeadIns.TryGetValue(tokenList[tokenID].Value.ToUpperInvariant(), out leadIn))
                 return false;
 
+            int leadInID = GetPreviousSignificantTokenID(tokenList, tokenID);
+            if (leadInID < 0 || !IsUnquotedWord(tokenList[leadInID], leadIn))
+                return true;
+
+            return !IsInPermissionList(tokenList, leadInID);
+        }
+
+        private static bool IsInPermissionList(ITokenList tokenList, int permissionID)
+        {
+            int previousID = GetPreviousSignificantTokenID(tokenList, permissionID);
+            if (previousID < 0)
+                return false;
+
+            IToken previous = tokenList[previousID];
+            return previous.Type == SqlTokenType.Comma
+                || PermissionStatementStarters.Any(starter => IsUnquotedWord(previous, starter));
+        }
+
+        private static bool IsUnquotedWord(IToken token, string word)
+        {
+            return token.Type == SqlTokenType.OtherNode
+                && token.Value.Equals(word, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static int GetPreviousSignificantTokenID(ITokenList tokenList, int tokenID)
+        {
             for (int previousID = tokenID - 1; previousID >= 0; previousID--)
             {
-                IToken previous = tokenList[previousID];
-                if (previous.Type == SqlTokenType.WhiteSpace
-                    || previous.Type == SqlTokenType.SingleLineComment
-                    || previous.Type == SqlTokenType.SingleLineCommentCStyle
-                    || previous.Type == SqlTokenType.MultiLineComment)
-                    continue;
-
-                return !previous.Value.Equals("VIEW", StringComparison.OrdinalIgnoreCase);
+                SqlTokenType type = tokenList[previousID].Type;
+                if (type != SqlTokenType.WhiteSpace
+                    && type != SqlTokenType.SingleLineComment
+                    && type != SqlTokenType.SingleLineCommentCStyle
+                    && type != SqlTokenType.MultiLineComment)
+                    return previousID;
             }
-            return true;
+            return -1;
         }
 
         private static bool IsClauseStarter(IToken token)
