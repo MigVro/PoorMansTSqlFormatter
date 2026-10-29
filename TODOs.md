@@ -14,7 +14,7 @@
 - [ ] (2026-10-24) sqlcmd commands (`:r file.sql`, `:setvar name value`) cause parse errors (upstream TaoK#92).
 - [x] (2026-10-24) Maximum line width breaks binary literals, corrupting the data (upstream TaoK#257).
 - [x] (2026-10-24) `[noformat]...[/noformat]` adds a line feed before `[/noformat]` on every format (upstream TaoK#292).
-- [x] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192). Fixed for the command line `-o:file` mode only (separator between files, none after the last or after a file already ending in `GO`); not reproducible in the library.
+- [x] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192). Fixed for the command line `-o:file` mode only (separator between files, none after the last or after a file already ending in `GO`); not reproducible in the library. Behaviour change: no `GO` is written after the last file. `GO <count>` is not detected as a separator.
 - [x] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
 - [x] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272). Fixed for `DEFINITION` only (keyword only after `VIEW`); other contextual keywords still uppercase.
 - [x] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298). Neutral-culture check in `SingleAssemblyResourceManager` now compares culture names ordinally (case-insensitive).

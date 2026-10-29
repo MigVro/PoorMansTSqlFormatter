@@ -29,13 +29,13 @@ using System.IO;
 using System.Reflection;
 using NDesk.Options;
 using PoorMansTSqlFormatterExeShared;
+using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterCmdLine
 {
     class Program
     {
         private static SingleAssemblyResourceManager _generalResourceManager = null;
-        private static bool _lastFileEndedWithBatchSeparator = false;
 
         const string UILANGUAGE_EN = "EN";
         const string UILANGUAGE_FR = "FR";
@@ -250,7 +250,7 @@ namespace PoorMansTSqlFormatterCmdLine
                     return 2;
                 }
 
-                System.IO.StreamWriter singleFileWriter = null;
+                SingleFileOutput singleFileWriter = null;
                 string replaceFromFolderPath = null;
                 string replaceToFolderPath = null;
                 if (!string.IsNullOrEmpty(outputFileOrFolder))
@@ -272,7 +272,7 @@ namespace PoorMansTSqlFormatterCmdLine
                         {
                             //let's not worry too hard about releasing this resource - this is a command-line program, 
                             // when it ends or dies all will be released anyway.
-                            singleFileWriter = new StreamWriter(outputFileOrFolder);
+                            singleFileWriter = new SingleFileOutput(new StreamWriter(outputFileOrFolder));
                         }
                         catch (Exception e)
                         {
@@ -290,8 +290,6 @@ namespace PoorMansTSqlFormatterCmdLine
 
                 if (singleFileWriter != null)
                 {
-                    singleFileWriter.Flush();
-                    singleFileWriter.Close();
                     singleFileWriter.Dispose();
                 }
             }
@@ -302,7 +300,7 @@ namespace PoorMansTSqlFormatterCmdLine
                 return 0; //we got there, did something, and received no (handled) errors!
         }
 
-        private static bool ProcessSearchResults(List<string> extensions, bool backups, bool allowParsingErrors, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, FileSystemInfo[] matchingObjects, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
+        private static bool ProcessSearchResults(List<string> extensions, bool backups, bool allowParsingErrors, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, FileSystemInfo[] matchingObjects, SingleFileOutput singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool fileFound = false;
 
@@ -326,17 +324,71 @@ namespace PoorMansTSqlFormatterCmdLine
             return fileFound;
         }
 
-        private static bool EndsWithBatchSeparator(string sql)
+        private sealed class SingleFileOutput : IDisposable
         {
-            string trimmed = sql.TrimEnd();
-            if (!trimmed.EndsWith("GO", StringComparison.OrdinalIgnoreCase))
-                return false;
+            private readonly StreamWriter _writer;
+            private readonly PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer _tokenizer = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer();
+            private bool _wroteAnyFile = false;
+            private bool _lastFileEndedWithBatchSeparator = false;
 
-            string beforeGo = trimmed.Substring(0, trimmed.Length - 2);
-            return beforeGo.Length == 0 || beforeGo.EndsWith("\n");
+            public SingleFileOutput(StreamWriter writer)
+            {
+                _writer = writer;
+            }
+
+            public void Write(string sql)
+            {
+                if (_wroteAnyFile && !_lastFileEndedWithBatchSeparator)
+                    _writer.WriteLine("GO");
+
+                _writer.WriteLine(sql);
+                _wroteAnyFile = true;
+                _lastFileEndedWithBatchSeparator = EndsWithBatchSeparator(sql);
+            }
+
+            public void Dispose()
+            {
+                _writer.Dispose();
+            }
+
+            private bool EndsWithBatchSeparator(string sql)
+            {
+                ITokenList tokens = _tokenizer.TokenizeSQL(sql);
+
+                int goID = GetPreviousSignificantTokenID(tokens, tokens.Count);
+                if (goID >= 0 && tokens[goID].Type == SqlTokenType.Number)
+                    goID = GetPreviousSignificantTokenID(tokens, goID);
+
+                if (goID < 0
+                    || tokens[goID].Type != SqlTokenType.OtherNode
+                    || !tokens[goID].Value.Equals("GO", StringComparison.OrdinalIgnoreCase))
+                    return false;
+
+                return goID == 0 || EndsLine(tokens[goID - 1]);
+            }
+
+            private static bool EndsLine(IToken token)
+            {
+                return token.Type == SqlTokenType.SingleLineComment
+                    || (token.Type == SqlTokenType.WhiteSpace && token.Value.Contains("\n"));
+            }
+
+            private static int GetPreviousSignificantTokenID(ITokenList tokens, int tokenID)
+            {
+                for (int previousID = tokenID - 1; previousID >= 0; previousID--)
+                {
+                    SqlTokenType type = tokens[previousID].Type;
+                    if (type != SqlTokenType.WhiteSpace
+                        && type != SqlTokenType.SingleLineComment
+                        && type != SqlTokenType.SingleLineCommentCStyle
+                        && type != SqlTokenType.MultiLineComment)
+                        return previousID;
+                }
+                return -1;
+            }
         }
 
-        private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, bool allowParsingErrors, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
+        private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, bool allowParsingErrors, SingleFileOutput singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool failedBackup = false;
             string oldFileContents = "";
@@ -411,11 +463,7 @@ namespace PoorMansTSqlFormatterCmdLine
                     if (singleFileWriter != null)
                     {
                         //we'll assume that running out of disk space, and other while-you-are-writing errors, and not worth worrying about
-                        singleFileWriter.Flush();
-                        if (singleFileWriter.BaseStream.Position > 0 && !_lastFileEndedWithBatchSeparator)
-                            singleFileWriter.WriteLine("GO");
-                        singleFileWriter.WriteLine(newFileContents);
-                        _lastFileEndedWithBatchSeparator = EndsWithBatchSeparator(newFileContents);
+                        singleFileWriter.Write(newFileContents);
                     }
                     else
                     {
