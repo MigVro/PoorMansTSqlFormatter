@@ -97,6 +97,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("se|smartExpand", delegate(string v) { options.SmartExpand = v != null; })
               .Add("ea|explicitAliases", delegate(string v) { options.ExplicitAliases = v != null; })
               .Add("sc|addSemicolons", delegate(string v) { options.AddSemicolons = v != null; })
+              .Add("ac|alignColumns", delegate(string v) { options.AlignColumns = v != null; })
 
               .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })

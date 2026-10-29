@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btn_Save.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 684</value>
+    <value>434, 725</value>
   </data>
   <data name="btn_Save.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
@@ -154,7 +154,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="btn_Cancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>596, 684</value>
+    <value>596, 725</value>
   </data>
   <data name="btn_Cancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
@@ -664,6 +664,36 @@
     <value>tableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;chk_AddSemicolons.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chk_AlignColumns.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_AlignColumns.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 303</value>
+  </data>
+  <data name="chk_AlignColumns.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chk_AlignColumns.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 29</value>
+  </data>
+  <data name="chk_AlignColumns.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="chk_AlignColumns.Text" xml:space="preserve">
+    <value>Align Columns</value>
+  </data>
+  <data name="&gt;&gt;chk_AlignColumns.Name" xml:space="preserve">
+    <value>chk_AlignColumns</value>
+  </data>
+  <data name="&gt;&gt;chk_AlignColumns.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_AlignColumns.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_AlignColumns.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
@@ -673,7 +703,7 @@
     <value>6, 6, 6, 6</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>722, 351</value>
+    <value>722, 392</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -865,7 +895,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="btn_About.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 684</value>
+    <value>24, 725</value>
   </data>
   <data name="btn_About.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
@@ -895,7 +925,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="btn_Reset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>186, 684</value>
+    <value>186, 725</value>
   </data>
   <data name="btn_Reset.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
@@ -1180,7 +1210,7 @@
     <value>12, 25</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>770, 751</value>
+    <value>770, 792</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>

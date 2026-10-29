@@ -101,7 +101,8 @@ namespace PoorMansTSqlFormatterWebDemo
 			bool trailingBooleanOperators,
 			bool smartExpand,
 			bool explicitAliases,
-			bool addSemicolons
+			bool addSemicolons,
+			bool alignColumns
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -130,7 +131,8 @@ namespace PoorMansTSqlFormatterWebDemo
 						TrailingBooleanOperators = trailingBooleanOperators,
 						SmartExpand = smartExpand,
 						ExplicitAliases = explicitAliases,
-						AddSemicolons = addSemicolons
+						AddSemicolons = addSemicolons,
+						AlignColumns = alignColumns
                     });
 
             }

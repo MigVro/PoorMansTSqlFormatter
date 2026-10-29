@@ -171,6 +171,9 @@
   <data name="chk_AddSemicolons.Text" xml:space="preserve">
     <value>Agregar Punto y Coma</value>
   </data>
+  <data name="chk_AlignColumns.Text" xml:space="preserve">
+    <value>Alinear Columnas</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Saltos de linea por Cláusula:</value>
   </data>

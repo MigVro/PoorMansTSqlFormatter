@@ -322,6 +322,18 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["AddSemicolons"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AlignColumns {
+            get {
+                return ((bool)(this["AlignColumns"]));
+            }
+            set {
+                this["AlignColumns"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

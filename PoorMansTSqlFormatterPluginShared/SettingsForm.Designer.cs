@@ -67,6 +67,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.chk_SmartExpand = new System.Windows.Forms.CheckBox();
             this.chk_ExplicitAliases = new System.Windows.Forms.CheckBox();
             this.chk_AddSemicolons = new System.Windows.Forms.CheckBox();
+            this.chk_AlignColumns = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -121,11 +122,13 @@ namespace PoorMansTSqlFormatterPluginShared
             this.tableLayoutPanel1.Controls.Add(this.chk_SmartExpand);
             this.tableLayoutPanel1.Controls.Add(this.chk_ExplicitAliases);
             this.tableLayoutPanel1.Controls.Add(this.chk_AddSemicolons);
+            this.tableLayoutPanel1.Controls.Add(this.chk_AlignColumns);
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -230,6 +233,12 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.chk_AddSemicolons, "chk_AddSemicolons");
             this.chk_AddSemicolons.Name = "chk_AddSemicolons";
             this.chk_AddSemicolons.UseVisualStyleBackColor = true;
+            // 
+            // chk_AlignColumns
+            // 
+            resources.ApplyResources(this.chk_AlignColumns, "chk_AlignColumns");
+            this.chk_AlignColumns.Name = "chk_AlignColumns";
+            this.chk_AlignColumns.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -390,6 +399,7 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.CheckBox chk_SmartExpand;
         private System.Windows.Forms.CheckBox chk_ExplicitAliases;
         private System.Windows.Forms.CheckBox chk_AddSemicolons;
+        private System.Windows.Forms.CheckBox chk_AlignColumns;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;

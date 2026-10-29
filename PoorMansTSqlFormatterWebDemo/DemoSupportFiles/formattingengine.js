@@ -199,6 +199,7 @@ trailingBooleanOperators=false
 smartExpand=false
 explicitAliases=false
 addSemicolons=false
+alignColumns=false
 randomizeColor=false
 randomizeLineLengths=false
 randomizeKeywordCase=false

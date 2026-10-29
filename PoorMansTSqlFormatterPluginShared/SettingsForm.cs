@@ -115,6 +115,7 @@ namespace PoorMansTSqlFormatterPluginShared
             chk_SmartExpand.Checked = options.SmartExpand;
             chk_ExplicitAliases.Checked = options.ExplicitAliases;
             chk_AddSemicolons.Checked = options.AddSemicolons;
+            chk_AlignColumns.Checked = options.AlignColumns;
 
             if (_supportsHotkey) txt_Hotkey.Text = (string)_settings["Hotkey"];
         }
@@ -142,7 +143,8 @@ namespace PoorMansTSqlFormatterPluginShared
                 TrailingBooleanOperators = chk_TrailingBooleanOperators.Checked,
                 SmartExpand = chk_SmartExpand.Checked,
                 ExplicitAliases = chk_ExplicitAliases.Checked,
-                AddSemicolons = chk_AddSemicolons.Checked
+                AddSemicolons = chk_AddSemicolons.Checked,
+                AlignColumns = chk_AlignColumns.Checked
             };
 
             if (_supportsHotkey) _settings["Hotkey"] = txt_Hotkey.Text;

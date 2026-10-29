@@ -171,6 +171,9 @@
   <data name="chk_AddSemicolons.Text" xml:space="preserve">
     <value>Ajouter Points-Virgules</value>
   </data>
+  <data name="chk_AlignColumns.Text" xml:space="preserve">
+    <value>Aligner les Colonnes</value>
+  </data>
   <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
     <value>Fins de Ligne par Clause:</value>
   </data>
