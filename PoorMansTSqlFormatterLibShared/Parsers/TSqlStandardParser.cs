@@ -1044,6 +1044,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT, "", sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDL_WITH_CLAUSE, ""));
                             sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
+                        else if (significantTokensString.StartsWith("SET ")
+                            && sqlTree.PathNameMatches(0, SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)
+                            && ContentStartsWithKeyword(sqlTree.CurrentContainer, "ALTER")
+                            )
+                        {
+                            sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
                         else if (significantTokensString.StartsWith("SET "))
                         {
                             Node firstNonCommentSibling2 = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
