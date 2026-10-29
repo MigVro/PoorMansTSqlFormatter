@@ -235,6 +235,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
+                        else if (significantTokensString.StartsWith("CREATE OR ALTER PROC")
+                            || significantTokensString.StartsWith("CREATE OR ALTER FUNC")
+                            || significantTokensString.StartsWith("CREATE OR ALTER TRIGGER ")
+                            || significantTokensString.StartsWith("CREATE OR ALTER VIEW ")
+                            )
+                        {
+                            sqlTree.ConsiderStartingNewStatement();
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK, "");
+                            AppendNodesWithMapping(sqlTree, tokenList.GetRangeByIndex(significantTokenPositions[0], significantTokenPositions[2]), SqlStructureConstants.ENAME_OTHERKEYWORD, sqlTree.CurrentContainer);
+                            tokenID = significantTokenPositions[2];
+                        }
                         else if (significantTokensString.StartsWith("CREATE PROC")
                             || significantTokensString.StartsWith("CREATE FUNC")
                             || significantTokensString.StartsWith("CREATE TRIGGER ")
