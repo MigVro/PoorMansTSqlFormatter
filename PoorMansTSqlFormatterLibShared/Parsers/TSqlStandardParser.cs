@@ -287,6 +287,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK, "");
                             sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
+                        else if ((significantTokensString.StartsWith("ALTER COLUMN ")
+                                || significantTokensString.StartsWith("DROP COLUMN ")
+                                )
+                            && sqlTree.PathNameMatches(0, SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)
+                            )
+                        {
+                            sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
                         else if (significantTokensString.StartsWith("CREATE ")
                             || significantTokensString.StartsWith("ALTER ")
                             )
