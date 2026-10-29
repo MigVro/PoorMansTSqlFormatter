@@ -61,7 +61,7 @@ namespace PoorMansTSqlFormatterExeShared
                 }
 
                 //if we're asking for the default language, then ask for the invaliant (non-specific) resources.
-                if (_neutralResourcesCulture.Equals(culture))
+                if (string.Equals(_neutralResourcesCulture.Name, culture.Name, StringComparison.OrdinalIgnoreCase))
                     culture = CultureInfo.InvariantCulture;
                 resourceFileName = GetResourceFileName(culture);
 

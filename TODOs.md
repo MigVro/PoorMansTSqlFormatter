@@ -17,7 +17,7 @@
 - [x] (2026-10-24) Formatter appends an extra `GO` at the end of the output (upstream TaoK#287, TaoK#192). Fixed for the command line `-o:file` mode only (separator between files, none after the last or after a file already ending in `GO`); not reproducible in the library.
 - [x] (2026-10-24) Wrong indent for `IF ... THROW` without `BEGIN ... END` (upstream TaoK#266).
 - [x] (2026-10-24) Non-keyword identifiers such as `definition` get uppercased (upstream TaoK#272). Fixed for `DEFINITION` only (keyword only after `VIEW`); other contextual keywords still uppercase.
-- [ ] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298).
+- [x] (2026-10-24) Culture-sensitive comparison may break resource lookup (upstream TaoK#298). Neutral-culture check in `SingleAssemblyResourceManager` now compares culture names ordinally (case-insensitive).
 - [x] (2026-10-24) Command-line formatter skips files with an uppercase `.SQL` extension (upstream TaoK#242).
 - [ ] (2026-10-24) Option: "smart expand" — keep comma lists, `IN` lists and `CASE` on one line unless they exceed `MaxLineWidth`.
 - [ ] (2026-10-24) Option: insert explicit `AS` for implicit table and column aliases. Check first whether the parser can reliably identify implicit aliases.
