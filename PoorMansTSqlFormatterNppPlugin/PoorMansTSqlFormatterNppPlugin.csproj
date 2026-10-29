@@ -91,7 +91,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="PreBuild_Replace.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,7 +105,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>Call $(ProjectDir)\PreBuild_Replace.bat $(SolutionDir) $(ProjectDir)</PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>

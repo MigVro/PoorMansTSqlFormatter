@@ -21,7 +21,7 @@ msbuild PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj /restore /p:Con
 
 - Solution platforms: `x86`, `x64`, `PureDotNet`. `x86`/`x64` exist for the Notepad++ plugin (UnmanagedExports).
 - The WinMerge setup project (VS Installer Projects) and the WinMerge VB6 COM plugin need extra tooling and manual steps — see `BUILDING.txt`.
-- `ExternalBuildTools/` (fart.exe, ILRepack), and `packages/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
+- `ExternalBuildTools/` (ILRepack), and `packages/` are vendored binaries. `Key.snk` files sign assemblies; don't regenerate them outside the guided step in the VSIX plan.
 
 ## Tests
 

@@ -22,6 +22,7 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 * Tests use NUnit 3 and its console runner instead of the NUnit 2.5 GUI runner
 * Settings dialog is centered on the host main window
+* Build no longer needs fart.exe: the Notepad++ settings class declares `ISqlSettings` in a partial class and the Demo designer uses `SingleAssemblyComponentResourceManager` directly
 
 ### Fixed
 

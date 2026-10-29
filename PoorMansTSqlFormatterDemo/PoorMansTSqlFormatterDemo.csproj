@@ -33,7 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PostBuildEvent>Call $(MSBuildProjectDirectory)\Postbuild_Merge.bat $(TargetDir)</PostBuildEvent>
-    <PreBuildEvent>Call $(MSBuildProjectDirectory)\PreBuild_Replace.bat $(SolutionDir) $(MSBuildProjectDirectory)</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,7 +86,6 @@
     </Compile>
     <None Include="app.config" />
     <None Include="Postbuild_Merge.bat" />
-    <None Include="PreBuild_Replace.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

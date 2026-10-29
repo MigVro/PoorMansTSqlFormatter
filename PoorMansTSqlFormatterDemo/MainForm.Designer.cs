@@ -49,7 +49,7 @@ namespace PoorMansTSqlFormatterDemo
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            FrameworkClassReplacements.SingleAssemblyComponentResourceManager resources = new FrameworkClassReplacements.SingleAssemblyComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
