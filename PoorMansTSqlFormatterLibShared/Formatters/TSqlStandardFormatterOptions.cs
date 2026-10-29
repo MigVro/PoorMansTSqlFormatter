@@ -53,6 +53,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			SmartExpand = false;
 			ExplicitAliases = false;
 			AddSemicolons = false;
+			AlignColumns = false;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -94,6 +95,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "SmartExpand") SmartExpand = Convert.ToBoolean(value);
 				else if (key == "ExplicitAliases") ExplicitAliases = Convert.ToBoolean(value);
 				else if (key == "AddSemicolons") AddSemicolons = Convert.ToBoolean(value);
+				else if (key == "AlignColumns") AlignColumns = Convert.ToBoolean(value);
 				else throw new ArgumentException("Unknown option: " + key);
             }
 
@@ -128,6 +130,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			if (SmartExpand != _defaultOptions.SmartExpand) overrides.Add("SmartExpand", SmartExpand.ToString());
 			if (ExplicitAliases != _defaultOptions.ExplicitAliases) overrides.Add("ExplicitAliases", ExplicitAliases.ToString());
 			if (AddSemicolons != _defaultOptions.AddSemicolons) overrides.Add("AddSemicolons", AddSemicolons.ToString());
+			if (AlignColumns != _defaultOptions.AlignColumns) overrides.Add("AlignColumns", AlignColumns.ToString());
 
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
@@ -168,6 +171,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 		public bool SmartExpand { get; set; }
 		public bool ExplicitAliases { get; set; }
 		public bool AddSemicolons { get; set; }
+		public bool AlignColumns { get; set; }
 
     }
 }

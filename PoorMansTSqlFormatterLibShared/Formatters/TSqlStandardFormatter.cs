@@ -416,6 +416,180 @@ namespace PoorMansTSqlFormatterLib.Formatters
             state.WordSeparatorExpected = true;
         }
 
+        //column lists (CREATE TABLE and table variable columns, multi-variable DECLARE) get their names and types padded
+        // into columns. The rows are measured before any output, and the padding is written right after the node it
+        // belongs to, so it never trails a line.
+        private class ColumnRow
+        {
+            public Node Name;
+            public int Start;
+            public int NameWidth;
+            public Node TypeEnd;
+            public int TypeWidth;
+            public bool TypeFollowed;
+        }
+
+        private static bool IsColumnListParens(Node parens)
+        {
+            for (Node previous = parens.PreviousSibling(); previous != null; previous = previous.PreviousSibling())
+            {
+                if (previous.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                    && previous.TextValue.Equals("TABLE", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        private static void SplitColumnItems(IEnumerable<Node> nodes, List<List<Node>> items, List<Node> commas)
+        {
+            foreach (Node node in nodes)
+            {
+                if (node.Name.Equals(SqlStructureConstants.ENAME_COMMA))
+                {
+                    commas.Add(node);
+                    items.Add(new List<Node>());
+                }
+                else if (node.Name.Equals(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT))
+                    SplitColumnItems(node.Children, items, commas);
+                else if (!node.Name.Equals(SqlStructureConstants.ENAME_WHITESPACE))
+                    items[items.Count - 1].Add(node);
+            }
+        }
+
+        private static int NameWidth(Node name)
+        {
+            switch (name.Name)
+            {
+                case SqlStructureConstants.ENAME_OTHERNODE:
+                    return name.TextValue.Length;
+                case SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME:
+                case SqlStructureConstants.ENAME_QUOTED_STRING:
+                    return name.TextValue.Length + 2 + name.TextValue.Count(c => c == ']' || c == '"');
+                default:
+                    return 0;
+            }
+        }
+
+        private int TypeWidth(Node type)
+        {
+            if (type.Name.Equals(SqlStructureConstants.ENAME_DATATYPE_KEYWORD))
+                return FormatKeyword(type.TextValue).Length;
+
+            return type.TextValue.StartsWith("@") ? 0 : NameWidth(type);
+        }
+
+        private ColumnRow GetColumnRow(List<Node> item, bool declare, int start)
+        {
+            int first = declare && item.Count > 0
+                && item[0].Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
+                && item[0].TextValue.Equals("DECLARE", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+            if (item.Count < first + 2)
+                return null;
+
+            Node name = item[first];
+            int nameWidth = NameWidth(name);
+            if (nameWidth == 0 || declare != name.TextValue.StartsWith("@"))
+                return null;
+
+            ColumnRow row = new ColumnRow { Name = name, Start = start, NameWidth = nameWidth };
+            Node type = item[first + 1];
+            if (type.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD) && type.TextValue.Equals("AS", StringComparison.OrdinalIgnoreCase))
+                return row;
+
+            row.TypeWidth = TypeWidth(type);
+            if (row.TypeWidth == 0)
+                return null;
+
+            int typeEnd = first + 1;
+            while (typeEnd + 2 < item.Count && item[typeEnd + 1].Name.Equals(SqlStructureConstants.ENAME_PERIOD) && NameWidth(item[typeEnd + 2]) > 0)
+            {
+                row.TypeWidth += 1 + NameWidth(item[typeEnd + 2]);
+                typeEnd += 2;
+            }
+
+            row.TypeEnd = item[typeEnd];
+            if (typeEnd + 1 < item.Count && item[typeEnd + 1].Name.Equals(SqlStructureConstants.ENAME_DDLDETAIL_PARENS))
+            {
+                row.TypeEnd = item[typeEnd + 1];
+                row.TypeWidth += FormatFlat(row.TypeEnd).Length + 2;
+            }
+            row.TypeFollowed = item.Skip(item.IndexOf(row.TypeEnd) + 1).Any(n => !SqlStructureConstants.ENAMELIST_COMMENT.Contains(n.Name) && !n.Name.Equals(SqlStructureConstants.ENAME_SEMICOLON));
+            return row;
+        }
+
+        private List<ColumnRow> GetColumnRows(List<List<Node>> items, bool declare, int firstStart, int otherStart)
+        {
+            List<ColumnRow> rows = new List<ColumnRow>();
+            for (int i = 0; i < items.Count; i++)
+            {
+                ColumnRow row = GetColumnRow(items[i], declare, i == 0 ? firstStart : otherStart);
+                if (row != null)
+                    rows.Add(row);
+            }
+            return rows;
+        }
+
+        private static void RegisterColumnPads(List<ColumnRow> rows, TSqlStandardFormattingState state)
+        {
+            if (rows.Count < 2)
+                return;
+
+            int nameEnd = rows.Max(r => r.Start + r.NameWidth);
+            int typeWidth = rows.Where(r => r.TypeFollowed).Select(r => r.TypeWidth).DefaultIfEmpty(0).Max();
+            foreach (ColumnRow row in rows)
+            {
+                state.AddAlignPad(row.Name, nameEnd - row.Start - row.NameWidth);
+                if (row.TypeFollowed)
+                    state.AddAlignPad(row.TypeEnd, typeWidth - row.TypeWidth);
+            }
+        }
+
+        private int CommaLeadWidth()
+        {
+            if (Options.TrailingCommas)
+                return 0;
+
+            return Options.SpaceAfterExpandedComma ? 2 : 1;
+        }
+
+        private void AlignColumnList(Node parens, TSqlStandardFormattingState state)
+        {
+            if (!Options.AlignColumns || !IsColumnListParens(parens))
+                return;
+
+            List<List<Node>> items = new List<List<Node>> { new List<Node>() };
+            List<Node> commas = new List<Node>();
+            SplitColumnItems(parens.Children, items, commas);
+            if (commas.Count == 0 || !IsCommaListExpanded(commas[0], state))
+                return;
+
+            RegisterColumnPads(GetColumnRows(items, false, 0, CommaLeadWidth()), state);
+        }
+
+        private void AlignDeclareList(Node declare, TSqlStandardFormattingState state)
+        {
+            if (!Options.AlignColumns)
+                return;
+
+            List<List<Node>> items = new List<List<Node>> { new List<Node>() };
+            List<Node> commas = new List<Node>();
+            SplitColumnItems(declare.Children, items, commas);
+            if (commas.Count == 0 || !IsCommaListExpanded(commas[0], state))
+                return;
+
+            RegisterColumnPads(GetColumnRows(items, true, "DECLARE ".Length, state.IndentLength + CommaLeadWidth()), state);
+        }
+
+        private static void WriteAlignPad(Node node, TSqlStandardFormattingState state)
+        {
+            int pad;
+            if (!state.AlignPads.TryGetValue(node, out pad))
+                return;
+
+            state.NoWrapNext = true;
+            state.AddOutputContent(new string(' ', pad));
+        }
+
         private static bool IsTableHintParens(Node parens)
         {
             if (!parens.Parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET))
@@ -474,6 +648,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             foreach (Node contentElement in rootList)
             {
                 ProcessSqlNode(contentElement, state);
+                WriteAlignPad(contentElement, state);
                 if (state.TerminatorTargets.Contains(contentElement))
                     WriteTerminator(state);
             }
@@ -551,6 +726,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_PERMISSIONS_DETAIL:
                 case SqlStructureConstants.ENAME_MERGE_CLAUSE:
                 case SqlStructureConstants.ENAME_MERGE_TARGET:
+                    if (contentElement.Name.Equals(SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK))
+                        AlignDeclareList(contentElement, state);
                     ProcessSqlNodeList(contentElement.Children, state);
                     break;
 
@@ -712,6 +889,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_EXPRESSION_PARENS:
                 case SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS:
 				case SqlStructureConstants.ENAME_IN_PARENS:
+					if (contentElement.Name.Equals(SqlStructureConstants.ENAME_DDL_PARENS))
+						AlignColumnList(contentElement, state);
 					if (contentElement.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS) && Options.ExpandInLists)
 						DecideSmartExpand(contentElement, state, state.PrefixLength, 2);
 					WhiteSpace_SeparateWords(state);
@@ -1236,10 +1415,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 _fitsOnLine = sourceState._fitsOnLine;
                 TerminateStatements = sourceState.TerminateStatements;
                 TerminatorTargets = sourceState.TerminatorTargets;
+                AlignPads = sourceState.AlignPads;
             }
 
             public bool TerminateStatements { get; set; }
             public HashSet<Node> TerminatorTargets = new HashSet<Node>();
+            public Dictionary<Node, int> AlignPads = new Dictionary<Node, int>();
+
+            public void AddAlignPad(Node node, int pad)
+            {
+                if (pad > 0)
+                    AlignPads[node] = pad;
+            }
 
             private Dictionary<Node, bool> _fitsOnLine = new Dictionary<Node, bool>();
 

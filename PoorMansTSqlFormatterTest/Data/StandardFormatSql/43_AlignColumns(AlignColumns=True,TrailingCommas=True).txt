@@ -1,0 +1,37 @@
+﻿CREATE TABLE dbo.Orders (
+	id              INT            NOT NULL,
+	[Customer Name] NVARCHAR(50)   NULL,
+	amount          DECIMAL(10, 2) DEFAULT 0,
+	total           AS (id * 2),
+	tag             VARCHAR(max),
+	ref             dbo.RefType,
+	CONSTRAINT pk PRIMARY KEY (id)
+	);
+
+CREATE TABLE dbo.Tiny (a INT);
+
+DECLARE @a    INT = 1,
+	@longname VARCHAR(20),
+	@c        dbo.MyType;
+DECLARE @single INT;
+
+IF 1 = 1
+BEGIN
+	DECLARE @x    INT,
+		@yyyyyyyy NVARCHAR(max) = N'a'
+	DECLARE @t TABLE (
+		a      INT,
+		bbbbbb DATETIME2(7) NOT NULL,
+		c      MONEY
+		)
+END
+
+CREATE FUNCTION dbo.f ()
+RETURNS @r TABLE (
+	k          INT,
+	longcolumn VARCHAR(10)
+	)
+AS
+BEGIN
+	RETURN
+END
