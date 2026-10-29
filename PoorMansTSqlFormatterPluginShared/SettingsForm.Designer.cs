@@ -50,7 +50,7 @@ namespace PoorMansTSqlFormatterPluginShared
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.chk_ExpandCommaLists = new System.Windows.Forms.CheckBox();
             this.chk_TrailingCommas = new System.Windows.Forms.CheckBox();
             this.chk_ExpandBooleanExpressions = new System.Windows.Forms.CheckBox();
@@ -82,7 +82,7 @@ namespace PoorMansTSqlFormatterPluginShared
             this.lbl_StatementBreaks = new System.Windows.Forms.Label();
             this.txt_ClauseBreaks = new System.Windows.Forms.TextBox();
             this.lbl_ClauseBreaks = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Save
@@ -100,24 +100,35 @@ namespace PoorMansTSqlFormatterPluginShared
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             // 
-            // flowLayoutPanel1
+            // tableLayoutPanel1
             // 
-            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
-            this.flowLayoutPanel1.Controls.Add(this.chk_ExpandCommaLists);
-            this.flowLayoutPanel1.Controls.Add(this.chk_TrailingCommas);
-            this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBooleanExpressions);
-            this.flowLayoutPanel1.Controls.Add(this.chk_ExpandCaseStatements);
-            this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBetweenConditions);
-            this.flowLayoutPanel1.Controls.Add(this.chk_ExpandInLists);
-            this.flowLayoutPanel1.Controls.Add(this.chk_UppercaseKeywords);
-            this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
-            this.flowLayoutPanel1.Controls.Add(this.chk_BreakJoinOnSections);
-            this.flowLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
-            this.flowLayoutPanel1.Controls.Add(this.chk_CollapseBlankLines);
-            this.flowLayoutPanel1.Controls.Add(this.chk_StripTrailingWhitespace);
-            this.flowLayoutPanel1.Controls.Add(this.chk_TrailingBooleanOperators);
-            this.flowLayoutPanel1.Controls.Add(this.chk_SmartExpand);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExpandCommaLists);
+            this.tableLayoutPanel1.Controls.Add(this.chk_TrailingCommas);
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExpandBooleanExpressions);
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExpandCaseStatements);
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExpandBetweenConditions);
+            this.tableLayoutPanel1.Controls.Add(this.chk_ExpandInLists);
+            this.tableLayoutPanel1.Controls.Add(this.chk_UppercaseKeywords);
+            this.tableLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
+            this.tableLayoutPanel1.Controls.Add(this.chk_BreakJoinOnSections);
+            this.tableLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
+            this.tableLayoutPanel1.Controls.Add(this.chk_CollapseBlankLines);
+            this.tableLayoutPanel1.Controls.Add(this.chk_StripTrailingWhitespace);
+            this.tableLayoutPanel1.Controls.Add(this.chk_TrailingBooleanOperators);
+            this.tableLayoutPanel1.Controls.Add(this.chk_SmartExpand);
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             // 
             // chk_ExpandCommaLists
             // 
@@ -318,13 +329,13 @@ namespace PoorMansTSqlFormatterPluginShared
             this.Controls.Add(this.lbl_Hotkey);
             this.Controls.Add(this.lbl_IndentHint);
             this.Controls.Add(this.lbl_IndentString);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Save);
             this.Name = "SettingsForm";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,7 +345,7 @@ namespace PoorMansTSqlFormatterPluginShared
 
         private System.Windows.Forms.Button btn_Save;
         private System.Windows.Forms.Button btn_Cancel;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lbl_IndentString;
         private System.Windows.Forms.TextBox txt_IndentString;
         private System.Windows.Forms.CheckBox chk_ExpandCommaLists;
