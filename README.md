@@ -17,8 +17,6 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
     aliases, semicolon insertion, column alignment, whitespace stripping and blank-line
     collapsing. See `CHANGELOG.md`.
 
-
-
 ### Features
 
 * Simple Xml-style parse tree
@@ -39,7 +37,6 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
     bulk formatting tool.
 * JS library (transpiled from C#) is fully functional for browser or other (eg Node.js) 
     contexts.
-
 
 ### General Limitations
 
@@ -63,7 +60,6 @@ plugin, and WinMerge plugin) for reformatting T-SQL code.
 
 * See [TODOs.md](TODOs.md)
 * And other stuff that is tracked in the GitHub issues list
-
 
 ### Longer-term enhancements / additions
 
@@ -119,11 +115,9 @@ but not limited to:
 * Sheldon Hull
 * Benjamin Solomon
 
-
 Translation work on this project was originally facilitated by [Amanuens](http://amanuens.com/), the online translation platform that is now sadly defunct.
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.
 
 Tao Klerks
-

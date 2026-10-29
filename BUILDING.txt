@@ -53,4 +53,3 @@ To run the tests, build PoorMansTSqlFormatterTests with /restore, then from Poor
 
 If you encounter any issues building this project, please don't hesitate to contact me: my email address starts with tao, and is 
 hosted at klerks dot biz.
-
